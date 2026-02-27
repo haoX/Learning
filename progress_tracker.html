@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Suivi des progres</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { height: 100%; }
+body {
+  font-family: -apple-system, 'Helvetica Neue', 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #e0f0ff 0%, #e8dff5 50%, #fce4ec 100%);
+  background-attachment: fixed;
+  color: #333;
+  min-height: 100%;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+  padding-bottom: 80px;
+}
+
+/* ===== HEADER ===== */
+.app-header {
+  text-align: center;
+  padding: 20px 16px 10px;
+}
+.app-header h1 {
+  font-size: 26px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #8e44ad, #3498db);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.app-header .subtitle {
+  font-size: 13px;
+  color: #888;
+  margin-top: 2px;
+}
+
+/* ===== INFO BAR ===== */
+.info-bar {
+  display: flex;
+  gap: 10px;
+  padding: 0 16px;
+  margin-bottom: 10px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.info-bar input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  font-size: 15px;
+  background: rgba(255,255,255,0.9);
+  min-height: 44px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.info-bar input:focus { border-color: #8e44ad; }
+
+/* ===== TAB NAV ===== */
+.tab-nav {
+  display: flex;
+  gap: 4px;
+  padding: 8px 16px;
+  max-width: 600px;
+  margin: 0 auto;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex-shrink: 0;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.6);
+  font-size: 13px;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  min-height: 44px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tab-btn.active {
+  background: #fff;
+  color: #8e44ad;
+  box-shadow: 0 2px 12px rgba(142,68,173,0.2);
+}
+
+/* ===== TAB CONTENT ===== */
+.tab-content { display: none; padding: 0 16px 20px; max-width: 600px; margin: 0 auto; }
+.tab-content.active { display: block; }
+
+/* ===== CARDS ===== */
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card-title .icon { font-size: 20px; }
+
+/* ===== DASHBOARD ===== */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.stat-box {
+  background: #fff;
+  border-radius: 16px;
+  padding: 14px 10px;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.stat-num {
+  font-size: 28px;
+  font-weight: 800;
+}
+.stat-num.purple { color: #8e44ad; }
+.stat-num.gold { color: #f39c12; }
+.stat-num.green { color: #27ae60; }
+.stat-label {
+  font-size: 11px;
+  color: #888;
+  margin-top: 2px;
+}
+.progress-bar-wrap {
+  background: #eee;
+  border-radius: 10px;
+  height: 14px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #8e44ad, #3498db);
+  transition: width 0.5s ease;
+}
+.milestone-hint {
+  font-size: 12px;
+  color: #888;
+  text-align: center;
+  font-style: italic;
+}
+
+/* ===== STAMP GRID ===== */
+.week-section {
+  margin-bottom: 16px;
+}
+.week-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.week-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #8e44ad;
+}
+.ipad-count {
+  font-size: 12px;
+  color: #f39c12;
+  font-weight: 600;
+}
+.stamp-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+.day-label {
+  text-align: center;
+  font-size: 10px;
+  color: #aaa;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.stamp-cell {
+  aspect-ratio: 1;
+  border: 2.5px dashed #d5b8e8;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-height: 44px;
+  background: rgba(255,255,255,0.5);
+  -webkit-user-select: none;
+  user-select: none;
+}
+.stamp-cell.stamped {
+  background: linear-gradient(135deg, #e8d5f5, #f0e0ff);
+  border-color: #8e44ad;
+  border-style: solid;
+  animation: stampBounce 0.4s ease;
+}
+@keyframes stampBounce {
+  0% { transform: scale(0.5); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* ===== WEEKLY TESTS (Accordion) ===== */
+.test-accordion {
+  border: 2px solid #e8eef4;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  background: #fff;
+}
+.test-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  cursor: pointer;
+  min-height: 44px;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.test-header .week-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: #2c3e50;
+}
+.test-header .result-badge {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.result-badge.green { background: #d5f5e3; color: #27ae60; }
+.result-badge.yellow { background: #fef9e7; color: #f39c12; }
+.result-badge.red { background: #fadbd8; color: #e74c3c; }
+.result-badge.none { background: #eee; color: #999; }
+.test-header .chevron {
+  font-size: 14px;
+  color: #aaa;
+  transition: transform 0.2s;
+}
+.test-accordion.open .chevron { transform: rotate(180deg); }
+.test-body {
+  display: none;
+  padding: 0 16px 16px;
+}
+.test-accordion.open .test-body { display: block; }
+.test-field {
+  margin-bottom: 10px;
+}
+.test-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #888;
+  margin-bottom: 4px;
+}
+.test-field input, .test-field select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #e8eef4;
+  border-radius: 10px;
+  font-size: 14px;
+  min-height: 44px;
+  outline: none;
+  background: #fafbfc;
+}
+.test-field input:focus, .test-field select:focus {
+  border-color: #8e44ad;
+}
+.test-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.skill-label {
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+  margin-bottom: 6px;
+}
+
+/* ===== STARS & REWARDS ===== */
+.stars-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.star-cell {
+  aspect-ratio: 1;
+  border: 2.5px solid #f0d9a0;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-height: 44px;
+  background: rgba(255,255,255,0.5);
+  -webkit-user-select: none;
+  user-select: none;
+}
+.star-cell.lit {
+  background: linear-gradient(135deg, #fff9e6, #fef3c7);
+  border-color: #f39c12;
+  border-style: solid;
+  animation: starGlow 0.5s ease;
+}
+@keyframes starGlow {
+  0% { transform: scale(0.5) rotate(-30deg); }
+  50% { transform: scale(1.3) rotate(10deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+.star-milestone {
+  text-align: center;
+  font-size: 11px;
+  color: #ccc;
+  margin-top: -4px;
+  margin-bottom: 4px;
+}
+.star-milestone.active { color: #f39c12; font-weight: 700; }
+
+.reward-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  border: 2px solid #fadbd8;
+  border-radius: 14px;
+  margin-bottom: 8px;
+  background: #fff;
+}
+.reward-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.reward-inputs {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.reward-inputs input {
+  border: none;
+  border-bottom: 2px solid #eee;
+  padding: 6px 4px;
+  font-size: 14px;
+  outline: none;
+  background: transparent;
+  min-height: 34px;
+}
+.reward-inputs input:focus { border-bottom-color: #e74c3c; }
+.reward-locked {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ===== DAILY LOG ===== */
+.log-week {
+  margin-bottom: 12px;
+}
+.log-week-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  background: #fff;
+  border-radius: 14px 14px 0 0;
+  cursor: pointer;
+  min-height: 44px;
+  border: 2px solid #e8eef4;
+  border-bottom: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.log-week-header.collapsed + .log-week-body { display: none; }
+.log-week-body {
+  background: #fff;
+  border: 2px solid #e8eef4;
+  border-top: none;
+  border-radius: 0 0 14px 14px;
+  overflow: hidden;
+}
+.log-day {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.log-day:last-child { border-bottom: none; }
+.log-day-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #8e44ad;
+  min-width: 32px;
+  padding-top: 10px;
+}
+.log-check {
+  width: 28px;
+  height: 28px;
+  border: 2.5px solid #ccc;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-top: 6px;
+  flex-shrink: 0;
+  font-size: 16px;
+  min-width: 28px;
+  min-height: 28px;
+  transition: all 0.2s;
+}
+.log-check.checked {
+  background: #27ae60;
+  border-color: #27ae60;
+  color: #fff;
+}
+.log-fields {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.log-fields input, .log-fields textarea {
+  border: none;
+  border-bottom: 1.5px solid #eee;
+  padding: 6px 4px;
+  font-size: 13px;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  resize: none;
+  min-height: 30px;
+}
+.log-fields input:focus, .log-fields textarea:focus { border-bottom-color: #8e44ad; }
+.log-fields input::placeholder, .log-fields textarea::placeholder { color: #ccc; }
+
+/* ===== NOTES TAB ===== */
+.notes-area {
+  width: 100%;
+  min-height: 100px;
+  border: 2px solid #e8eef4;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  resize: vertical;
+  background: #fafbfc;
+}
+.notes-area:focus { border-color: #8e44ad; }
+
+/* ===== TOOLBAR ===== */
+.toolbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid #eee;
+  padding: 8px 16px;
+  padding-bottom: max(8px, env(safe-area-inset-bottom));
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  z-index: 100;
+}
+.tool-btn {
+  padding: 8px 16px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  min-height: 40px;
+  transition: all 0.2s;
+}
+.tool-btn:active { transform: scale(0.95); }
+.tool-btn.danger { border-color: #fadbd8; color: #e74c3c; }
+
+/* ===== MODAL ===== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.active { display: flex; }
+.modal-box {
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+.modal-box h3 { font-size: 18px; margin-bottom: 10px; }
+.modal-box p { font-size: 14px; color: #666; margin-bottom: 16px; }
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.modal-actions button {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 44px;
+}
+.btn-cancel { background: #eee; color: #666; }
+.btn-confirm { background: #e74c3c; color: #fff; }
+
+/* ===== CONFETTI ===== */
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 300;
+  overflow: hidden;
+}
+.confetti-piece {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  animation: confettiFall linear forwards;
+}
+@keyframes confettiFall {
+  0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* ===== METHOD TAB ===== */
+.method-section {
+  overflow: hidden;
+}
+.method-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  min-height: 44px;
+}
+.method-header .chevron {
+  font-size: 14px;
+  color: #aaa;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+.method-section.collapsed .method-body { display: none; }
+.method-section.collapsed .chevron { transform: rotate(-90deg); }
+.method-body {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #555;
+}
+.method-body p { margin-bottom: 8px; }
+.method-body strong { color: #2c3e50; }
+.method-body .highlight {
+  background: linear-gradient(135deg, #e8d5f5, #d5e8f5);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin: 8px 0;
+  font-size: 13px;
+}
+.method-body .compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 8px 0;
+}
+.method-body .compare-table th {
+  background: #f0e8f5;
+  padding: 8px 10px;
+  text-align: left;
+  font-weight: 700;
+  color: #8e44ad;
+  border-radius: 6px 6px 0 0;
+}
+.method-body .compare-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid #eee;
+  vertical-align: top;
+}
+.method-body .cpa-steps {
+  display: flex;
+  gap: 8px;
+  margin: 10px 0;
+}
+.method-body .cpa-step {
+  flex: 1;
+  background: #fff;
+  border: 2px solid #e8eef4;
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+}
+.method-body .cpa-step .step-icon { font-size: 28px; margin-bottom: 4px; }
+.method-body .cpa-step .step-label { font-size: 11px; font-weight: 700; color: #8e44ad; }
+.method-body .cpa-step .step-desc { font-size: 11px; color: #888; margin-top: 2px; }
+.method-body .routine-block {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  padding: 8px 10px;
+  border-left: 3px solid #8e44ad;
+  background: #faf8fc;
+  border-radius: 0 8px 8px 0;
+  margin: 6px 0;
+}
+.method-body .routine-block .time {
+  font-weight: 800;
+  color: #8e44ad;
+  font-size: 13px;
+  min-width: 50px;
+}
+.method-body .routine-block .desc {
+  font-size: 13px;
+  color: #555;
+}
+.method-body .material-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin: 8px 0;
+}
+.method-body .material-table th {
+  background: #8e44ad;
+  color: #fff;
+  padding: 8px 8px;
+  text-align: left;
+  font-size: 11px;
+}
+.method-body .material-table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid #eee;
+}
+.method-body .material-table tr:nth-child(even) { background: #faf8fc; }
+.method-body .tens-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  margin: 8px 0;
+  color: #2c3e50;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 400px) {
+  .stats-row { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .stat-num { font-size: 22px; }
+  .stamp-cell { font-size: 20px; }
+  .star-cell { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="app-header">
+  <h1>Suivi des progres</h1>
+  <div class="subtitle">Calcul mental + Anglais - 8 semaines</div>
+</div>
+
+<!-- ===== INFO BAR ===== -->
+<div class="info-bar">
+  <input type="text" id="childName" placeholder="Prenom de l'enfant" autocomplete="off">
+  <input type="date" id="startDate">
+</div>
+
+<!-- ===== TAB NAV ===== -->
+<div class="tab-nav">
+  <button class="tab-btn active" data-tab="method">Methode</button>
+  <button class="tab-btn" data-tab="dashboard">Tableau de bord</button>
+  <button class="tab-btn" data-tab="stamps">Tampons</button>
+  <button class="tab-btn" data-tab="tests">Tests</button>
+  <button class="tab-btn" data-tab="stars">Etoiles</button>
+  <button class="tab-btn" data-tab="log">Journal</button>
+</div>
+
+<!-- ===== METHOD TAB ===== -->
+<div class="tab-content active" id="tab-method">
+
+  <div class="card method-section">
+    <div class="method-header" onclick="this.parentElement.classList.toggle('collapsed')">
+      <div class="card-title" style="margin:0;"><span class="icon">🎯</span> Pourquoi pas compter sur les doigts ?<br><span style="font-size:12px;color:#888;font-weight:400;">为什么不要数手指？</span></div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="method-body">
+      <p>数手指是<strong>「过程性策略」</strong>——孩子每次都要从头数，速度慢、容易数错，而且数字大了手指不够用。</p>
+      <p>我们的目标是<strong>「事实性提取」</strong>——看到 3+4 直接知道等于7，就像看到一个字直接认识，不需要拼读。</p>
+      <table class="compare-table">
+        <tr><th>❌ 数手指</th><th>✅ 目标</th></tr>
+        <tr><td>3+4 → 从3开始：4, 5, 6, 7 → "7!"</td><td>3+4 → "7!"（直接反应）</td></tr>
+        <tr><td>依赖序列，容易数错</td><td>从记忆中直接提取</td></tr>
+        <tr><td>5-10秒</td><td>不到2秒</td></tr>
+      </table>
+      <div class="highlight">💡 <strong>类比：</strong>就像学认字 — 一开始需要拼音，但最终目标是「看到字就认识」，拼音只是过渡工具。心算也一样，数手指只是过渡，不能停留在这一步。</div>
+    </div>
+  </div>
+
+  <div class="card method-section">
+    <div class="method-header" onclick="this.parentElement.classList.toggle('collapsed')">
+      <div class="card-title" style="margin:0;"><span class="icon">🧱</span> La methode CPA<br><span style="font-size:12px;color:#888;font-weight:400;">CPA教学法（新加坡数学）</span></div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="method-body">
+      <p>CPA是经过验证的数学教学法，每个概念都经过三个阶段：</p>
+      <div class="cpa-steps">
+        <div class="cpa-step">
+          <div class="step-icon">🧱</div>
+          <div class="step-label">Concrete</div>
+          <div class="step-desc">实物操作<br>积木、纽扣、乐高</div>
+        </div>
+        <div class="cpa-step">
+          <div class="step-icon">🖼️</div>
+          <div class="step-label">Pictorial</div>
+          <div class="step-desc">图画表示<br>十格框、数链</div>
+        </div>
+        <div class="cpa-step">
+          <div class="step-icon">🔢</div>
+          <div class="step-label">Abstract</div>
+          <div class="step-desc">纯数字<br>3 + 4 = ?</div>
+        </div>
+      </div>
+      <div class="highlight">⚠️ <strong>关键规则：</strong>每个新概念必须按 C→P→A 顺序走。孩子在「实物操作」阶段还不熟练时，绝对不要跳到「纯数字」。欲速则不达！</div>
+      <p><strong>举例（学 3+4=7）：</strong></p>
+      <p>🧱 先用3颗纽扣+4颗纽扣合在一起 → 🖼️ 再在十格框里画3+4 → 🔢 最后纯口算 3+4=?</p>
+    </div>
+  </div>
+
+  <div class="card method-section">
+    <div class="method-header" onclick="this.parentElement.classList.toggle('collapsed')">
+      <div class="card-title" style="margin:0;"><span class="icon">📅</span> Routine quotidienne<br><span style="font-size:12px;color:#888;font-weight:400;">每日流程（15-20分钟）</span></div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="method-body">
+      <div class="routine-block">
+        <div class="time">5 min</div>
+        <div class="desc"><strong>Flash Cards 复习</strong> — 快速翻卡，已掌握的过，不会的放一边。目标：每张2秒内。</div>
+      </div>
+      <div class="routine-block">
+        <div class="time">10 min</div>
+        <div class="desc"><strong>当周主题练习</strong> — 按CPA顺序操作。Sem1-2: 实物+十格框；Sem3-4: Number bonds+凑十；Sem5-8: 百数表+书面。</div>
+      </div>
+      <div class="routine-block">
+        <div class="time">5 min</div>
+        <div class="desc"><strong>英语卡片</strong> — 复习3-5张词汇卡，看图说词。</div>
+      </div>
+      <div class="highlight">🎮 <strong>iPad时间：</strong>完成当天练习 → 得1印章。3印章 → 1次iPad（10分钟）。iPad上过关 → 得1颗星。这是奖励，不是主菜！</div>
+      <p><strong>周末：</strong>周六正常练习 + 混合复习；周日做周测试，记录分数到「测试」tab。</p>
+    </div>
+  </div>
+
+  <div class="card method-section collapsed">
+    <div class="method-header" onclick="this.parentElement.classList.toggle('collapsed')">
+      <div class="card-title" style="margin:0;"><span class="icon">🔟</span> Les complements a 10<br><span style="font-size:12px;color:#888;font-weight:400;">凑十法 — 最重要的基础</span></div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="method-body">
+      <p>凑十是<strong>所有后续心算的基石</strong>。目标：看到任何数字（0-10），瞬间知道它的「朋友」（凑成10的另一个数）。</p>
+      <div class="tens-grid">
+        <span>0 + 10 = 10</span><span>5 + 5 = 10</span>
+        <span>1 + 9 = 10</span><span>6 + 4 = 10</span>
+        <span>2 + 8 = 10</span><span>7 + 3 = 10</span>
+        <span>3 + 7 = 10</span><span>8 + 2 = 10</span>
+        <span>4 + 6 = 10</span><span>9 + 1 = 10</span>
+      </div>
+      <p><strong>练习方法：</strong></p>
+      <p>🖐 <strong>拍手游戏：</strong>家长说一个数，孩子拍手喊出「朋友」。例：家长"3！" → 孩子拍手"7！"</p>
+      <p>🟦 <strong>十格框：</strong>框里放N个棋子，问「还差几个到10？」</p>
+      <p>🔗 <strong>Number bonds：</strong>画出10的所有分解方式</p>
+      <p>⏱️ <strong>速度挑战：</strong>10题凑十计时，目标20秒全对</p>
+    </div>
+  </div>
+
+  <div class="card method-section collapsed">
+    <div class="method-header" onclick="this.parentElement.classList.toggle('collapsed')">
+      <div class="card-title" style="margin:0;"><span class="icon">⚡</span> La vitesse compte<br><span style="font-size:12px;color:#888;font-weight:400;">速度很重要 — 自动化目标</span></div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="method-body">
+      <p>最终目标不只是「会算」，而是<strong>「不假思索就能算」</strong>。2秒内回答 = 达到「自动化」水平。</p>
+      <p><strong>策略：从小到大</strong></p>
+      <p>1️⃣ 先掌握 1-5 的加减（Sem 1-2）</p>
+      <p>2️⃣ 扩展到 6-10，重点凑十（Sem 3-4）</p>
+      <p>3️⃣ 应用到两位数（Sem 5-8）</p>
+      <div class="highlight">📊 <strong>每周测试追踪：</strong>在「测试」tab 记录分数和速度。绿色=达标，黄色=再练几天，红色=本周继续。不要急着跳到下一周！</div>
+    </div>
+  </div>
+
+  <div class="card method-section collapsed">
+    <div class="method-header" onclick="this.parentElement.classList.toggle('collapsed')">
+      <div class="card-title" style="margin:0;"><span class="icon">📚</span> Materiel<br><span style="font-size:12px;color:#888;font-weight:400;">配套材料说明</span></div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="method-body">
+      <p>所有练习材料都在 <code>exercices/</code> 文件夹中，浏览器打开即可使用：</p>
+      <table class="material-table">
+        <tr><th>文件</th><th>用途</th><th>阶段</th></tr>
+        <tr><td><strong>ten_frames</strong></td><td>十格框 — CPA的P阶段，建立数感</td><td>Sem 1-4</td></tr>
+        <tr><td><strong>number_bonds</strong></td><td>数字分解 — 理解加减关系</td><td>Sem 1-4</td></tr>
+        <tr><td><strong>flash_cards</strong></td><td>心算卡片 — 速度训练，按难度分级</td><td>每天</td></tr>
+        <tr><td><strong>hundred_chart</strong></td><td>百数表 — 发现±1, ±10规律</td><td>Sem 5-8</td></tr>
+        <tr><td><strong>weekly_sheets</strong></td><td>每周书面练习 — 8周分级题目</td><td>每周</td></tr>
+        <tr><td><strong>math_game</strong></td><td>iPad数学游戏 — 趣味巩固</td><td>奖励用</td></tr>
+        <tr><td><strong>english_vocab</strong></td><td>英语词汇卡 — 4主题+句型</td><td>每天5min</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== DASHBOARD ===== -->
+<div class="tab-content" id="tab-dashboard">
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="stat-num purple" id="stat-stamps">0</div>
+      <div class="stat-label">Tampons</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num gold" id="stat-stars">0</div>
+      <div class="stat-label">Etoiles</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num green" id="stat-rewards">0</div>
+      <div class="stat-label">Recompenses</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📊</span> Progression globale</div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+    <div class="milestone-hint" id="milestone-hint">Commence par gagner ton premier tampon !</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📅</span> Semaine en cours</div>
+    <div id="current-week-info">
+      <p style="font-size:14px;color:#666;">Renseigne la date de debut pour voir ta semaine.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🎮</span> Sessions iPad gagnes</div>
+    <div id="ipad-total" style="font-size:24px;font-weight:800;color:#f39c12;text-align:center;">0</div>
+    <div style="font-size:12px;color:#aaa;text-align:center;">3 tampons = 1 session iPad</div>
+  </div>
+</div>
+
+<!-- ===== STAMPS TAB ===== -->
+<div class="tab-content" id="tab-stamps">
+  <div style="margin-bottom:8px;">
+    <div class="day-label" style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:4px;">
+      <span>Lun</span><span>Mar</span><span>Mer</span><span>Jeu</span><span>Ven</span><span>Sam</span><span>Dim</span>
+    </div>
+  </div>
+  <div id="stamps-container"></div>
+</div>
+
+<!-- ===== TESTS TAB ===== -->
+<div class="tab-content" id="tab-tests">
+  <div class="card" style="padding:12px;margin-bottom:12px;">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:12px;">
+      <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;border-radius:3px;background:#d5f5e3;display:inline-block;"></span> Objectif atteint</span>
+      <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;border-radius:3px;background:#fef9e7;display:inline-block;"></span> Presque</span>
+      <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;border-radius:3px;background:#fadbd8;display:inline-block;"></span> A retravailler</span>
+    </div>
+  </div>
+  <div id="tests-container"></div>
+</div>
+
+<!-- ===== STARS & REWARDS ===== -->
+<div class="tab-content" id="tab-stars">
+  <div class="card">
+    <div class="card-title"><span class="icon">⭐</span> Collection d'etoiles</div>
+    <p style="font-size:12px;color:#888;margin-bottom:12px;">Touche une etoile apres chaque niveau reussi sur iPad.</p>
+    <div class="stars-grid" id="stars-grid"></div>
+    <div style="display:flex;justify-content:space-around;margin-top:4px;">
+      <div class="star-milestone" data-ms="5">5 = Recompense 1</div>
+      <div class="star-milestone" data-ms="10">10 = Recompense 2</div>
+      <div class="star-milestone" data-ms="15">15 = Recompense 3</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🎉</span> Recompenses activites</div>
+    <p style="font-size:12px;color:#888;margin-bottom:12px;">5 etoiles = 1 recompense. L'enfant choisit !</p>
+    <div id="rewards-container"></div>
+    <div style="margin-top:8px;padding:10px;background:#fdf2f2;border-radius:10px;font-size:12px;color:#888;">
+      <strong>Idees :</strong> sortie au parc, faire un gateau, choisir le diner, regarder un film, jeu de societe, dessin ensemble...
+    </div>
+  </div>
+</div>
+
+<!-- ===== DAILY LOG ===== -->
+<div class="tab-content" id="tab-log">
+  <div id="log-container"></div>
+
+  <div class="card" style="margin-top:12px;">
+    <div class="card-title"><span class="icon">📝</span> Notes generales</div>
+    <label style="font-size:12px;color:#888;display:block;margin-bottom:4px;">Points forts :</label>
+    <textarea class="notes-area" id="note-strengths" rows="3" placeholder="Ce qui marche bien..."></textarea>
+    <label style="font-size:12px;color:#888;display:block;margin:8px 0 4px;">Difficultes :</label>
+    <textarea class="notes-area" id="note-difficulties" rows="3" placeholder="Ce qui reste difficile..."></textarea>
+    <label style="font-size:12px;color:#888;display:block;margin:8px 0 4px;">Ajustements :</label>
+    <textarea class="notes-area" id="note-adjustments" rows="3" placeholder="Changements au plan..."></textarea>
+  </div>
+</div>
+
+<!-- ===== TOOLBAR ===== -->
+<div class="toolbar">
+  <button class="tool-btn" onclick="exportData()">📤 Exporter</button>
+  <label class="tool-btn" style="cursor:pointer;">📥 Importer
+    <input type="file" accept=".json" style="display:none;" onchange="importData(event)">
+  </label>
+  <button class="tool-btn danger" onclick="showResetModal()">🗑 Reset</button>
+</div>
+
+<!-- ===== MODAL ===== -->
+<div class="modal-overlay" id="reset-modal">
+  <div class="modal-box">
+    <h3>Tout effacer ?</h3>
+    <p>Toutes les donnees seront perdues. Cette action est irreversible.</p>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="hideResetModal()">Annuler</button>
+      <button class="btn-confirm" onclick="resetData()">Effacer tout</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONFETTI CONTAINER ===== -->
+<div class="confetti-container" id="confetti"></div>
+
+<script>
+/* =============================================
+   DATA MODEL
+   ============================================= */
+const STORAGE_KEY = 'progress_tracker_data';
+const WEEKS = 8;
+const DAYS = 7;
+const STARS_TOTAL = 15;
+const REWARDS_TOTAL = 3;
+const DAY_NAMES = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+
+const WEEK_SKILLS = [
+  'Additions jusqu\'a 5',
+  'Add. + Soustr. jusqu\'a 5',
+  'Nombres 6-8',
+  'Complements a 10',
+  '+-1, +-2 sans passage',
+  '+-1, +-2 avec passage',
+  '+-10',
+  '+-5 + test global'
+];
+
+const WEEK_TARGETS = [
+  '6/10 en < 2s','8/10 en < 2s','8/10 en < 2s','12/15 en < 2s',
+  '8/10 en < 3s','16/20 en < 3s','8/10 en < 3s','16/20 en < 3s'
+];
+
+const PHASE_NAMES = [
+  'Phase 1 : Fondations','Phase 1 : Fondations',
+  'Phase 2 : Percee','Phase 2 : Percee',
+  'Phase 3 : Application','Phase 3 : Application',
+  'Phase 4 : Extension','Phase 4 : Extension'
+];
+
+function defaultData() {
+  const stamps = {};
+  const dailyLog = {};
+  for (let w = 0; w < WEEKS; w++) {
+    for (let d = 0; d < DAYS; d++) {
+      stamps['w' + w + 'd' + d] = false;
+      dailyLog['w' + w + 'd' + d] = { done: false, activity: '', observations: '' };
+    }
+  }
+  const weeklyTests = [];
+  for (let w = 0; w < WEEKS; w++) {
+    weeklyTests.push({
+      week: w + 1,
+      skill: WEEK_SKILLS[w],
+      score: '',
+      fastResponses: '',
+      target: WEEK_TARGETS[w],
+      result: '',
+      date: ''
+    });
+  }
+  const stars = [];
+  for (let i = 0; i < STARS_TOTAL; i++) stars.push(false);
+  const rewards = [];
+  for (let i = 0; i < REWARDS_TOTAL; i++) rewards.push({ activity: '', date: '' });
+  return {
+    version: 1,
+    childName: '',
+    startDate: '',
+    weeklyTests,
+    stamps,
+    stars,
+    rewards,
+    dailyLog,
+    notes: { strengths: '', difficulties: '', adjustments: '' }
+  };
+}
+
+let data = loadData();
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      // Merge with defaults to handle any missing keys
+      const def = defaultData();
+      return { ...def, ...parsed, notes: { ...def.notes, ...(parsed.notes || {}) } };
+    }
+  } catch (e) { /* ignore */ }
+  return defaultData();
+}
+
+function saveData() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch (e) { /* ignore */ }
+}
+
+/* =============================================
+   TAB NAVIGATION
+   ============================================= */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+/* =============================================
+   INFO BAR
+   ============================================= */
+const nameInput = document.getElementById('childName');
+const dateInput = document.getElementById('startDate');
+
+nameInput.value = data.childName;
+dateInput.value = data.startDate;
+
+nameInput.addEventListener('input', () => {
+  data.childName = nameInput.value;
+  saveData();
+  updateDashboard();
+});
+
+dateInput.addEventListener('change', () => {
+  data.startDate = dateInput.value;
+  saveData();
+  updateDashboard();
+});
+
+/* =============================================
+   STAMPS
+   ============================================= */
+function buildStamps() {
+  const container = document.getElementById('stamps-container');
+  container.innerHTML = '';
+  for (let w = 0; w < WEEKS; w++) {
+    const section = document.createElement('div');
+    section.className = 'week-section';
+
+    const stampCount = countWeekStamps(w);
+    const iPadCount = Math.floor(stampCount / 3);
+
+    section.innerHTML =
+      '<div class="week-header">' +
+        '<span class="week-label">Sem. ' + (w + 1) + '</span>' +
+        '<span class="ipad-count">🎮 iPad : ' + iPadCount + '</span>' +
+      '</div>' +
+      '<div class="stamp-row" id="stamp-row-' + w + '"></div>';
+
+    container.appendChild(section);
+
+    const row = document.getElementById('stamp-row-' + w);
+    for (let d = 0; d < DAYS; d++) {
+      const key = 'w' + w + 'd' + d;
+      const cell = document.createElement('div');
+      cell.className = 'stamp-cell' + (data.stamps[key] ? ' stamped' : '');
+      cell.textContent = data.stamps[key] ? '✅' : '';
+      cell.dataset.key = key;
+      cell.addEventListener('click', () => toggleStamp(key, cell, w));
+      row.appendChild(cell);
+    }
+  }
+}
+
+function toggleStamp(key, cell, week) {
+  data.stamps[key] = !data.stamps[key];
+  cell.classList.toggle('stamped');
+  cell.textContent = data.stamps[key] ? '✅' : '';
+  if (data.stamps[key]) {
+    cell.style.animation = 'none';
+    cell.offsetHeight; // reflow
+    cell.style.animation = '';
+  }
+  // Update iPad count for this week
+  const stampCount = countWeekStamps(week);
+  const iPadCount = Math.floor(stampCount / 3);
+  cell.closest('.week-section').querySelector('.ipad-count').textContent = '🎮 iPad : ' + iPadCount;
+  saveData();
+  updateDashboard();
+}
+
+function countWeekStamps(w) {
+  let count = 0;
+  for (let d = 0; d < DAYS; d++) {
+    if (data.stamps['w' + w + 'd' + d]) count++;
+  }
+  return count;
+}
+
+function countAllStamps() {
+  let count = 0;
+  for (let w = 0; w < WEEKS; w++) count += countWeekStamps(w);
+  return count;
+}
+
+/* =============================================
+   WEEKLY TESTS
+   ============================================= */
+function buildTests() {
+  const container = document.getElementById('tests-container');
+  container.innerHTML = '';
+  let lastPhase = '';
+
+  for (let w = 0; w < WEEKS; w++) {
+    const test = data.weeklyTests[w];
+    const phase = PHASE_NAMES[w];
+
+    if (phase !== lastPhase) {
+      const phaseDiv = document.createElement('div');
+      phaseDiv.style.cssText = 'font-size:13px;font-weight:700;color:#8e44ad;margin:12px 0 6px;padding:6px 12px;background:rgba(142,68,173,0.1);border-radius:8px;';
+      phaseDiv.textContent = phase;
+      container.appendChild(phaseDiv);
+      lastPhase = phase;
+    }
+
+    const resultClass = test.result === 'green' ? 'green' : test.result === 'yellow' ? 'yellow' : test.result === 'red' ? 'red' : 'none';
+    const resultText = test.result === 'green' ? 'Atteint' : test.result === 'yellow' ? 'Presque' : test.result === 'red' ? 'A revoir' : '—';
+
+    const acc = document.createElement('div');
+    acc.className = 'test-accordion';
+    acc.innerHTML =
+      '<div class="test-header" onclick="this.parentElement.classList.toggle(\'open\')">' +
+        '<span class="week-title">Sem. ' + (w + 1) + ' — ' + test.skill + '</span>' +
+        '<span class="result-badge ' + resultClass + '">' + resultText + '</span>' +
+        '<span class="chevron">▼</span>' +
+      '</div>' +
+      '<div class="test-body">' +
+        '<div class="skill-label">Objectif : ' + test.target + '</div>' +
+        '<div class="test-row">' +
+          '<div class="test-field"><label>Score</label><input type="text" placeholder="ex: 8/10" value="' + escHtml(test.score) + '" data-w="' + w + '" data-field="score" onchange="updateTest(this)"></div>' +
+          '<div class="test-field"><label>Reponses rapides</label><input type="text" placeholder="ex: 6" value="' + escHtml(test.fastResponses) + '" data-w="' + w + '" data-field="fastResponses" onchange="updateTest(this)"></div>' +
+        '</div>' +
+        '<div class="test-row">' +
+          '<div class="test-field"><label>Resultat</label>' +
+            '<select data-w="' + w + '" data-field="result" onchange="updateTest(this)">' +
+              '<option value=""' + (test.result === '' ? ' selected' : '') + '>— Choisir —</option>' +
+              '<option value="green"' + (test.result === 'green' ? ' selected' : '') + '>✅ Objectif atteint</option>' +
+              '<option value="yellow"' + (test.result === 'yellow' ? ' selected' : '') + '>🟡 Presque</option>' +
+              '<option value="red"' + (test.result === 'red' ? ' selected' : '') + '>🔴 A retravailler</option>' +
+            '</select>' +
+          '</div>' +
+          '<div class="test-field"><label>Date</label><input type="date" value="' + escHtml(test.date) + '" data-w="' + w + '" data-field="date" onchange="updateTest(this)"></div>' +
+        '</div>' +
+      '</div>';
+    container.appendChild(acc);
+  }
+}
+
+function updateTest(el) {
+  const w = parseInt(el.dataset.w);
+  const field = el.dataset.field;
+  data.weeklyTests[w][field] = el.value;
+  saveData();
+  // Update badge
+  const acc = el.closest('.test-accordion');
+  const badge = acc.querySelector('.result-badge');
+  const r = data.weeklyTests[w].result;
+  badge.className = 'result-badge ' + (r || 'none');
+  badge.textContent = r === 'green' ? 'Atteint' : r === 'yellow' ? 'Presque' : r === 'red' ? 'A revoir' : '—';
+  updateDashboard();
+}
+
+/* =============================================
+   STARS
+   ============================================= */
+function buildStars() {
+  const grid = document.getElementById('stars-grid');
+  grid.innerHTML = '';
+  for (let i = 0; i < STARS_TOTAL; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'star-cell' + (data.stars[i] ? ' lit' : '');
+    cell.textContent = data.stars[i] ? '⭐' : '☆';
+    cell.dataset.idx = i;
+    cell.addEventListener('click', () => toggleStar(i, cell));
+    grid.appendChild(cell);
+  }
+  updateMilestones();
+}
+
+function toggleStar(idx, cell) {
+  data.stars[idx] = !data.stars[idx];
+  cell.classList.toggle('lit');
+  cell.textContent = data.stars[idx] ? '⭐' : '☆';
+  if (data.stars[idx]) {
+    cell.style.animation = 'none';
+    cell.offsetHeight;
+    cell.style.animation = '';
+    // Check milestones
+    const starCount = countStars();
+    if (starCount === 5 || starCount === 10 || starCount === 15) {
+      fireConfetti();
+    }
+  }
+  saveData();
+  updateMilestones();
+  buildRewards();
+  updateDashboard();
+}
+
+function countStars() {
+  return data.stars.filter(Boolean).length;
+}
+
+function updateMilestones() {
+  const count = countStars();
+  document.querySelectorAll('.star-milestone').forEach(el => {
+    const ms = parseInt(el.dataset.ms);
+    el.classList.toggle('active', count >= ms);
+  });
+}
+
+/* =============================================
+   REWARDS
+   ============================================= */
+function buildRewards() {
+  const container = document.getElementById('rewards-container');
+  container.innerHTML = '';
+  const starCount = countStars();
+
+  for (let i = 0; i < REWARDS_TOTAL; i++) {
+    const threshold = (i + 1) * 5;
+    const unlocked = starCount >= threshold;
+    const reward = data.rewards[i];
+
+    const item = document.createElement('div');
+    item.className = 'reward-item' + (unlocked ? '' : ' reward-locked');
+    item.innerHTML =
+      '<div class="reward-num">' + (i + 1) + '</div>' +
+      '<div class="reward-inputs">' +
+        '<input type="text" placeholder="' + (unlocked ? 'Activite choisie...' : '🔒 ' + threshold + ' etoiles pour debloquer') + '" value="' + escHtml(reward.activity) + '" data-r="' + i + '" data-field="activity" ' + (unlocked ? 'onchange="updateReward(this)"' : 'disabled') + '>' +
+        '<input type="date" value="' + escHtml(reward.date) + '" data-r="' + i + '" data-field="date" ' + (unlocked ? 'onchange="updateReward(this)"' : 'disabled') + '>' +
+      '</div>';
+    container.appendChild(item);
+  }
+}
+
+function updateReward(el) {
+  const r = parseInt(el.dataset.r);
+  const field = el.dataset.field;
+  data.rewards[r][field] = el.value;
+  saveData();
+  updateDashboard();
+}
+
+/* =============================================
+   DAILY LOG
+   ============================================= */
+function buildLog() {
+  const container = document.getElementById('log-container');
+  container.innerHTML = '';
+
+  for (let w = 0; w < WEEKS; w++) {
+    const weekDiv = document.createElement('div');
+    weekDiv.className = 'log-week';
+
+    const doneCount = countWeekLogDone(w);
+
+    const header = document.createElement('div');
+    header.className = 'log-week-header';
+    header.innerHTML =
+      '<span style="font-weight:700;font-size:14px;color:#8e44ad;">Sem. ' + (w + 1) + ' — ' + WEEK_SKILLS[w] + '</span>' +
+      '<span style="font-size:12px;color:#aaa;">' + doneCount + '/7 ▼</span>';
+    header.addEventListener('click', () => {
+      header.classList.toggle('collapsed');
+    });
+    // Collapse all but first non-complete week
+    if (w > 0) header.classList.add('collapsed');
+
+    weekDiv.appendChild(header);
+
+    const body = document.createElement('div');
+    body.className = 'log-week-body';
+
+    for (let d = 0; d < DAYS; d++) {
+      const key = 'w' + w + 'd' + d;
+      const log = data.dailyLog[key] || { done: false, activity: '', observations: '' };
+
+      const dayDiv = document.createElement('div');
+      dayDiv.className = 'log-day';
+      dayDiv.innerHTML =
+        '<div class="log-day-label">' + DAY_NAMES[d] + '</div>' +
+        '<div class="log-check' + (log.done ? ' checked' : '') + '" data-key="' + key + '" onclick="toggleLogDone(this, ' + w + ')"><span>' + (log.done ? '✓' : '') + '</span></div>' +
+        '<div class="log-fields">' +
+          '<input type="text" placeholder="Activite..." value="' + escHtml(log.activity) + '" data-key="' + key + '" data-field="activity" onchange="updateLog(this)">' +
+          '<input type="text" placeholder="Observations..." value="' + escHtml(log.observations) + '" data-key="' + key + '" data-field="observations" onchange="updateLog(this)">' +
+        '</div>';
+      body.appendChild(dayDiv);
+    }
+
+    weekDiv.appendChild(body);
+    container.appendChild(weekDiv);
+  }
+}
+
+function toggleLogDone(el, week) {
+  const key = el.dataset.key;
+  if (!data.dailyLog[key]) data.dailyLog[key] = { done: false, activity: '', observations: '' };
+  data.dailyLog[key].done = !data.dailyLog[key].done;
+  el.classList.toggle('checked');
+  el.querySelector('span').textContent = data.dailyLog[key].done ? '✓' : '';
+  // Update header count
+  const doneCount = countWeekLogDone(week);
+  el.closest('.log-week').querySelector('.log-week-header span:last-child').textContent = doneCount + '/7 ▼';
+  saveData();
+}
+
+function updateLog(el) {
+  const key = el.dataset.key;
+  const field = el.dataset.field;
+  if (!data.dailyLog[key]) data.dailyLog[key] = { done: false, activity: '', observations: '' };
+  data.dailyLog[key][field] = el.value;
+  saveData();
+}
+
+function countWeekLogDone(w) {
+  let count = 0;
+  for (let d = 0; d < DAYS; d++) {
+    const log = data.dailyLog['w' + w + 'd' + d];
+    if (log && log.done) count++;
+  }
+  return count;
+}
+
+/* =============================================
+   NOTES
+   ============================================= */
+document.getElementById('note-strengths').value = data.notes.strengths;
+document.getElementById('note-difficulties').value = data.notes.difficulties;
+document.getElementById('note-adjustments').value = data.notes.adjustments;
+
+['strengths', 'difficulties', 'adjustments'].forEach(field => {
+  document.getElementById('note-' + field).addEventListener('input', function() {
+    data.notes[field] = this.value;
+    saveData();
+  });
+});
+
+/* =============================================
+   DASHBOARD
+   ============================================= */
+function updateDashboard() {
+  const stamps = countAllStamps();
+  const stars = countStars();
+  const rewards = data.rewards.filter(r => r.activity.trim() !== '').length;
+
+  document.getElementById('stat-stamps').textContent = stamps;
+  document.getElementById('stat-stars').textContent = stars;
+  document.getElementById('stat-rewards').textContent = rewards;
+
+  // Total iPad sessions
+  let totalIPad = 0;
+  for (let w = 0; w < WEEKS; w++) {
+    totalIPad += Math.floor(countWeekStamps(w) / 3);
+  }
+  document.getElementById('ipad-total').textContent = totalIPad;
+
+  // Progress: stamps (56 max) contribute 50%, stars (15 max) 30%, tests done 20%
+  const stampPct = Math.min(stamps / (WEEKS * DAYS), 1) * 50;
+  const starPct = Math.min(stars / STARS_TOTAL, 1) * 30;
+  const testsDone = data.weeklyTests.filter(t => t.result !== '').length;
+  const testPct = Math.min(testsDone / WEEKS, 1) * 20;
+  const totalPct = Math.round(stampPct + starPct + testPct);
+
+  document.getElementById('progress-fill').style.width = totalPct + '%';
+
+  // Milestone hint
+  const hint = document.getElementById('milestone-hint');
+  if (stamps === 0) {
+    hint.textContent = 'Commence par gagner ton premier tampon !';
+  } else if (stars === 0) {
+    hint.textContent = 'Joue sur iPad pour gagner des etoiles !';
+  } else if (stars < 5) {
+    hint.textContent = 'Encore ' + (5 - stars) + ' etoile(s) pour la premiere recompense !';
+  } else if (stars < 10) {
+    hint.textContent = 'Encore ' + (10 - stars) + ' etoile(s) pour la deuxieme recompense !';
+  } else if (stars < 15) {
+    hint.textContent = 'Encore ' + (15 - stars) + ' etoile(s) pour la derniere recompense !';
+  } else {
+    hint.textContent = 'Toutes les etoiles sont gagnees ! Bravo champion !';
+  }
+
+  // Current week info
+  const weekInfo = document.getElementById('current-week-info');
+  if (data.startDate) {
+    const start = new Date(data.startDate);
+    const now = new Date();
+    const diffDays = Math.floor((now - start) / (1000 * 60 * 60 * 24));
+    const currentWeek = Math.min(Math.floor(diffDays / 7) + 1, WEEKS);
+    if (currentWeek > 0 && currentWeek <= WEEKS) {
+      const weekStamps = countWeekStamps(currentWeek - 1);
+      weekInfo.innerHTML =
+        '<div style="font-size:20px;font-weight:800;color:#8e44ad;margin-bottom:4px;">Semaine ' + currentWeek + '</div>' +
+        '<div style="font-size:13px;color:#666;">' + WEEK_SKILLS[currentWeek - 1] + '</div>' +
+        '<div style="font-size:12px;color:#aaa;margin-top:4px;">' + weekStamps + '/7 tampons cette semaine</div>';
+    } else if (diffDays < 0) {
+      weekInfo.innerHTML = '<p style="font-size:14px;color:#888;">Le plan commence ' + start.toLocaleDateString('fr-FR') + '</p>';
+    } else {
+      weekInfo.innerHTML = '<p style="font-size:14px;color:#27ae60;font-weight:700;">Programme termine !</p>';
+    }
+  }
+}
+
+/* =============================================
+   CONFETTI
+   ============================================= */
+function fireConfetti() {
+  const container = document.getElementById('confetti');
+  const colors = ['#e74c3c','#f39c12','#27ae60','#3498db','#8e44ad','#e91e63'];
+  for (let i = 0; i < 40; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + '%';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+    piece.style.animationDelay = (Math.random() * 0.5) + 's';
+    piece.style.width = (6 + Math.random() * 8) + 'px';
+    piece.style.height = (6 + Math.random() * 8) + 'px';
+    container.appendChild(piece);
+    setTimeout(() => piece.remove(), 4000);
+  }
+}
+
+/* =============================================
+   EXPORT / IMPORT / RESET
+   ============================================= */
+function exportData() {
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'suivi_progres_' + (data.childName || 'enfant').replace(/\s+/g, '_') + '_' + new Date().toISOString().slice(0, 10) + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const imported = JSON.parse(e.target.result);
+      if (imported.version) {
+        const def = defaultData();
+        data = { ...def, ...imported, notes: { ...def.notes, ...(imported.notes || {}) } };
+        saveData();
+        rebuildAll();
+      } else {
+        alert('Fichier invalide.');
+      }
+    } catch (err) {
+      alert('Erreur de lecture du fichier.');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function showResetModal() {
+  document.getElementById('reset-modal').classList.add('active');
+}
+
+function hideResetModal() {
+  document.getElementById('reset-modal').classList.remove('active');
+}
+
+function resetData() {
+  data = defaultData();
+  saveData();
+  hideResetModal();
+  rebuildAll();
+}
+
+/* =============================================
+   INITIALIZATION
+   ============================================= */
+function rebuildAll() {
+  nameInput.value = data.childName;
+  dateInput.value = data.startDate;
+  document.getElementById('note-strengths').value = data.notes.strengths;
+  document.getElementById('note-difficulties').value = data.notes.difficulties;
+  document.getElementById('note-adjustments').value = data.notes.adjustments;
+  buildStamps();
+  buildTests();
+  buildStars();
+  buildRewards();
+  buildLog();
+  updateDashboard();
+}
+
+function escHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+rebuildAll();
+</script>
+</body>
+</html>

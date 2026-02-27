@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Vocabulary Cards - CP / First Grade</title>
+<style>
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #f0f4f8;
+    color: #2d3748;
+    line-height: 1.3;
+  }
+
+  /* ===== PAGE / PRINT SETUP ===== */
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 10mm auto;
+    padding: 8mm;
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+
+  @page { size: A4 portrait; margin: 8mm; }
+  @media print {
+    body { background: #fff; margin: 0; padding: 0; }
+    *, *::before, *::after {
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+    .page {
+      width: 100%;
+      min-height: 297mm;
+      margin: 0;
+      padding: 8mm;
+      box-shadow: none;
+      page-break-after: always;
+    }
+    .page:last-child { page-break-after: avoid; }
+    .no-print { display: none !important; }
+    .theme-header { text-shadow: none; }
+    .card-grid { height: auto; }
+    .sentence-grid { height: auto; }
+    .qa-grid { height: auto; }
+  }
+
+  /* ===== THEME HEADER ===== */
+  .theme-header {
+    text-align: center;
+    padding: 4mm 0 5mm;
+    border-radius: 6px;
+    margin-bottom: 4mm;
+    font-size: 22pt;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+  }
+  .theme-header .subtitle {
+    display: block;
+    font-size: 11pt;
+    font-weight: 600;
+    opacity: 0.9;
+    margin-top: 1mm;
+  }
+
+  /* Theme colours */
+  .theme-school    { background: #4299e1; border-color: #4299e1; }
+  .theme-body      { background: #ed8936; border-color: #ed8936; }
+  .theme-colors    { background: #48bb78; border-color: #48bb78; }
+  .theme-food      { background: #ed64a6; border-color: #ed64a6; }
+  .theme-sentences { background: #9f7aea; border-color: #9f7aea; }
+  .theme-questions { background: #38b2ac; border-color: #38b2ac; }
+
+  /* ===== CARD GRID (4x4) ===== */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 3mm;
+    height: calc(297mm - 8mm - 8mm - 22mm);
+  }
+
+  /* Half-page grid (4x2 for second half) */
+  .card-grid.half {
+    grid-template-rows: repeat(4, 1fr);
+  }
+
+  /* ===== VOCABULARY CARD ===== */
+  .card {
+    border: 2px dashed #a0aec0;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3mm 2mm;
+    text-align: center;
+    background: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card .emoji {
+    font-size: 28pt;
+    line-height: 1.1;
+    margin-bottom: 1.5mm;
+  }
+
+  .card .word {
+    font-size: 22pt;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 1mm;
+  }
+
+  .card .french {
+    font-size: 9pt;
+    color: #718096;
+    font-style: italic;
+    line-height: 1.2;
+  }
+
+  /* Border colours per theme */
+  .card.border-school   { border-color: #4299e1; }
+  .card.border-body     { border-color: #ed8936; }
+  .card.border-colors   { border-color: #48bb78; }
+  .card.border-food     { border-color: #ed64a6; }
+
+  /* ===== COLOR CARDS (special background) ===== */
+  .card.bg-red       { background: #fc8181; }
+  .card.bg-blue      { background: #90cdf4; }
+  .card.bg-green     { background: #9ae6b4; }
+  .card.bg-yellow    { background: #fefcbf; }
+  .card.bg-black     { background: #2d3748; color: #fff; }
+  .card.bg-black .french { color: #cbd5e0; }
+  .card.bg-white     { background: #fff; border-style: solid; border-width: 3px; }
+  .card.bg-orange    { background: #fbd38d; }
+  .card.bg-pink      { background: #fed7e2; }
+
+  /* ===== SENTENCE FRAME CARDS ===== */
+  .sentence-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4mm;
+    height: calc(297mm - 8mm - 8mm - 22mm);
+  }
+
+  .sentence-card {
+    border: 2.5px dashed #9f7aea;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5mm 6mm;
+    text-align: center;
+    background: #faf5ff;
+  }
+
+  .sentence-card .pattern {
+    font-size: 20pt;
+    font-weight: 800;
+    line-height: 1.3;
+    color: #553c9a;
+    margin-bottom: 3mm;
+  }
+
+  .sentence-card .pattern .blank {
+    display: inline-block;
+    border-bottom: 3px solid #9f7aea;
+    min-width: 18mm;
+    margin: 0 1mm;
+  }
+
+  .sentence-card .example {
+    font-size: 12pt;
+    color: #a0aec0;
+    font-style: italic;
+    line-height: 1.3;
+  }
+
+  /* ===== Q&A CARDS ===== */
+  .qa-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4mm;
+    height: calc(297mm - 8mm - 8mm - 22mm);
+  }
+
+  .qa-card {
+    border: 2.5px dashed #38b2ac;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4mm 5mm;
+    text-align: center;
+    background: #e6fffa;
+  }
+
+  .qa-card .question {
+    font-size: 17pt;
+    font-weight: 800;
+    color: #285e61;
+    margin-bottom: 3mm;
+    line-height: 1.25;
+  }
+
+  .qa-card .arrow {
+    font-size: 18pt;
+    color: #38b2ac;
+    margin-bottom: 2mm;
+  }
+
+  .qa-card .answer {
+    font-size: 15pt;
+    font-weight: 700;
+    color: #2c7a7b;
+    line-height: 1.25;
+  }
+
+  .qa-card .answer .blank {
+    display: inline-block;
+    border-bottom: 3px solid #38b2ac;
+    min-width: 14mm;
+    margin: 0 1mm;
+  }
+
+  /* ===== SCREEN-ONLY INSTRUCTIONS ===== */
+  .instructions {
+    max-width: 210mm;
+    margin: 6mm auto;
+    padding: 5mm 8mm;
+    background: #ebf8ff;
+    border: 1px solid #90cdf4;
+    border-radius: 8px;
+    font-size: 10pt;
+    color: #2b6cb0;
+  }
+  .instructions h2 { font-size: 13pt; margin-bottom: 3mm; }
+  .instructions ul { padding-left: 5mm; }
+  .instructions li { margin-bottom: 1.5mm; }
+</style>
+</head>
+<body>
+
+<!-- ===== SCREEN INSTRUCTIONS ===== -->
+<div class="instructions no-print">
+  <h2>English Vocabulary Cards - 8-Week Plan (CP / EJM Paris)</h2>
+  <ul>
+    <li><strong>Pages 1-2:</strong> School (16 cards)</li>
+    <li><strong>Pages 3-4:</strong> Body &amp; Clothes (16 cards)</li>
+    <li><strong>Pages 5-6:</strong> Colors &amp; Animals (16 cards)</li>
+    <li><strong>Pages 7-8:</strong> Food &amp; Daily Routine (16 cards)</li>
+    <li><strong>Page 9:</strong> Sentence Patterns (8 frames)</li>
+    <li><strong>Page 10:</strong> Question &amp; Answer Patterns (8 Q&amp;A pairs)</li>
+  </ul>
+  <p style="margin-top:3mm;">Print at <strong>100% scale</strong> on A4. Cut along the dashed lines.</p>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 1 : SCHOOL (cards 1-16 split across 2 pages of 8)       -->
+<!-- Actually: 16 cards on 2 pages = 8 per page? No, 4x4 = 16    -->
+<!-- Let's do 16 cards per 2 pages => 8 cards per page (4x2)      -->
+<!-- Re-reading spec: "16 vocabulary cards in a 4x4 grid"          -->
+<!-- That means 16 on one page. But spec says Page 1-2.            -->
+<!-- I'll put all 16 in a 4x4 on one page, repeat for readability -->
+<!-- ============================================================ -->
+
+<!-- PAGE 1: SCHOOL (first 8) -->
+<div class="page">
+  <div class="theme-header theme-school">
+    School
+    <span class="subtitle">Week 1 - L'ecole</span>
+  </div>
+  <div class="card-grid">
+    <!-- Row 1 -->
+    <div class="card border-school">
+      <div class="emoji">📖</div>
+      <div class="word">book</div>
+      <div class="french">un livre</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji">🖊️</div>
+      <div class="word">pen</div>
+      <div class="french">un stylo</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji">✏️</div>
+      <div class="word">pencil</div>
+      <div class="french">un crayon</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji">🧹</div>
+      <div class="word">rubber</div>
+      <div class="french">une gomme</div>
+    </div>
+    <!-- Row 2 -->
+    <div class="card border-school">
+      <div class="emoji">📏</div>
+      <div class="word">ruler</div>
+      <div class="french">une regle</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji">🪑</div>
+      <div class="word">table</div>
+      <div class="french">une table</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji">💺</div>
+      <div class="word">chair</div>
+      <div class="french">une chaise</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji">🎒</div>
+      <div class="word">bag</div>
+      <div class="french">un sac</div>
+    </div>
+    <!-- Row 3 -->
+    <div class="card border-school">
+      <div class="emoji">👩‍🏫</div>
+      <div class="word">teacher</div>
+      <div class="french">un(e) maitre(sse)</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji">🧒🤝🧒</div>
+      <div class="word">friend</div>
+      <div class="french">un(e) ami(e)</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji">🏫</div>
+      <div class="word">classroom</div>
+      <div class="french">la classe</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji">📋</div>
+      <div class="word">board</div>
+      <div class="french">le tableau</div>
+    </div>
+    <!-- Row 4 -->
+    <div class="card border-school">
+      <div class="emoji">🚪</div>
+      <div class="word">door</div>
+      <div class="french">une porte</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji">🪟</div>
+      <div class="word">window</div>
+      <div class="french">une fenetre</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji">🏫</div>
+      <div class="word">school</div>
+      <div class="french">l'ecole</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji">🍽️</div>
+      <div class="word">lunch</div>
+      <div class="french">le dejeuner</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2: SCHOOL (reverse/practice side - large visual) -->
+<div class="page">
+  <div class="theme-header theme-school">
+    School - Practice Side
+    <span class="subtitle">Week 1 - Cut &amp; match with the cards</span>
+  </div>
+  <div class="card-grid">
+    <div class="card border-school">
+      <div class="emoji" style="font-size:38pt;">📖</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">un livre</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji" style="font-size:38pt;">🖊️</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">un stylo</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji" style="font-size:38pt;">✏️</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">un crayon</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji" style="font-size:38pt;">🧹</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">une gomme</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji" style="font-size:38pt;">📏</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">une regle</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji" style="font-size:38pt;">🪑</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">une table</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji" style="font-size:38pt;">💺</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">une chaise</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji" style="font-size:38pt;">🎒</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">un sac</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji" style="font-size:38pt;">👩‍🏫</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">un(e) maitre(sse)</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji" style="font-size:38pt;">🧒🤝🧒</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">un(e) ami(e)</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji" style="font-size:38pt;">🏫</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">la classe</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji" style="font-size:38pt;">📋</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">le tableau</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji" style="font-size:38pt;">🚪</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">une porte</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji" style="font-size:38pt;">🪟</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">une fenetre</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji" style="font-size:38pt;">🏫</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">l'ecole</div>
+    </div>
+    <div class="card border-school">
+      <div class="emoji" style="font-size:38pt;">🍽️</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">le dejeuner</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 3-4: BODY & CLOTHES                                      -->
+<!-- ============================================================ -->
+
+<div class="page">
+  <div class="theme-header theme-body">
+    Body &amp; Clothes
+    <span class="subtitle">Week 2 - Le corps et les vetements</span>
+  </div>
+  <div class="card-grid">
+    <div class="card border-body">
+      <div class="emoji">😊</div>
+      <div class="word">head</div>
+      <div class="french">la tete</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji">✋</div>
+      <div class="word">hand</div>
+      <div class="french">la main</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji">💪</div>
+      <div class="word">arm</div>
+      <div class="french">le bras</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji">🦵</div>
+      <div class="word">leg</div>
+      <div class="french">la jambe</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji">🦶</div>
+      <div class="word">foot / feet</div>
+      <div class="french">le pied / les pieds</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji">👁️</div>
+      <div class="word">eye / eyes</div>
+      <div class="french">l'oeil / les yeux</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji">👂</div>
+      <div class="word">ear</div>
+      <div class="french">l'oreille</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji">👃</div>
+      <div class="word">nose</div>
+      <div class="french">le nez</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji">👄</div>
+      <div class="word">mouth</div>
+      <div class="french">la bouche</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji">💇</div>
+      <div class="word">hair</div>
+      <div class="french">les cheveux</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji">☝️</div>
+      <div class="word">finger</div>
+      <div class="french">le doigt</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji">🦵</div>
+      <div class="word">knee</div>
+      <div class="french">le genou</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji">👕</div>
+      <div class="word">shirt</div>
+      <div class="french">une chemise</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji">👖</div>
+      <div class="word">trousers</div>
+      <div class="french">un pantalon</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji">👟</div>
+      <div class="word">shoes</div>
+      <div class="french">les chaussures</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji">🎩</div>
+      <div class="word">hat</div>
+      <div class="french">un chapeau</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 4: BODY & CLOTHES - Practice side -->
+<div class="page">
+  <div class="theme-header theme-body">
+    Body &amp; Clothes - Practice Side
+    <span class="subtitle">Week 2 - Cut &amp; match with the cards</span>
+  </div>
+  <div class="card-grid">
+    <div class="card border-body">
+      <div class="emoji" style="font-size:38pt;">😊</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">la tete</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji" style="font-size:38pt;">✋</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">la main</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji" style="font-size:38pt;">💪</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">le bras</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji" style="font-size:38pt;">🦵</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">la jambe</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji" style="font-size:38pt;">🦶</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">le pied</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji" style="font-size:38pt;">👁️</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">l'oeil</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji" style="font-size:38pt;">👂</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">l'oreille</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji" style="font-size:38pt;">👃</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">le nez</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji" style="font-size:38pt;">👄</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">la bouche</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji" style="font-size:38pt;">💇</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">les cheveux</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji" style="font-size:38pt;">☝️</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">le doigt</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji" style="font-size:38pt;">🦵</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">le genou</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji" style="font-size:38pt;">👕</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">une chemise</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji" style="font-size:38pt;">👖</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">un pantalon</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji" style="font-size:38pt;">👟</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">les chaussures</div>
+    </div>
+    <div class="card border-body">
+      <div class="emoji" style="font-size:38pt;">🎩</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">un chapeau</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 5-6: COLORS & ANIMALS                                    -->
+<!-- ============================================================ -->
+
+<div class="page">
+  <div class="theme-header theme-colors">
+    Colors &amp; Animals
+    <span class="subtitle">Week 3 - Les couleurs et les animaux</span>
+  </div>
+  <div class="card-grid">
+    <!-- COLORS -->
+    <div class="card border-colors bg-red">
+      <div class="emoji">🔴</div>
+      <div class="word">red</div>
+      <div class="french">rouge</div>
+    </div>
+    <div class="card border-colors bg-blue">
+      <div class="emoji">🔵</div>
+      <div class="word">blue</div>
+      <div class="french">bleu</div>
+    </div>
+    <div class="card border-colors bg-green">
+      <div class="emoji">🟢</div>
+      <div class="word">green</div>
+      <div class="french">vert</div>
+    </div>
+    <div class="card border-colors bg-yellow">
+      <div class="emoji">🟡</div>
+      <div class="word">yellow</div>
+      <div class="french">jaune</div>
+    </div>
+    <div class="card border-colors bg-black">
+      <div class="emoji">⚫</div>
+      <div class="word">black</div>
+      <div class="french">noir</div>
+    </div>
+    <div class="card border-colors bg-white">
+      <div class="emoji">⚪</div>
+      <div class="word">white</div>
+      <div class="french">blanc</div>
+    </div>
+    <div class="card border-colors bg-orange">
+      <div class="emoji">🟠</div>
+      <div class="word">orange</div>
+      <div class="french">orange</div>
+    </div>
+    <div class="card border-colors bg-pink">
+      <div class="emoji">🩷</div>
+      <div class="word">pink</div>
+      <div class="french">rose</div>
+    </div>
+    <!-- ANIMALS -->
+    <div class="card border-colors">
+      <div class="emoji">🐱</div>
+      <div class="word">cat</div>
+      <div class="french">un chat</div>
+    </div>
+    <div class="card border-colors">
+      <div class="emoji">🐶</div>
+      <div class="word">dog</div>
+      <div class="french">un chien</div>
+    </div>
+    <div class="card border-colors">
+      <div class="emoji">🐦</div>
+      <div class="word">bird</div>
+      <div class="french">un oiseau</div>
+    </div>
+    <div class="card border-colors">
+      <div class="emoji">🐟</div>
+      <div class="word">fish</div>
+      <div class="french">un poisson</div>
+    </div>
+    <div class="card border-colors">
+      <div class="emoji">🐰</div>
+      <div class="word">rabbit</div>
+      <div class="french">un lapin</div>
+    </div>
+    <div class="card border-colors">
+      <div class="emoji">🐴</div>
+      <div class="word">horse</div>
+      <div class="french">un cheval</div>
+    </div>
+    <div class="card border-colors">
+      <div class="emoji">🐭</div>
+      <div class="word">mouse</div>
+      <div class="french">une souris</div>
+    </div>
+    <div class="card border-colors">
+      <div class="emoji">🦋</div>
+      <div class="word">butterfly</div>
+      <div class="french">un papillon</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 6: COLORS & ANIMALS - Practice side -->
+<div class="page">
+  <div class="theme-header theme-colors">
+    Colors &amp; Animals - Practice Side
+    <span class="subtitle">Week 3 - Cut &amp; match with the cards</span>
+  </div>
+  <div class="card-grid">
+    <div class="card border-colors bg-red">
+      <div class="french" style="font-size:18pt; font-style:normal; color:#2d3748; font-weight:700;">rouge</div>
+    </div>
+    <div class="card border-colors bg-blue">
+      <div class="french" style="font-size:18pt; font-style:normal; color:#2d3748; font-weight:700;">bleu</div>
+    </div>
+    <div class="card border-colors bg-green">
+      <div class="french" style="font-size:18pt; font-style:normal; color:#2d3748; font-weight:700;">vert</div>
+    </div>
+    <div class="card border-colors bg-yellow">
+      <div class="french" style="font-size:18pt; font-style:normal; color:#2d3748; font-weight:700;">jaune</div>
+    </div>
+    <div class="card border-colors bg-black">
+      <div class="french" style="font-size:18pt; font-style:normal; color:#fff; font-weight:700;">noir</div>
+    </div>
+    <div class="card border-colors bg-white">
+      <div class="french" style="font-size:18pt; font-style:normal; color:#2d3748; font-weight:700;">blanc</div>
+    </div>
+    <div class="card border-colors bg-orange">
+      <div class="french" style="font-size:18pt; font-style:normal; color:#2d3748; font-weight:700;">orange</div>
+    </div>
+    <div class="card border-colors bg-pink">
+      <div class="french" style="font-size:18pt; font-style:normal; color:#2d3748; font-weight:700;">rose</div>
+    </div>
+    <div class="card border-colors">
+      <div class="emoji" style="font-size:38pt;">🐱</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">un chat</div>
+    </div>
+    <div class="card border-colors">
+      <div class="emoji" style="font-size:38pt;">🐶</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">un chien</div>
+    </div>
+    <div class="card border-colors">
+      <div class="emoji" style="font-size:38pt;">🐦</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">un oiseau</div>
+    </div>
+    <div class="card border-colors">
+      <div class="emoji" style="font-size:38pt;">🐟</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">un poisson</div>
+    </div>
+    <div class="card border-colors">
+      <div class="emoji" style="font-size:38pt;">🐰</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">un lapin</div>
+    </div>
+    <div class="card border-colors">
+      <div class="emoji" style="font-size:38pt;">🐴</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">un cheval</div>
+    </div>
+    <div class="card border-colors">
+      <div class="emoji" style="font-size:38pt;">🐭</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">une souris</div>
+    </div>
+    <div class="card border-colors">
+      <div class="emoji" style="font-size:38pt;">🦋</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">un papillon</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 7-8: FOOD & DAILY ROUTINE                                -->
+<!-- ============================================================ -->
+
+<div class="page">
+  <div class="theme-header theme-food">
+    Food &amp; Daily Routine
+    <span class="subtitle">Week 4 - La nourriture et la routine</span>
+  </div>
+  <div class="card-grid">
+    <!-- FOOD -->
+    <div class="card border-food">
+      <div class="emoji">🥣</div>
+      <div class="word">breakfast</div>
+      <div class="french">le petit-dejeuner</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji">🍽️</div>
+      <div class="word">lunch</div>
+      <div class="french">le dejeuner</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji">🍝</div>
+      <div class="word">dinner</div>
+      <div class="french">le diner</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji">💧</div>
+      <div class="word">water</div>
+      <div class="french">l'eau</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji">🥛</div>
+      <div class="word">milk</div>
+      <div class="french">le lait</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji">🍞</div>
+      <div class="word">bread</div>
+      <div class="french">le pain</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji">🍎</div>
+      <div class="word">apple</div>
+      <div class="french">une pomme</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji">🍌</div>
+      <div class="word">banana</div>
+      <div class="french">une banane</div>
+    </div>
+    <!-- DAILY ROUTINE -->
+    <div class="card border-food">
+      <div class="emoji">⏰</div>
+      <div class="word">wake up</div>
+      <div class="french">se reveiller</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji">🚶‍♂️🏫</div>
+      <div class="word">go to school</div>
+      <div class="french">aller a l'ecole</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji">⚽</div>
+      <div class="word">play</div>
+      <div class="french">jouer</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji">🍴</div>
+      <div class="word">eat</div>
+      <div class="french">manger</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji">🥤</div>
+      <div class="word">drink</div>
+      <div class="french">boire</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji">😴</div>
+      <div class="word">sleep</div>
+      <div class="french">dormir</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji">📖</div>
+      <div class="word">read</div>
+      <div class="french">lire</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji">🎨</div>
+      <div class="word">draw</div>
+      <div class="french">dessiner</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 8: FOOD & DAILY ROUTINE - Practice side -->
+<div class="page">
+  <div class="theme-header theme-food">
+    Food &amp; Daily Routine - Practice Side
+    <span class="subtitle">Week 4 - Cut &amp; match with the cards</span>
+  </div>
+  <div class="card-grid">
+    <div class="card border-food">
+      <div class="emoji" style="font-size:38pt;">🥣</div>
+      <div class="french" style="font-size:14pt; font-style:normal; color:#2d3748; font-weight:700;">le petit-dejeuner</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji" style="font-size:38pt;">🍽️</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">le dejeuner</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji" style="font-size:38pt;">🍝</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">le diner</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji" style="font-size:38pt;">💧</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">l'eau</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji" style="font-size:38pt;">🥛</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">le lait</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji" style="font-size:38pt;">🍞</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">le pain</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji" style="font-size:38pt;">🍎</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">une pomme</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji" style="font-size:38pt;">🍌</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">une banane</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji" style="font-size:38pt;">⏰</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">se reveiller</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji" style="font-size:38pt;">🚶‍♂️🏫</div>
+      <div class="french" style="font-size:14pt; font-style:normal; color:#2d3748; font-weight:700;">aller a l'ecole</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji" style="font-size:38pt;">⚽</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">jouer</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji" style="font-size:38pt;">🍴</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">manger</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji" style="font-size:38pt;">🥤</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">boire</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji" style="font-size:38pt;">😴</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">dormir</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji" style="font-size:38pt;">📖</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">lire</div>
+    </div>
+    <div class="card border-food">
+      <div class="emoji" style="font-size:38pt;">🎨</div>
+      <div class="french" style="font-size:16pt; font-style:normal; color:#2d3748; font-weight:700;">dessiner</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 9: SENTENCE PATTERNS                                     -->
+<!-- ============================================================ -->
+
+<div class="page">
+  <div class="theme-header theme-sentences">
+    Sentence Patterns
+    <span class="subtitle">Weeks 5-8 - Structures de phrases</span>
+  </div>
+  <div class="sentence-grid">
+    <div class="sentence-card">
+      <div class="pattern">I can see a <span class="blank"></span>.</div>
+      <div class="example">I can see a red bird.</div>
+    </div>
+    <div class="sentence-card">
+      <div class="pattern">I like <span class="blank"></span> because <span class="blank"></span>.</div>
+      <div class="example">I like cats because they are soft.</div>
+    </div>
+    <div class="sentence-card">
+      <div class="pattern">I don't like <span class="blank"></span>.</div>
+      <div class="example">I don't like spiders.</div>
+    </div>
+    <div class="sentence-card">
+      <div class="pattern">This is my <span class="blank"></span>.</div>
+      <div class="example">This is my pencil.</div>
+    </div>
+    <div class="sentence-card">
+      <div class="pattern">There is a <span class="blank"></span> on the <span class="blank"></span>.</div>
+      <div class="example">There is a book on the table.</div>
+    </div>
+    <div class="sentence-card">
+      <div class="pattern">I went to <span class="blank"></span>.</div>
+      <div class="example">I went to the park.</div>
+    </div>
+    <div class="sentence-card">
+      <div class="pattern">I played with <span class="blank"></span>.</div>
+      <div class="example">I played with my friend.</div>
+    </div>
+    <div class="sentence-card">
+      <div class="pattern">My favourite <span class="blank"></span> is <span class="blank"></span>.</div>
+      <div class="example">My favourite colour is blue.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 10: QUESTION & ANSWER PATTERNS                           -->
+<!-- ============================================================ -->
+
+<div class="page">
+  <div class="theme-header theme-questions">
+    Questions &amp; Answers
+    <span class="subtitle">Weeks 5-8 - Questions et reponses</span>
+  </div>
+  <div class="qa-grid">
+    <div class="qa-card">
+      <div class="question">What is this?</div>
+      <div class="arrow">&#x2B07;</div>
+      <div class="answer">This is a <span class="blank"></span>.</div>
+    </div>
+    <div class="qa-card">
+      <div class="question">What colour is it?</div>
+      <div class="arrow">&#x2B07;</div>
+      <div class="answer">It is <span class="blank"></span>.</div>
+    </div>
+    <div class="qa-card">
+      <div class="question">Do you like <span class="blank"></span>?</div>
+      <div class="arrow">&#x2B07;</div>
+      <div class="answer">Yes, I do. / No, I don't.</div>
+    </div>
+    <div class="qa-card">
+      <div class="question">How many <span class="blank"></span>?</div>
+      <div class="arrow">&#x2B07;</div>
+      <div class="answer">There are <span class="blank"></span>.</div>
+    </div>
+    <div class="qa-card">
+      <div class="question">Where is the <span class="blank"></span>?</div>
+      <div class="arrow">&#x2B07;</div>
+      <div class="answer">It is on / in / under <span class="blank"></span>.</div>
+    </div>
+    <div class="qa-card">
+      <div class="question">What did you do?</div>
+      <div class="arrow">&#x2B07;</div>
+      <div class="answer">I <span class="blank"></span>.</div>
+    </div>
+    <div class="qa-card">
+      <div class="question">Can you <span class="blank"></span>?</div>
+      <div class="arrow">&#x2B07;</div>
+      <div class="answer">Yes, I can. / No, I can't.</div>
+    </div>
+    <div class="qa-card">
+      <div class="question">What's your favourite <span class="blank"></span>?</div>
+      <div class="arrow">&#x2B07;</div>
+      <div class="answer">My favourite <span class="blank"></span> is <span class="blank"></span>.</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

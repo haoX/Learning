@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les boîtes de 10 — Exercices CP</title>
+<style>
+  /* ===== Reset & Base ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #222;
+    background: #f8f8f8;
+    padding: 12mm;
+    line-height: 1.4;
+  }
+
+  /* ===== Page-level ===== */
+  .page {
+    width: 190mm;
+    margin: 0 auto 10mm;
+    background: #fff;
+    padding: 10mm;
+    border: 1px solid #ccc;
+  }
+
+  .page-title {
+    text-align: center;
+    font-size: 22pt;
+    font-weight: 700;
+    margin-bottom: 2mm;
+    color: #1a237e;
+  }
+
+  .page-subtitle {
+    text-align: center;
+    font-size: 14pt;
+    font-weight: 600;
+    margin-bottom: 2mm;
+    color: #3949ab;
+  }
+
+  .instruction {
+    text-align: center;
+    font-size: 11pt;
+    font-style: italic;
+    color: #555;
+    margin-bottom: 6mm;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 3mm;
+  }
+
+  /* ===== Ten Frame Grid ===== */
+  .ten-frame {
+    display: inline-grid;
+    grid-template-columns: repeat(5, 30mm);
+    grid-template-rows: repeat(2, 30mm);
+    border: 2.5px solid #333;
+    border-radius: 3px;
+  }
+
+  .ten-frame.small {
+    grid-template-columns: repeat(5, 22mm);
+    grid-template-rows: repeat(2, 22mm);
+  }
+
+  .ten-frame.medium {
+    grid-template-columns: repeat(5, 25mm);
+    grid-template-rows: repeat(2, 25mm);
+  }
+
+  .cell {
+    border: 1.5px dashed #bbb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+  }
+
+  .cell.filled .dot {
+    width: 15mm;
+    height: 15mm;
+    border-radius: 50%;
+    background: #1565c0;
+  }
+
+  .ten-frame.small .cell.filled .dot {
+    width: 11mm;
+    height: 11mm;
+  }
+
+  .ten-frame.medium .cell.filled .dot {
+    width: 13mm;
+    height: 13mm;
+  }
+
+  /* ===== Section 1: Blank frames ===== */
+  .blank-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10mm;
+    justify-items: center;
+    margin-top: 4mm;
+  }
+
+  /* ===== Section 2: Subitizing ===== */
+  .subitizing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8mm 6mm;
+    justify-items: center;
+    margin-top: 4mm;
+  }
+
+  .exercise-unit {
+    text-align: center;
+  }
+
+  .answer-line {
+    font-size: 14pt;
+    margin-top: 3mm;
+    font-weight: 600;
+  }
+
+  .answer-line .blank {
+    display: inline-block;
+    width: 15mm;
+    border-bottom: 2px solid #333;
+    margin-left: 2mm;
+  }
+
+  /* ===== Section 3 & 4: Number Bonds ===== */
+  .bonds-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8mm 10mm;
+    justify-items: center;
+    margin-top: 4mm;
+  }
+
+  .bond-unit {
+    text-align: center;
+  }
+
+  .bond-question {
+    font-size: 13pt;
+    font-weight: 600;
+    margin-top: 3mm;
+  }
+
+  .bond-question .blank {
+    display: inline-block;
+    width: 15mm;
+    border-bottom: 2px solid #333;
+    margin: 0 1mm;
+  }
+
+  /* ===== Section 5: Addition ===== */
+  .addition-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10mm;
+    justify-items: center;
+    margin-top: 4mm;
+  }
+
+  .addition-unit {
+    text-align: center;
+  }
+
+  .addition-pair {
+    display: flex;
+    align-items: center;
+    gap: 5mm;
+    justify-content: center;
+  }
+
+  .addition-plus {
+    font-size: 18pt;
+    font-weight: 700;
+    color: #333;
+  }
+
+  .addition-equation {
+    font-size: 16pt;
+    font-weight: 700;
+    margin-top: 4mm;
+  }
+
+  .addition-equation .blank {
+    display: inline-block;
+    width: 12mm;
+    border-bottom: 2.5px solid #333;
+    margin: 0 2mm;
+  }
+
+  /* ===== Numbering ===== */
+  .exercise-number {
+    font-size: 11pt;
+    font-weight: 700;
+    color: #888;
+    margin-bottom: 1mm;
+  }
+
+  /* ===== Print ===== */
+  @page { size: A4 portrait; margin: 8mm; }
+  @media print {
+    body {
+      padding: 0;
+      margin: 0;
+      background: #fff;
+    }
+    *, *::before, *::after {
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+    .page {
+      border: none;
+      padding: 8mm;
+      margin: 0;
+      width: 100%;
+      min-height: auto;
+      box-shadow: none;
+    }
+    .page-break {
+      page-break-before: always;
+    }
+    .no-break {
+      page-break-inside: avoid;
+    }
+    .ten-frame {
+      page-break-inside: avoid;
+    }
+    .exercise-group {
+      page-break-inside: avoid;
+    }
+    .no-print { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     SECTION 1 — Blank Ten Frames (Page 1 of 2)
+     ============================================================ -->
+<div class="page">
+  <div class="page-title">Les boîtes de 10</div>
+  <div class="page-subtitle">Boîtes vides (1/2)</div>
+  <div class="instruction">Place des objets (boutons, jetons, haricots) dans les cases pour représenter un nombre.</div>
+  <div class="blank-grid">
+    <div class="ten-frame">
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>
+    <div class="ten-frame">
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>
+    <div class="ten-frame">
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>
+    <div class="ten-frame">
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>
+    <div class="ten-frame">
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>
+    <div class="ten-frame">
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>
+    <div class="ten-frame">
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>
+    <div class="ten-frame">
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 1 — Blank Ten Frames (Page 2 of 2) -->
+<div class="page page-break">
+  <div class="page-title">Les boîtes de 10</div>
+  <div class="page-subtitle">Boîtes vides (2/2)</div>
+  <div class="instruction">Place des objets (boutons, jetons, haricots) dans les cases pour représenter un nombre.</div>
+  <div class="blank-grid">
+    <div class="ten-frame">
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>
+    <div class="ten-frame">
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>
+    <div class="ten-frame">
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>
+    <div class="ten-frame">
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>
+    <div class="ten-frame">
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>
+    <div class="ten-frame">
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>
+    <div class="ten-frame">
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>
+    <div class="ten-frame">
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 2 — Subitizing Practice (within 5)
+     ============================================================
+     Dot patterns (dice-like):
+       1 = top-left
+       2 = top-left, bottom-right (diagonal)
+       3 = top-left, center, bottom-right (diagonal)
+       4 = four corners of left 2 cols
+       5 = four corners + center
+     Cells indexed 0-9 in row-major order:
+       0  1  2  3  4
+       5  6  7  8  9
+-->
+<div class="page page-break">
+  <div class="page-title">Les boîtes de 10</div>
+  <div class="page-subtitle">Reconnaissance rapide (1 à 5)</div>
+  <div class="instruction">Regarde bien la boîte et écris combien il y a de points.</div>
+  <div class="subitizing-grid">
+
+    <!-- Ex 1: 1 dot — center-left -->
+    <div class="exercise-unit no-break">
+      <div class="exercise-number">1</div>
+      <div class="ten-frame small">
+        <div class="cell"></div><div class="cell"></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="answer-line">Combien ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 2: 3 dots — diagonal: 0, 7, 4 → top-left, bottom-center-right, top-right (like dice 3) -->
+    <div class="exercise-unit no-break">
+      <div class="exercise-number">2</div>
+      <div class="ten-frame small">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell filled"><div class="dot"></div></div>
+      </div>
+      <div class="answer-line">Combien ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 3: 2 dots — top-left, bottom-right -->
+    <div class="exercise-unit no-break">
+      <div class="exercise-number">3</div>
+      <div class="ten-frame small">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell filled"><div class="dot"></div></div>
+      </div>
+      <div class="answer-line">Combien ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 4: 5 dots — four corners + center -->
+    <div class="exercise-unit no-break">
+      <div class="exercise-number">4</div>
+      <div class="ten-frame small">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell filled"><div class="dot"></div></div>
+        <div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell filled"><div class="dot"></div></div>
+      </div>
+      <div class="answer-line">Combien ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 5: 4 dots — two on each row, left side -->
+    <div class="exercise-unit no-break">
+      <div class="exercise-number">5</div>
+      <div class="ten-frame small">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="answer-line">Combien ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 6: 2 dots — side by side top -->
+    <div class="exercise-unit no-break">
+      <div class="exercise-number">6</div>
+      <div class="ten-frame small">
+        <div class="cell"></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="answer-line">Combien ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 7: 5 dots — top row full -->
+    <div class="exercise-unit no-break">
+      <div class="exercise-number">7</div>
+      <div class="ten-frame small">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="answer-line">Combien ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 8: 1 dot — center -->
+    <div class="exercise-unit no-break">
+      <div class="exercise-number">8</div>
+      <div class="ten-frame small">
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="answer-line">Combien ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 9: 3 dots — column on left (0, 5 + one more) -->
+    <div class="exercise-unit no-break">
+      <div class="exercise-number">9</div>
+      <div class="ten-frame small">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="answer-line">Combien ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 10: 4 dots — four corners -->
+    <div class="exercise-unit no-break">
+      <div class="exercise-number">10</div>
+      <div class="ten-frame small">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell filled"><div class="dot"></div></div>
+        <div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell filled"><div class="dot"></div></div>
+      </div>
+      <div class="answer-line">Combien ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 11: 3 dots — L shape -->
+    <div class="exercise-unit no-break">
+      <div class="exercise-number">11</div>
+      <div class="ten-frame small">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="answer-line">Combien ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 12: 4 dots — row of 4 on top -->
+    <div class="exercise-unit no-break">
+      <div class="exercise-number">12</div>
+      <div class="ten-frame small">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="answer-line">Combien ? <span class="blank"></span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 3 — Number Bonds within 5
+     ============================================================
+     Dots fill from left to right, top row first.
+     Ask: Combien pour faire 5 ?
+-->
+<div class="page page-break">
+  <div class="page-title">Les boîtes de 10</div>
+  <div class="page-subtitle">Compléments à 5</div>
+  <div class="instruction">Regarde les points. Combien en faut-il encore pour faire 5 ?</div>
+  <div class="bonds-grid">
+
+    <!-- Ex 1: 1 dot → need 4 -->
+    <div class="bond-unit no-break">
+      <div class="exercise-number">1</div>
+      <div class="ten-frame medium">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="bond-question">Combien pour faire 5 ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 2: 3 dots → need 2 -->
+    <div class="bond-unit no-break">
+      <div class="exercise-number">2</div>
+      <div class="ten-frame medium">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="bond-question">Combien pour faire 5 ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 3: 2 dots → need 3 -->
+    <div class="bond-unit no-break">
+      <div class="exercise-number">3</div>
+      <div class="ten-frame medium">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="bond-question">Combien pour faire 5 ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 4: 4 dots → need 1 -->
+    <div class="bond-unit no-break">
+      <div class="exercise-number">4</div>
+      <div class="ten-frame medium">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="bond-question">Combien pour faire 5 ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 5: 0 dots → need 5 -->
+    <div class="bond-unit no-break">
+      <div class="exercise-number">5</div>
+      <div class="ten-frame medium">
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="bond-question">Combien pour faire 5 ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 6: 3 dots → need 2 (different arrangement: bottom row) -->
+    <div class="bond-unit no-break">
+      <div class="exercise-number">6</div>
+      <div class="ten-frame medium">
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="bond-question">Combien pour faire 5 ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 7: 1 dot → need 4 (different position) -->
+    <div class="bond-unit no-break">
+      <div class="exercise-number">7</div>
+      <div class="ten-frame medium">
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="bond-question">Combien pour faire 5 ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 8: 4 dots → need 1 (two per row) -->
+    <div class="bond-unit no-break">
+      <div class="exercise-number">8</div>
+      <div class="ten-frame medium">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="bond-question">Combien pour faire 5 ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 9: 2 dots → need 3 (different arrangement) -->
+    <div class="bond-unit no-break">
+      <div class="exercise-number">9</div>
+      <div class="ten-frame medium">
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div>
+      </div>
+      <div class="bond-question">Combien pour faire 5 ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 10: 5 dots → need 0 (full top row) -->
+    <div class="bond-unit no-break">
+      <div class="exercise-number">10</div>
+      <div class="ten-frame medium">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="bond-question">Combien pour faire 5 ? <span class="blank"></span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 4 — Number Bonds within 10
+     ============================================================
+     Dots fill top row first (left-to-right), then bottom row.
+     So n dots: top row gets min(n,5), bottom row gets max(0, n-5).
+-->
+<div class="page page-break">
+  <div class="page-title">Les boîtes de 10</div>
+  <div class="page-subtitle">Compléments à 10 (1/2)</div>
+  <div class="instruction">Regarde les points. Combien en faut-il encore pour remplir la boîte de 10 ?</div>
+  <div class="bonds-grid">
+
+    <!-- Ex 1: 6 dots → need 4 (top full, 1 bottom) -->
+    <div class="bond-unit no-break">
+      <div class="exercise-number">1</div>
+      <div class="ten-frame medium">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div>
+        <div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="bond-question">Combien pour faire 10 ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 2: 8 dots → need 2 -->
+    <div class="bond-unit no-break">
+      <div class="exercise-number">2</div>
+      <div class="ten-frame medium">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div>
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="bond-question">Combien pour faire 10 ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 3: 4 dots → need 6 -->
+    <div class="bond-unit no-break">
+      <div class="exercise-number">3</div>
+      <div class="ten-frame medium">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="bond-question">Combien pour faire 10 ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 4: 9 dots → need 1 -->
+    <div class="bond-unit no-break">
+      <div class="exercise-number">4</div>
+      <div class="ten-frame medium">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div>
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div>
+      </div>
+      <div class="bond-question">Combien pour faire 10 ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 5: 5 dots → need 5 -->
+    <div class="bond-unit no-break">
+      <div class="exercise-number">5</div>
+      <div class="ten-frame medium">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="bond-question">Combien pour faire 10 ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 6: 7 dots → need 3 -->
+    <div class="bond-unit no-break">
+      <div class="exercise-number">6</div>
+      <div class="ten-frame medium">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div>
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="bond-question">Combien pour faire 10 ? <span class="blank"></span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Section 4 continued (Page 2) -->
+<div class="page page-break">
+  <div class="page-title">Les boîtes de 10</div>
+  <div class="page-subtitle">Compléments à 10 (2/2)</div>
+  <div class="instruction">Regarde les points. Combien en faut-il encore pour remplir la boîte de 10 ?</div>
+  <div class="bonds-grid">
+
+    <!-- Ex 7: 4 dots → need 6 (different arrangement: 2+2) -->
+    <div class="bond-unit no-break">
+      <div class="exercise-number">7</div>
+      <div class="ten-frame medium">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="bond-question">Combien pour faire 10 ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 8: 6 dots → need 4 (3+3) -->
+    <div class="bond-unit no-break">
+      <div class="exercise-number">8</div>
+      <div class="ten-frame medium">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="bond-question">Combien pour faire 10 ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 9: 8 dots → need 2 (different: 4+4) -->
+    <div class="bond-unit no-break">
+      <div class="exercise-number">9</div>
+      <div class="ten-frame medium">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div>
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div>
+      </div>
+      <div class="bond-question">Combien pour faire 10 ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 10: 7 dots → need 3 (5+2, standard fill) -->
+    <div class="bond-unit no-break">
+      <div class="exercise-number">10</div>
+      <div class="ten-frame medium">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div>
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="bond-question">Combien pour faire 10 ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 11: 5 dots → need 5 (bottom row only) -->
+    <div class="bond-unit no-break">
+      <div class="exercise-number">11</div>
+      <div class="ten-frame medium">
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div>
+      </div>
+      <div class="bond-question">Combien pour faire 10 ? <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 12: 9 dots → need 1 (different arrangement: 5+4) -->
+    <div class="bond-unit no-break">
+      <div class="exercise-number">12</div>
+      <div class="ten-frame medium">
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div>
+        <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div>
+      </div>
+      <div class="bond-question">Combien pour faire 10 ? <span class="blank"></span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 5 — Addition with Ten Frames
+     ============================================================
+     Two ten frames side by side. Child counts each, writes addition.
+     All sums stay within 10.
+-->
+<div class="page page-break">
+  <div class="page-title">Les boîtes de 10</div>
+  <div class="page-subtitle">Additions avec les boîtes de 10 (1/2)</div>
+  <div class="instruction">Compte les points dans chaque boîte, puis écris l'addition.</div>
+  <div class="addition-grid">
+
+    <!-- Ex 1: 3 + 2 = 5 -->
+    <div class="addition-unit no-break">
+      <div class="exercise-number">1</div>
+      <div class="addition-pair">
+        <div class="ten-frame small">
+          <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        </div>
+        <div class="addition-plus">+</div>
+        <div class="ten-frame small">
+          <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        </div>
+      </div>
+      <div class="addition-equation"><span class="blank"></span> + <span class="blank"></span> = <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 2: 4 + 3 = 7 -->
+    <div class="addition-unit no-break">
+      <div class="exercise-number">2</div>
+      <div class="addition-pair">
+        <div class="ten-frame small">
+          <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        </div>
+        <div class="addition-plus">+</div>
+        <div class="ten-frame small">
+          <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        </div>
+      </div>
+      <div class="addition-equation"><span class="blank"></span> + <span class="blank"></span> = <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 3: 5 + 2 = 7 -->
+    <div class="addition-unit no-break">
+      <div class="exercise-number">3</div>
+      <div class="addition-pair">
+        <div class="ten-frame small">
+          <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        </div>
+        <div class="addition-plus">+</div>
+        <div class="ten-frame small">
+          <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        </div>
+      </div>
+      <div class="addition-equation"><span class="blank"></span> + <span class="blank"></span> = <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 4: 1 + 4 = 5 -->
+    <div class="addition-unit no-break">
+      <div class="exercise-number">4</div>
+      <div class="addition-pair">
+        <div class="ten-frame small">
+          <div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        </div>
+        <div class="addition-plus">+</div>
+        <div class="ten-frame small">
+          <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        </div>
+      </div>
+      <div class="addition-equation"><span class="blank"></span> + <span class="blank"></span> = <span class="blank"></span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Section 5 continued (Page 2) -->
+<div class="page page-break">
+  <div class="page-title">Les boîtes de 10</div>
+  <div class="page-subtitle">Additions avec les boîtes de 10 (2/2)</div>
+  <div class="instruction">Compte les points dans chaque boîte, puis écris l'addition.</div>
+  <div class="addition-grid">
+
+    <!-- Ex 5: 5 + 5 = 10 -->
+    <div class="addition-unit no-break">
+      <div class="exercise-number">5</div>
+      <div class="addition-pair">
+        <div class="ten-frame small">
+          <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        </div>
+        <div class="addition-plus">+</div>
+        <div class="ten-frame small">
+          <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        </div>
+      </div>
+      <div class="addition-equation"><span class="blank"></span> + <span class="blank"></span> = <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 6: 6 + 3 = 9 -->
+    <div class="addition-unit no-break">
+      <div class="exercise-number">6</div>
+      <div class="addition-pair">
+        <div class="ten-frame small">
+          <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div>
+          <div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        </div>
+        <div class="addition-plus">+</div>
+        <div class="ten-frame small">
+          <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        </div>
+      </div>
+      <div class="addition-equation"><span class="blank"></span> + <span class="blank"></span> = <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 7: 2 + 6 = 8 -->
+    <div class="addition-unit no-break">
+      <div class="exercise-number">7</div>
+      <div class="addition-pair">
+        <div class="ten-frame small">
+          <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        </div>
+        <div class="addition-plus">+</div>
+        <div class="ten-frame small">
+          <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div>
+          <div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        </div>
+      </div>
+      <div class="addition-equation"><span class="blank"></span> + <span class="blank"></span> = <span class="blank"></span></div>
+    </div>
+
+    <!-- Ex 8: 4 + 6 = 10 -->
+    <div class="addition-unit no-break">
+      <div class="exercise-number">8</div>
+      <div class="addition-pair">
+        <div class="ten-frame small">
+          <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        </div>
+        <div class="addition-plus">+</div>
+        <div class="ten-frame small">
+          <div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div><div class="cell filled"><div class="dot"></div></div>
+          <div class="cell filled"><div class="dot"></div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        </div>
+      </div>
+      <div class="addition-equation"><span class="blank"></span> + <span class="blank"></span> = <span class="blank"></span></div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cartes Flash — Calcul Mental</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; background: #f5f5f5; }
+
+  .page-title {
+    text-align: center; padding: 20px; font-size: 28px; color: #2c3e50;
+  }
+  .page-subtitle {
+    text-align: center; font-size: 16px; color: #666; margin-bottom: 10px;
+  }
+  .instruction {
+    text-align: center; font-size: 14px; color: #888; margin-bottom: 20px;
+    font-style: italic;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 10px;
+  }
+
+  .card {
+    border: 2px dashed #ccc;
+    aspect-ratio: 3/2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    position: relative;
+    min-height: 120px;
+  }
+
+  .card-problem {
+    font-size: 32px;
+    font-weight: bold;
+    color: #2c3e50;
+  }
+
+  .card-answer {
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    font-size: 12px;
+    color: #ccc;
+    transform: rotate(180deg);
+  }
+
+  .card-level {
+    position: absolute;
+    top: 5px;
+    left: 8px;
+    font-size: 10px;
+    color: #aaa;
+  }
+
+  .section-break {
+    page-break-before: always;
+  }
+
+  /* Color coding by level */
+  .level-1 { border-left: 5px solid #27ae60; }
+  .level-2 { border-left: 5px solid #2980b9; }
+  .level-3 { border-left: 5px solid #8e44ad; }
+  .level-4 { border-left: 5px solid #e67e22; }
+  .level-5 { border-left: 5px solid #e74c3c; }
+
+  @page { size: A4 portrait; margin: 8mm; }
+  @media print {
+    body { background: white; margin: 0; padding: 0; }
+    *, *::before, *::after {
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+    .page-title { font-size: 22px; padding: 10px; }
+    .no-print { display: none !important; }
+    .card-grid { gap: 0; padding: 5px; max-width: 100%; }
+    .card { border: 1.5px dashed #999; }
+    .section-break { page-break-before: always; }
+    .legend { display: none; }
+  }
+
+  .legend {
+    max-width: 780px; margin: 10px auto; padding: 10px;
+    display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+    font-size: 13px; color: #555;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 5px;
+  }
+  .legend-color {
+    width: 20px; height: 12px; border-radius: 2px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== PAGE 1: Within 5 (Addition) ==================== -->
+<h1 class="page-title">Cartes Flash — Addition</h1>
+<p class="page-subtitle">Niveau 1 : Additions jusqu'à 5</p>
+<p class="instruction">✂️ Découper le long des lignes pointillées. Réponse en bas à droite (retournée).</p>
+
+<div class="legend no-print">
+  <div class="legend-item"><div class="legend-color" style="background:#27ae60"></div> Jusqu'à 5</div>
+  <div class="legend-item"><div class="legend-color" style="background:#2980b9"></div> 6-8</div>
+  <div class="legend-item"><div class="legend-color" style="background:#8e44ad"></div> 9-10</div>
+  <div class="legend-item"><div class="legend-color" style="background:#e67e22"></div> Deux chiffres ±1,±2</div>
+  <div class="legend-item"><div class="legend-color" style="background:#e74c3c"></div> ±5, ±10</div>
+</div>
+
+<div class="card-grid">
+  <!-- Within 5: addition -->
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">1 + 1</span><span class="card-answer">2</span></div>
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">1 + 2</span><span class="card-answer">3</span></div>
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">1 + 3</span><span class="card-answer">4</span></div>
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">1 + 4</span><span class="card-answer">5</span></div>
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">2 + 1</span><span class="card-answer">3</span></div>
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">2 + 2</span><span class="card-answer">4</span></div>
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">2 + 3</span><span class="card-answer">5</span></div>
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">3 + 1</span><span class="card-answer">4</span></div>
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">3 + 2</span><span class="card-answer">5</span></div>
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">4 + 1</span><span class="card-answer">5</span></div>
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">0 + 1</span><span class="card-answer">1</span></div>
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">0 + 5</span><span class="card-answer">5</span></div>
+</div>
+
+<!-- ==================== PAGE 2: 6-10 (Addition) ==================== -->
+<div class="section-break"></div>
+<h1 class="page-title">Cartes Flash — Addition</h1>
+<p class="page-subtitle">Niveau 2 : Résultats de 6 à 8</p>
+<p class="instruction">✂️ Découper le long des lignes pointillées</p>
+
+<div class="card-grid">
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">1 + 5</span><span class="card-answer">6</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">2 + 4</span><span class="card-answer">6</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">3 + 3</span><span class="card-answer">6</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">4 + 2</span><span class="card-answer">6</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">5 + 1</span><span class="card-answer">6</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">1 + 6</span><span class="card-answer">7</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">2 + 5</span><span class="card-answer">7</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">3 + 4</span><span class="card-answer">7</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">4 + 3</span><span class="card-answer">7</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">5 + 2</span><span class="card-answer">7</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">6 + 1</span><span class="card-answer">7</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">2 + 6</span><span class="card-answer">8</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">3 + 5</span><span class="card-answer">8</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">4 + 4</span><span class="card-answer">8</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">5 + 3</span><span class="card-answer">8</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">6 + 2</span><span class="card-answer">8</span></div>
+</div>
+
+<!-- ==================== PAGE 3: Complements to 10 ==================== -->
+<div class="section-break"></div>
+<h1 class="page-title">Cartes Flash — Compléments à 10</h1>
+<p class="page-subtitle">Niveau 3 : Additions dont le résultat est 9 ou 10</p>
+<p class="instruction">✂️ Les plus importantes ! À maîtriser en priorité.</p>
+
+<div class="card-grid">
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">1 + 8</span><span class="card-answer">9</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">2 + 7</span><span class="card-answer">9</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">3 + 6</span><span class="card-answer">9</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">4 + 5</span><span class="card-answer">9</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">5 + 4</span><span class="card-answer">9</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">6 + 3</span><span class="card-answer">9</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">7 + 2</span><span class="card-answer">9</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">8 + 1</span><span class="card-answer">9</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">1 + 9</span><span class="card-answer">10</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">2 + 8</span><span class="card-answer">10</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">3 + 7</span><span class="card-answer">10</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">4 + 6</span><span class="card-answer">10</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">5 + 5</span><span class="card-answer">10</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">6 + 4</span><span class="card-answer">10</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">7 + 3</span><span class="card-answer">10</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">8 + 2</span><span class="card-answer">10</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">9 + 1</span><span class="card-answer">10</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">10 + 0</span><span class="card-answer">10</span></div>
+  <!-- Complement format -->
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">? + 3 = 10</span><span class="card-answer">7</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">? + 6 = 10</span><span class="card-answer">4</span></div>
+</div>
+
+<!-- ==================== PAGE 4: Subtraction within 5 ==================== -->
+<div class="section-break"></div>
+<h1 class="page-title">Cartes Flash — Soustraction</h1>
+<p class="page-subtitle">Niveau 1 : Soustractions jusqu'à 5</p>
+<p class="instruction">✂️ Découper le long des lignes pointillées</p>
+
+<div class="card-grid">
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">2 − 1</span><span class="card-answer">1</span></div>
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">3 − 1</span><span class="card-answer">2</span></div>
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">3 − 2</span><span class="card-answer">1</span></div>
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">4 − 1</span><span class="card-answer">3</span></div>
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">4 − 2</span><span class="card-answer">2</span></div>
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">4 − 3</span><span class="card-answer">1</span></div>
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">5 − 1</span><span class="card-answer">4</span></div>
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">5 − 2</span><span class="card-answer">3</span></div>
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">5 − 3</span><span class="card-answer">2</span></div>
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">5 − 4</span><span class="card-answer">1</span></div>
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">1 − 1</span><span class="card-answer">0</span></div>
+  <div class="card level-1"><span class="card-level">N1</span><span class="card-problem">5 − 5</span><span class="card-answer">0</span></div>
+</div>
+
+<!-- ==================== PAGE 5: Subtraction 6-10 ==================== -->
+<div class="section-break"></div>
+<h1 class="page-title">Cartes Flash — Soustraction</h1>
+<p class="page-subtitle">Niveau 2-3 : Soustractions de 6 à 10</p>
+<p class="instruction">✂️ Découper le long des lignes pointillées</p>
+
+<div class="card-grid">
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">6 − 1</span><span class="card-answer">5</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">6 − 2</span><span class="card-answer">4</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">6 − 3</span><span class="card-answer">3</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">6 − 4</span><span class="card-answer">2</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">7 − 2</span><span class="card-answer">5</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">7 − 3</span><span class="card-answer">4</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">7 − 4</span><span class="card-answer">3</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">7 − 5</span><span class="card-answer">2</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">8 − 3</span><span class="card-answer">5</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">8 − 4</span><span class="card-answer">4</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">8 − 5</span><span class="card-answer">3</span></div>
+  <div class="card level-2"><span class="card-level">N2</span><span class="card-problem">8 − 6</span><span class="card-answer">2</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">9 − 1</span><span class="card-answer">8</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">9 − 4</span><span class="card-answer">5</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">9 − 7</span><span class="card-answer">2</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">10 − 1</span><span class="card-answer">9</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">10 − 3</span><span class="card-answer">7</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">10 − 4</span><span class="card-answer">6</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">10 − 5</span><span class="card-answer">5</span></div>
+  <div class="card level-3"><span class="card-level">N3</span><span class="card-problem">10 − 7</span><span class="card-answer">3</span></div>
+</div>
+
+<!-- ==================== PAGE 6: Two-digit ±1, ±2 ==================== -->
+<div class="section-break"></div>
+<h1 class="page-title">Cartes Flash — Nombres à deux chiffres</h1>
+<p class="page-subtitle">Niveau 4 : ±1 et ±2 (sans et avec passage de dizaine)</p>
+<p class="instruction">✂️ Découper le long des lignes pointillées</p>
+
+<div class="card-grid">
+  <!-- Without crossing ten -->
+  <div class="card level-4"><span class="card-level">N4</span><span class="card-problem">23 + 1</span><span class="card-answer">24</span></div>
+  <div class="card level-4"><span class="card-level">N4</span><span class="card-problem">45 + 2</span><span class="card-answer">47</span></div>
+  <div class="card level-4"><span class="card-level">N4</span><span class="card-problem">56 − 1</span><span class="card-answer">55</span></div>
+  <div class="card level-4"><span class="card-level">N4</span><span class="card-problem">67 − 2</span><span class="card-answer">65</span></div>
+  <div class="card level-4"><span class="card-level">N4</span><span class="card-problem">34 + 2</span><span class="card-answer">36</span></div>
+  <div class="card level-4"><span class="card-level">N4</span><span class="card-problem">71 + 1</span><span class="card-answer">72</span></div>
+  <div class="card level-4"><span class="card-level">N4</span><span class="card-problem">88 − 2</span><span class="card-answer">86</span></div>
+  <div class="card level-4"><span class="card-level">N4</span><span class="card-problem">53 − 1</span><span class="card-answer">52</span></div>
+  <!-- Crossing ten -->
+  <div class="card level-4"><span class="card-level">N4</span><span class="card-problem">29 + 1</span><span class="card-answer">30</span></div>
+  <div class="card level-4"><span class="card-level">N4</span><span class="card-problem">38 + 2</span><span class="card-answer">40</span></div>
+  <div class="card level-4"><span class="card-level">N4</span><span class="card-problem">49 + 2</span><span class="card-answer">51</span></div>
+  <div class="card level-4"><span class="card-level">N4</span><span class="card-problem">59 + 1</span><span class="card-answer">60</span></div>
+  <div class="card level-4"><span class="card-level">N4</span><span class="card-problem">30 − 1</span><span class="card-answer">29</span></div>
+  <div class="card level-4"><span class="card-level">N4</span><span class="card-problem">40 − 2</span><span class="card-answer">38</span></div>
+  <div class="card level-4"><span class="card-level">N4</span><span class="card-problem">50 − 1</span><span class="card-answer">49</span></div>
+  <div class="card level-4"><span class="card-level">N4</span><span class="card-problem">71 − 2</span><span class="card-answer">69</span></div>
+  <div class="card level-4"><span class="card-level">N4</span><span class="card-problem">99 + 1</span><span class="card-answer">100</span></div>
+  <div class="card level-4"><span class="card-level">N4</span><span class="card-problem">100 − 1</span><span class="card-answer">99</span></div>
+  <div class="card level-4"><span class="card-level">N4</span><span class="card-problem">100 − 2</span><span class="card-answer">98</span></div>
+  <div class="card level-4"><span class="card-level">N4</span><span class="card-problem">80 − 1</span><span class="card-answer">79</span></div>
+</div>
+
+<!-- ==================== PAGE 7: ±5, ±10 ==================== -->
+<div class="section-break"></div>
+<h1 class="page-title">Cartes Flash — ±5 et ±10</h1>
+<p class="page-subtitle">Niveau 5 : Additions et soustractions de 5 et 10</p>
+<p class="instruction">✂️ Découper le long des lignes pointillées</p>
+
+<div class="card-grid">
+  <!-- ±10 -->
+  <div class="card level-5"><span class="card-level">N5</span><span class="card-problem">23 + 10</span><span class="card-answer">33</span></div>
+  <div class="card level-5"><span class="card-level">N5</span><span class="card-problem">45 + 10</span><span class="card-answer">55</span></div>
+  <div class="card level-5"><span class="card-level">N5</span><span class="card-problem">67 − 10</span><span class="card-answer">57</span></div>
+  <div class="card level-5"><span class="card-level">N5</span><span class="card-problem">81 − 10</span><span class="card-answer">71</span></div>
+  <div class="card level-5"><span class="card-level">N5</span><span class="card-problem">14 + 10</span><span class="card-answer">24</span></div>
+  <div class="card level-5"><span class="card-level">N5</span><span class="card-problem">56 + 10</span><span class="card-answer">66</span></div>
+  <div class="card level-5"><span class="card-level">N5</span><span class="card-problem">90 − 10</span><span class="card-answer">80</span></div>
+  <div class="card level-5"><span class="card-level">N5</span><span class="card-problem">38 − 10</span><span class="card-answer">28</span></div>
+  <!-- ±5 -->
+  <div class="card level-5"><span class="card-level">N5</span><span class="card-problem">23 + 5</span><span class="card-answer">28</span></div>
+  <div class="card level-5"><span class="card-level">N5</span><span class="card-problem">35 + 5</span><span class="card-answer">40</span></div>
+  <div class="card level-5"><span class="card-level">N5</span><span class="card-problem">46 + 5</span><span class="card-answer">51</span></div>
+  <div class="card level-5"><span class="card-level">N5</span><span class="card-problem">78 + 5</span><span class="card-answer">83</span></div>
+  <div class="card level-5"><span class="card-level">N5</span><span class="card-problem">47 − 5</span><span class="card-answer">42</span></div>
+  <div class="card level-5"><span class="card-level">N5</span><span class="card-problem">53 − 5</span><span class="card-answer">48</span></div>
+  <div class="card level-5"><span class="card-level">N5</span><span class="card-problem">30 − 5</span><span class="card-answer">25</span></div>
+  <div class="card level-5"><span class="card-level">N5</span><span class="card-problem">62 − 5</span><span class="card-answer">57</span></div>
+  <div class="card level-5"><span class="card-level">N5</span><span class="card-problem">15 + 5</span><span class="card-answer">20</span></div>
+  <div class="card level-5"><span class="card-level">N5</span><span class="card-problem">90 + 10</span><span class="card-answer">100</span></div>
+  <div class="card level-5"><span class="card-level">N5</span><span class="card-problem">95 + 5</span><span class="card-answer">100</span></div>
+  <div class="card level-5"><span class="card-level">N5</span><span class="card-problem">100 − 10</span><span class="card-answer">90</span></div>
+</div>
+
+</body>
+</html>

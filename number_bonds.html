@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les liens numeriques - CP</title>
+<style>
+  /* ── Reset & Base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1a1a2e;
+    background: #f0f2f5;
+    padding: 1cm;
+    line-height: 1.4;
+  }
+
+  /* ── Page / Section Layout ── */
+  .page {
+    width: 19cm;
+    min-height: 27cm;
+    margin: 0 auto 2cm auto;
+    background: #fff;
+    padding: 0.8cm 1.2cm;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    page-break-after: always;
+    page-break-inside: avoid;
+  }
+  .page:last-child { page-break-after: avoid; }
+
+  /* ── Titles ── */
+  .main-title {
+    text-align: center;
+    font-size: 30pt;
+    font-weight: 800;
+    color: #2b4c7e;
+    margin-bottom: 0.1cm;
+    letter-spacing: -0.5px;
+  }
+  .main-subtitle {
+    text-align: center;
+    font-size: 13pt;
+    color: #6b7b8d;
+    margin-bottom: 0.5cm;
+    font-weight: 400;
+  }
+  .section-title {
+    font-size: 18pt;
+    font-weight: 700;
+    color: #2b4c7e;
+    text-align: center;
+    margin-bottom: 0.15cm;
+    padding-bottom: 0.15cm;
+    border-bottom: 2.5px solid #dce6f1;
+  }
+  .section-subtitle {
+    text-align: center;
+    font-size: 11pt;
+    color: #8a9bb0;
+    margin-bottom: 0.4cm;
+    font-style: italic;
+  }
+  .section-instruction {
+    text-align: center;
+    font-size: 12pt;
+    color: #4a6785;
+    margin-bottom: 0.4cm;
+    font-weight: 500;
+  }
+
+  /* ── Name / Date Header ── */
+  .header-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.4cm;
+    font-size: 12pt;
+    color: #4a6785;
+  }
+  .header-info span {
+    border-bottom: 1.5px solid #b0c4de;
+    padding-bottom: 2px;
+    min-width: 6cm;
+    display: inline-block;
+  }
+
+  /* ── Decorative divider ── */
+  .divider {
+    text-align: center;
+    margin: 0.2cm 0;
+    font-size: 12pt;
+    color: #d4e2f1;
+    letter-spacing: 6px;
+  }
+
+  /* ══════════════════════════════════════
+     NUMBER BOND DIAGRAM (SVG-based)
+     ══════════════════════════════════════ */
+  .bond-grid {
+    display: grid;
+    gap: 0.25cm 0.15cm;
+    justify-items: center;
+  }
+  .bond-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+  .bond-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+  .bond-grid.cols-6 { grid-template-columns: repeat(6, 1fr); }
+
+  .bond-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .bond-item .bond-label {
+    font-size: 8pt;
+    color: #8a9bb0;
+    margin-bottom: 0.05cm;
+    font-weight: 600;
+  }
+
+  /* SVG number bond styling */
+  .bond-svg {
+    width: 2.8cm;
+    height: 3.2cm;
+  }
+  .bond-svg.large {
+    width: 3.2cm;
+    height: 3.6cm;
+  }
+  .bond-svg.small {
+    width: 2.5cm;
+    height: 2.8cm;
+  }
+  .bond-svg .line {
+    stroke: #b0c4de;
+    stroke-width: 2.5;
+    fill: none;
+  }
+  .bond-svg .circle-solid {
+    fill: #fff;
+    stroke: #2b4c7e;
+    stroke-width: 2.8;
+  }
+  .bond-svg .circle-missing {
+    fill: #f8f9fb;
+    stroke: #a0b4c8;
+    stroke-width: 2.5;
+    stroke-dasharray: 5 3;
+  }
+  .bond-svg .num-given {
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    fill: #2b4c7e;
+    text-anchor: middle;
+    dominant-baseline: central;
+  }
+  .bond-svg .num-missing {
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    fill: #a0b4c8;
+    text-anchor: middle;
+    dominant-baseline: central;
+  }
+  .bond-svg .num-top {
+    font-size: 26px;
+  }
+
+  /* ══════════════════════════════════════
+     SECTION 3: Making 10 Layout
+     ══════════════════════════════════════ */
+  .ten-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.35cm 0.6cm;
+  }
+  .ten-item {
+    display: flex;
+    align-items: center;
+    gap: 0.25cm;
+    padding: 0.2cm 0.25cm;
+    border: 1.5px solid #e8eef4;
+    border-radius: 8px;
+    background: #fdfdfe;
+  }
+  .ten-item .item-num {
+    font-size: 10pt;
+    font-weight: 600;
+    color: #5a7a9a;
+    min-width: 1cm;
+    flex-shrink: 0;
+  }
+
+  /* Equation styling */
+  .equation {
+    font-size: 17pt;
+    font-weight: 700;
+    color: #2b4c7e;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.12cm;
+  }
+  .equation .blank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.3cm;
+    height: 1cm;
+    border: 2.5px dashed #a0b4c8;
+    border-radius: 6px;
+    color: #a0b4c8;
+    font-size: 15pt;
+    background: #f8f9fb;
+  }
+  .equation .given-num {
+    display: inline-block;
+    min-width: 0.9cm;
+    text-align: center;
+  }
+  .equation .op {
+    color: #6b8db5;
+    font-weight: 600;
+  }
+
+  /* ── Ten Frame ── */
+  .ten-frame {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 2px;
+    width: 2.5cm;
+    height: 1.1cm;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+  .ten-frame .cell {
+    border: 1.5px solid #b0c4de;
+    border-radius: 2px;
+    background: #fff;
+  }
+  .ten-frame .cell.filled {
+    background: #5b8fb9;
+    border-color: #4a7da6;
+  }
+
+  /* ══════════════════════════════════════
+     SECTION 4: Mixed Challenge
+     ══════════════════════════════════════ */
+  .mixed-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.35cm 0.3cm;
+    justify-items: center;
+  }
+  .mixed-item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.2cm;
+    border: 1.5px solid #e8eef4;
+    border-radius: 8px;
+    background: #fdfdfe;
+    min-height: 1.8cm;
+  }
+  .mixed-item.has-bond {
+    min-height: auto;
+  }
+  .mixed-item .mixed-label {
+    font-size: 8pt;
+    color: #8a9bb0;
+    font-weight: 600;
+    margin-bottom: 0.05cm;
+  }
+  .mixed-item .equation {
+    font-size: 15pt;
+  }
+  .mixed-item .bond-svg {
+    width: 2.8cm;
+    height: 3.0cm;
+  }
+
+  /* ══════════════════════════════════════
+     PRINT STYLES
+     ══════════════════════════════════════ */
+  @page { size: A4 portrait; margin: 8mm; }
+  @media print {
+    body {
+      background: #fff;
+      padding: 0;
+      margin: 0;
+    }
+    *, *::before, *::after {
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+    .page {
+      width: 100%;
+      min-height: auto;
+      padding: 0.5cm 0.5cm;
+      margin: 0;
+      box-shadow: none;
+      border-radius: 0;
+      page-break-after: always;
+      page-break-inside: avoid;
+    }
+    .page:last-child { page-break-after: auto; }
+    .no-print { display: none !important; }
+    .bond-svg {
+      max-width: 100%;
+      height: auto;
+    }
+    .bond-svg .circle-solid { fill: #fff; }
+    .bond-svg .circle-missing { fill: #f5f5f5; }
+    .bond-grid { gap: 0.2cm 0.1cm; }
+    .ten-frame .cell.filled { background: #5b8fb9 !important; }
+    .ten-item { border-color: #d0d8e4; }
+    .mixed-item { border-color: #d0d8e4; }
+  }
+</style>
+</head>
+<body>
+
+<script>
+/* =============================================
+   HELPER FUNCTIONS
+   ============================================= */
+
+function seededRandom(seed) {
+  let s = seed;
+  return function() {
+    s = (s * 16807 + 0) % 2147483647;
+    return (s - 1) / 2147483646;
+  };
+}
+
+function shuffle(arr, rng) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+const rng = seededRandom(2026);
+
+/**
+ * Create SVG number bond diagram.
+ * top = total, left/right = parts, missingSide = 'left' | 'right'
+ */
+function bondSVG(top, left, right, missingSide, opts) {
+  opts = opts || {};
+  var w = opts.w || 110;
+  var h = opts.h || 125;
+  var rTop = opts.rTop || 22;
+  var rBot = opts.rBot || 20;
+  var cx = w / 2;
+  var cyTop = rTop + 3;
+  var cyBot = h - rBot - 3;
+  var cxL = cx - 28;
+  var cxR = cx + 28;
+  var sizeClass = opts.sizeClass || '';
+
+  var leftClass  = missingSide === 'left'  ? 'circle-missing' : 'circle-solid';
+  var rightClass = missingSide === 'right' ? 'circle-missing' : 'circle-solid';
+  var leftNumClass  = missingSide === 'left'  ? 'num-missing' : 'num-given';
+  var rightNumClass = missingSide === 'right' ? 'num-missing' : 'num-given';
+  var leftText  = missingSide === 'left'  ? '?' : left;
+  var rightText = missingSide === 'right' ? '?' : right;
+
+  return '<svg class="bond-svg ' + sizeClass + '" viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg">' +
+    '<line class="line" x1="' + cx + '" y1="' + (cyTop + rTop) + '" x2="' + cxL + '" y2="' + (cyBot - rBot) + '"/>' +
+    '<line class="line" x1="' + cx + '" y1="' + (cyTop + rTop) + '" x2="' + cxR + '" y2="' + (cyBot - rBot) + '"/>' +
+    '<circle class="circle-solid" cx="' + cx + '" cy="' + cyTop + '" r="' + rTop + '"/>' +
+    '<text class="num-given num-top" x="' + cx + '" y="' + cyTop + '">' + top + '</text>' +
+    '<circle class="' + leftClass + '" cx="' + cxL + '" cy="' + cyBot + '" r="' + rBot + '"/>' +
+    '<text class="' + leftNumClass + '" x="' + cxL + '" y="' + cyBot + '">' + leftText + '</text>' +
+    '<circle class="' + rightClass + '" cx="' + cxR + '" cy="' + cyBot + '" r="' + rBot + '"/>' +
+    '<text class="' + rightNumClass + '" x="' + cxR + '" y="' + cyBot + '">' + rightText + '</text>' +
+  '</svg>';
+}
+
+/** Create ten-frame HTML: filled = number of filled cells (0-10) */
+function tenFrame(filled) {
+  var html = '<div class="ten-frame">';
+  for (var i = 0; i < 10; i++) {
+    html += '<div class="cell' + (i < filled ? ' filled' : '') + '"></div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+/* =============================================
+   SECTION 1: Number Bonds within 5
+   ============================================= */
+function buildSection1() {
+  var exercises = [];
+  for (var total = 2; total <= 5; total++) {
+    for (var left = 0; left <= total; left++) {
+      var right = total - left;
+      var side = rng() < 0.5 ? 'left' : 'right';
+      exercises.push({ total: total, left: left, right: right, missing: side });
+    }
+  }
+  // 3+4+5+6 = 18 bonds. Add 2 extras to reach 20.
+  exercises.push({ total: 4, left: 1, right: 3, missing: 'right' });
+  exercises.push({ total: 5, left: 2, right: 3, missing: 'left' });
+  exercises = shuffle(exercises, rng);
+
+  var html = '';
+  html += '<div class="main-title">Les liens num\u00e9riques</div>';
+  html += '<div class="main-subtitle">D\u00e9composition des nombres \u2014 CP</div>';
+  html += '<div class="header-info"><span>Pr\u00e9nom : </span><span>Date : </span></div>';
+  html += '<div class="divider">\u2022 \u2022 \u2022 \u2022 \u2022</div>';
+  html += '<div class="section-title">Section 1 \u2014 Liens num\u00e9riques jusqu\u2019\u00e0 5</div>';
+  html += '<div class="section-instruction">Trouve le nombre manquant dans chaque lien.</div>';
+  html += '<div class="bond-grid cols-5">';
+  for (var i = 0; i < exercises.length; i++) {
+    var ex = exercises[i];
+    html += '<div class="bond-item"><div class="bond-label">' + (i + 1) + '.</div>' +
+      bondSVG(ex.total, ex.left, ex.right, ex.missing) + '</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+/* =============================================
+   SECTION 2: Number Bonds within 10
+   Split across 2 pages (15 + 15)
+   ============================================= */
+function buildSection2() {
+  var exercises = [];
+  for (var total = 6; total <= 10; total++) {
+    for (var left = 1; left < total; left++) {
+      var right = total - left;
+      var side = rng() < 0.5 ? 'left' : 'right';
+      exercises.push({ total: total, left: left, right: right, missing: side });
+    }
+  }
+  // Pick 30 randomly
+  exercises = shuffle(exercises, rng).slice(0, 30);
+  return exercises;
+}
+
+function buildSection2a(exercises) {
+  var slice = exercises.slice(0, 15);
+  var html = '';
+  html += '<div class="section-title">Section 2 \u2014 Liens num\u00e9riques jusqu\u2019\u00e0 10</div>';
+  html += '<div class="section-instruction">Trouve le nombre manquant. Attention, il peut \u00eatre \u00e0 gauche ou \u00e0 droite !</div>';
+  html += '<div class="bond-grid cols-5">';
+  for (var i = 0; i < slice.length; i++) {
+    var ex = slice[i];
+    html += '<div class="bond-item"><div class="bond-label">' + (i + 1) + '.</div>' +
+      bondSVG(ex.total, ex.left, ex.right, ex.missing) + '</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function buildSection2b(exercises) {
+  var slice = exercises.slice(15, 30);
+  var html = '';
+  html += '<div class="section-title">Section 2 (suite)</div>';
+  html += '<div class="section-instruction">Continue \u00e0 trouver le nombre manquant.</div>';
+  html += '<div class="bond-grid cols-5">';
+  for (var i = 0; i < slice.length; i++) {
+    var ex = slice[i];
+    html += '<div class="bond-item"><div class="bond-label">' + (i + 16) + '.</div>' +
+      bondSVG(ex.total, ex.left, ex.right, ex.missing) + '</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+/* =============================================
+   SECTION 3: Making 10 (Complements a 10)
+   ============================================= */
+function buildSection3() {
+  // All pairs that make 10 (1-9 given, find complement)
+  var pairs = [];
+  for (var a = 0; a <= 10; a++) {
+    pairs.push({ given: a, complement: 10 - a });
+  }
+  // Duplicates to reach 20
+  var extras = [
+    { given: 1, complement: 9 },
+    { given: 3, complement: 7 },
+    { given: 5, complement: 5 },
+    { given: 7, complement: 3 },
+    { given: 9, complement: 1 },
+    { given: 2, complement: 8 },
+    { given: 4, complement: 6 },
+    { given: 6, complement: 4 },
+    { given: 8, complement: 2 }
+  ];
+  var exercises = pairs.concat(extras).slice(0, 20);
+  exercises = shuffle(exercises, rng);
+  // Randomly choose which side is blank
+  for (var i = 0; i < exercises.length; i++) {
+    exercises[i].givenOnLeft = rng() < 0.5;
+  }
+
+  var html = '';
+  html += '<div class="section-title">Section 3 \u2014 Compl\u00e9ments \u00e0 10</div>';
+  html += '<div class="section-subtitle">Le plus important ! Apprends \u00e0 faire 10.</div>';
+  html += '<div class="section-instruction">Compl\u00e8te pour faire 10. Le cadre de dix t\u2019aide.</div>';
+  html += '<div class="ten-grid">';
+  for (var i = 0; i < exercises.length; i++) {
+    var ex = exercises[i];
+    var leftPart, rightPart;
+    if (ex.givenOnLeft) {
+      leftPart = '<span class="given-num">' + ex.given + '</span>';
+      rightPart = '<span class="blank">?</span>';
+    } else {
+      leftPart = '<span class="blank">?</span>';
+      rightPart = '<span class="given-num">' + ex.complement + '</span>';
+    }
+    html += '<div class="ten-item">' +
+      '<div class="item-num">' + (i + 1) + '.</div>' +
+      '<div class="equation">' + leftPart + '<span class="op">+</span>' + rightPart +
+      '<span class="op">=</span><span class="given-num">10</span></div>' +
+      tenFrame(ex.given) +
+    '</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+/* =============================================
+   SECTION 4: Mixed Challenge
+   ============================================= */
+function buildSection4() {
+  var exercises = [];
+
+  // 8 addition exercises: given + ? = total
+  for (var i = 0; i < 8; i++) {
+    var total = Math.floor(rng() * 9) + 2;
+    var a = Math.floor(rng() * total);
+    exercises.push({ type: 'add', total: total, given: a, answer: total - a });
+  }
+
+  // 8 subtraction exercises: total - ? = result
+  for (var i = 0; i < 8; i++) {
+    var total = Math.floor(rng() * 9) + 2;
+    var sub = Math.floor(rng() * (total - 1)) + 1;
+    exercises.push({ type: 'sub', total: total, sub: sub, result: total - sub });
+  }
+
+  // 8 bond diagram exercises
+  for (var i = 0; i < 8; i++) {
+    var total = Math.floor(rng() * 9) + 2;
+    var left = Math.floor(rng() * (total + 1));
+    var right = total - left;
+    var side = rng() < 0.5 ? 'left' : 'right';
+    exercises.push({ type: 'bond', total: total, left: left, right: right, missing: side });
+  }
+
+  exercises = shuffle(exercises, rng);
+
+  var html = '';
+  html += '<div class="section-title">Section 4 \u2014 D\u00e9fi mix\u00e9</div>';
+  html += '<div class="section-instruction">Additions, soustractions et liens num\u00e9riques m\u00e9lang\u00e9s !</div>';
+  html += '<div class="mixed-grid">';
+  for (var i = 0; i < exercises.length; i++) {
+    var ex = exercises[i];
+    var extraClass = ex.type === 'bond' ? ' has-bond' : '';
+    html += '<div class="mixed-item' + extraClass + '">';
+    html += '<div class="mixed-label">' + (i + 1) + '.</div>';
+    if (ex.type === 'add') {
+      html += '<div class="equation">' +
+        '<span class="given-num">' + ex.given + '</span>' +
+        '<span class="op">+</span>' +
+        '<span class="blank">?</span>' +
+        '<span class="op">=</span>' +
+        '<span class="given-num">' + ex.total + '</span>' +
+      '</div>';
+    } else if (ex.type === 'sub') {
+      html += '<div class="equation">' +
+        '<span class="given-num">' + ex.total + '</span>' +
+        '<span class="op">\u2212</span>' +
+        '<span class="blank">?</span>' +
+        '<span class="op">=</span>' +
+        '<span class="given-num">' + ex.result + '</span>' +
+      '</div>';
+    } else {
+      html += bondSVG(ex.total, ex.left, ex.right, ex.missing, { w: 100, h: 110, rTop: 19, rBot: 17 });
+    }
+    html += '</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+/* =============================================
+   RENDER ALL PAGES
+   ============================================= */
+document.addEventListener('DOMContentLoaded', function() {
+  var sec2exercises = buildSection2();
+
+  var pages = [
+    buildSection1(),
+    buildSection2a(sec2exercises),
+    buildSection2b(sec2exercises),
+    buildSection3(),
+    buildSection4()
+  ];
+
+  for (var p = 0; p < pages.length; p++) {
+    var div = document.createElement('div');
+    div.className = 'page';
+    div.innerHTML = pages[p];
+    document.body.appendChild(div);
+  }
+});
+</script>
+
+<noscript>
+  <div class="page">
+    <p style="text-align:center; font-size:16pt; color:#c33; padding:3cm 0;">
+      JavaScript est n&eacute;cessaire pour g&eacute;n&eacute;rer les exercices.<br>
+      Veuillez ouvrir ce fichier dans un navigateur moderne.
+    </p>
+  </div>
+</noscript>
+
+</body>
+</html>

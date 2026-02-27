@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan de maths CP - 8 semaines</title>
+<style>
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Comic Sans MS", "Chalkboard SE", "Arial Rounded MT Bold", sans-serif;
+    font-size: 16px;
+    color: #333;
+    background: #f8f9fa;
+  }
+
+  /* ===== PAGE STRUCTURE ===== */
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 10mm auto;
+    padding: 12mm 15mm 15mm 15mm;
+    background: #fff;
+    border: 1px solid #ddd;
+    position: relative;
+    page-break-after: always;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  /* ===== HEADER ===== */
+  .page-header {
+    text-align: center;
+    margin-bottom: 6mm;
+    padding-bottom: 4mm;
+    border-bottom: 3px solid #4a90d9;
+  }
+  .page-header h1 {
+    font-size: 28pt;
+    color: #2c3e50;
+    margin-bottom: 2mm;
+  }
+  .page-header .topic {
+    font-size: 18pt;
+    color: #4a90d9;
+    margin-bottom: 3mm;
+  }
+  .info-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16pt;
+    margin-top: 3mm;
+  }
+  .info-line span {
+    display: inline-block;
+  }
+  .info-line .blank {
+    display: inline-block;
+    width: 50mm;
+    border-bottom: 2px solid #333;
+    margin-left: 2mm;
+  }
+
+  /* ===== PROBLEMS ===== */
+  .problems {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3mm 10mm;
+    margin-top: 5mm;
+  }
+  .problems.single-col {
+    grid-template-columns: 1fr;
+  }
+
+  .problem {
+    display: flex;
+    align-items: center;
+    font-size: 26pt;
+    font-weight: bold;
+    padding: 3mm 2mm;
+    min-height: 14mm;
+    border-bottom: 1px dashed #e0e0e0;
+  }
+  .problem .num {
+    color: #888;
+    font-size: 14pt;
+    min-width: 8mm;
+    margin-right: 2mm;
+  }
+  .problem .expr {
+    flex: 1;
+  }
+  .problem .answer-blank {
+    display: inline-block;
+    width: 18mm;
+    border-bottom: 3px solid #333;
+    margin: 0 1mm;
+    text-align: center;
+  }
+
+  /* ===== SECTION TITLE ===== */
+  .section-title {
+    font-size: 18pt;
+    color: #e67e22;
+    margin: 5mm 0 2mm 0;
+    padding: 2mm 4mm;
+    background: #fef9e7;
+    border-left: 4px solid #e67e22;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* ===== TEN FRAME ===== */
+  .ten-frame-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 4mm;
+    margin: 2mm 0;
+  }
+  .ten-frame {
+    display: inline-grid;
+    grid-template-columns: repeat(5, 9mm);
+    grid-template-rows: repeat(2, 9mm);
+    gap: 1px;
+    border: 2px solid #555;
+    border-radius: 3px;
+    background: #555;
+    flex-shrink: 0;
+  }
+  .ten-frame .cell {
+    width: 9mm;
+    height: 9mm;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ten-frame .cell.filled::after {
+    content: "";
+    width: 6mm;
+    height: 6mm;
+    background: #3498db;
+    border-radius: 50%;
+  }
+  .ten-frame .cell.filled.red::after {
+    background: #e74c3c;
+  }
+  .ten-frame-expr {
+    font-size: 24pt;
+    font-weight: bold;
+  }
+
+  /* ===== HUNDRED CHART ===== */
+  .hundred-chart-container {
+    margin: 3mm auto 5mm auto;
+    text-align: center;
+  }
+  .hundred-chart-container .label {
+    font-size: 12pt;
+    color: #666;
+    margin-bottom: 1mm;
+  }
+  .hundred-chart {
+    display: inline-grid;
+    grid-template-columns: repeat(10, 14mm);
+    gap: 0;
+    border: 2px solid #555;
+    font-size: 10pt;
+  }
+  .hundred-chart .hc-cell {
+    width: 14mm;
+    height: 10mm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0.5px solid #ccc;
+    font-weight: bold;
+    color: #444;
+  }
+  .hundred-chart .hc-cell.tens {
+    background: #e8f4fd;
+    color: #2980b9;
+  }
+
+  /* ===== HINT BOX ===== */
+  .hint-box {
+    background: #fdf2e9;
+    border: 2px dashed #e67e22;
+    border-radius: 8px;
+    padding: 3mm 5mm;
+    margin: 3mm 0;
+    font-size: 16pt;
+  }
+  .hint-box .hint-title {
+    font-size: 14pt;
+    color: #e67e22;
+    margin-bottom: 1mm;
+  }
+  .hint-box .hint-example {
+    font-size: 22pt;
+    font-weight: bold;
+    text-align: center;
+    margin: 2mm 0;
+  }
+
+  /* ===== COMPLEMENT SECTION ===== */
+  .complement-section {
+    margin-top: 4mm;
+    padding: 3mm;
+    background: #eaf7ea;
+    border-radius: 8px;
+    border: 2px solid #27ae60;
+  }
+  .complement-section h3 {
+    font-size: 18pt;
+    color: #27ae60;
+    margin-bottom: 3mm;
+    text-align: center;
+  }
+  .complement-problems {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2mm 8mm;
+  }
+  .complement-problems .problem {
+    font-size: 24pt;
+    border-bottom: none;
+    min-height: 12mm;
+  }
+
+  /* ===== SELF ASSESSMENT ===== */
+  .self-assessment {
+    margin-top: auto;
+    border-top: 2px solid #ddd;
+    padding-top: 3mm;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .assessment-option {
+    text-align: center;
+    cursor: pointer;
+    padding: 2mm 4mm;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    min-width: 45mm;
+  }
+  .assessment-option .face {
+    font-size: 30pt;
+    display: block;
+    margin-bottom: 1mm;
+  }
+  .assessment-option .label {
+    font-size: 11pt;
+    color: #555;
+  }
+
+  /* ===== ANSWERS PAGE ===== */
+  .answers-page h1 {
+    font-size: 22pt;
+    color: #555;
+    text-align: center;
+    margin-bottom: 5mm;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 3mm;
+  }
+  .answers-page .week-answers {
+    margin-bottom: 4mm;
+  }
+  .answers-page .week-answers h3 {
+    font-size: 12pt;
+    color: #2c3e50;
+    margin-bottom: 1mm;
+  }
+  .answers-page .answer-list {
+    font-size: 10pt;
+    color: #555;
+    line-height: 1.6;
+    columns: 3;
+    column-gap: 5mm;
+  }
+  .answers-page .answer-list span {
+    display: inline-block;
+    margin-right: 3mm;
+  }
+
+  /* ===== DECORATIVE ===== */
+  .deco-star { color: #f1c40f; }
+  .page-number {
+    position: absolute;
+    bottom: 5mm;
+    right: 15mm;
+    font-size: 10pt;
+    color: #aaa;
+  }
+
+  /* ===== PRINT STYLES ===== */
+  @page { size: A4 portrait; margin: 8mm; }
+  @media print {
+    body { background: none; margin: 0; padding: 0; }
+    *, *::before, *::after {
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+    .page {
+      margin: 0;
+      border: none;
+      box-shadow: none;
+      width: 100%;
+      min-height: auto;
+      height: auto;
+      padding: 10mm 12mm 15mm 12mm;
+    }
+    .self-assessment {
+      margin-top: auto;
+    }
+    .no-print { display: none !important; }
+  }
+
+  /* ===== SCREEN HELPERS ===== */
+  @media screen {
+    .page { box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .no-print { display: block; text-align: center; padding: 10px; background: #fff3cd; margin: 10px auto; max-width: 210mm; border-radius: 8px; font-size: 14pt; }
+  }
+</style>
+</head>
+<body>
+
+<div class="no-print">
+  Appuyez sur <strong>Ctrl+P</strong> (ou Cmd+P) pour imprimer. Chaque semaine commence sur une nouvelle page.
+</div>
+
+<!-- ============================================================ -->
+<!-- WEEK 1: Number bonds within 3-4                              -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <h1>Semaine 1</h1>
+    <div class="topic">Les amis des nombres (jusqu'a 4)</div>
+    <div class="info-line">
+      <span>Prenom : <span class="blank"></span></span>
+      <span>Date : <span class="blank"></span></span>
+    </div>
+  </div>
+
+  <!-- Ten-frame illustrations -->
+  <div style="display:flex; justify-content:space-around; margin: 3mm 0 4mm 0;">
+    <div class="ten-frame-wrapper">
+      <div class="ten-frame">
+        <div class="cell filled"></div><div class="cell filled"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <span class="ten-frame-expr">2 + 1 = 3</span>
+    </div>
+    <div class="ten-frame-wrapper">
+      <div class="ten-frame">
+        <div class="cell filled"></div><div class="cell filled"></div><div class="cell filled red"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <span class="ten-frame-expr">2 + 1 = 3</span>
+    </div>
+  </div>
+
+  <div class="section-title">Trouve le nombre manquant !</div>
+
+  <div class="problems">
+    <div class="problem"><span class="num">1.</span><span class="expr">1 + 1 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">2.</span><span class="expr">2 + 1 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">3.</span><span class="expr">1 + 2 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">4.</span><span class="expr">3 - 1 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">5.</span><span class="expr">3 - 2 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">6.</span><span class="expr"><span class="answer-blank"></span> + 1 = 3</span></div>
+    <div class="problem"><span class="num">7.</span><span class="expr">1 + <span class="answer-blank"></span> = 4</span></div>
+    <div class="problem"><span class="num">8.</span><span class="expr">2 + 2 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">9.</span><span class="expr">4 - 1 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">10.</span><span class="expr">4 - 2 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">11.</span><span class="expr"><span class="answer-blank"></span> + 2 = 4</span></div>
+    <div class="problem"><span class="num">12.</span><span class="expr">3 + 1 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">13.</span><span class="expr">4 - 3 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">14.</span><span class="expr">1 + <span class="answer-blank"></span> = 3</span></div>
+    <div class="problem"><span class="num">15.</span><span class="expr"><span class="answer-blank"></span> + 1 = 4</span></div>
+  </div>
+
+  <div class="self-assessment">
+    <div class="assessment-option"><span class="face">&#128513;</span><span class="label">Je sais bien !</span></div>
+    <div class="assessment-option"><span class="face">&#128528;</span><span class="label">Un peu difficile</span></div>
+    <div class="assessment-option"><span class="face">&#128543;</span><span class="label">Difficile</span></div>
+  </div>
+  <div class="page-number">1 / 8</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- WEEK 2: Number bonds within 5                                -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <h1>Semaine 2</h1>
+    <div class="topic">Les amis des nombres (jusqu'a 5)</div>
+    <div class="info-line">
+      <span>Prenom : <span class="blank"></span></span>
+      <span>Date : <span class="blank"></span></span>
+    </div>
+  </div>
+
+  <div style="display:flex; justify-content:space-around; margin: 3mm 0 4mm 0;">
+    <div class="ten-frame-wrapper">
+      <div class="ten-frame">
+        <div class="cell filled"></div><div class="cell filled"></div><div class="cell filled"></div><div class="cell filled red"></div><div class="cell filled red"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <span class="ten-frame-expr">3 + 2 = 5</span>
+    </div>
+    <div class="ten-frame-wrapper">
+      <div class="ten-frame">
+        <div class="cell filled"></div><div class="cell filled"></div><div class="cell filled"></div><div class="cell filled"></div><div class="cell filled red"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <span class="ten-frame-expr">4 + 1 = 5</span>
+    </div>
+  </div>
+
+  <div class="section-title">Trouve le nombre manquant !</div>
+
+  <div class="problems">
+    <div class="problem"><span class="num">1.</span><span class="expr">2 + 3 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">2.</span><span class="expr">4 + 1 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">3.</span><span class="expr">5 - 2 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">4.</span><span class="expr">5 - 3 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">5.</span><span class="expr"><span class="answer-blank"></span> + 3 = 5</span></div>
+    <div class="problem"><span class="num">6.</span><span class="expr">1 + <span class="answer-blank"></span> = 5</span></div>
+    <div class="problem"><span class="num">7.</span><span class="expr">5 - 1 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">8.</span><span class="expr">3 + <span class="answer-blank"></span> = 5</span></div>
+    <div class="problem"><span class="num">9.</span><span class="expr">5 - 4 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">10.</span><span class="expr"><span class="answer-blank"></span> + 1 = 5</span></div>
+    <div class="problem"><span class="num">11.</span><span class="expr">2 + <span class="answer-blank"></span> = 5</span></div>
+    <div class="problem"><span class="num">12.</span><span class="expr">5 - 5 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">13.</span><span class="expr"><span class="answer-blank"></span> + 4 = 5</span></div>
+    <div class="problem"><span class="num">14.</span><span class="expr">0 + 5 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">15.</span><span class="expr">5 - <span class="answer-blank"></span> = 2</span></div>
+  </div>
+
+  <div class="self-assessment">
+    <div class="assessment-option"><span class="face">&#128513;</span><span class="label">Je sais bien !</span></div>
+    <div class="assessment-option"><span class="face">&#128528;</span><span class="label">Un peu difficile</span></div>
+    <div class="assessment-option"><span class="face">&#128543;</span><span class="label">Difficile</span></div>
+  </div>
+  <div class="page-number">2 / 8</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- WEEK 3: Number bonds 6-8                                     -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <h1>Semaine 3</h1>
+    <div class="topic">Les amis des nombres (6, 7 et 8)</div>
+    <div class="info-line">
+      <span>Prenom : <span class="blank"></span></span>
+      <span>Date : <span class="blank"></span></span>
+    </div>
+  </div>
+
+  <div style="display:flex; justify-content:space-around; margin: 3mm 0 4mm 0;">
+    <div class="ten-frame-wrapper">
+      <div class="ten-frame">
+        <div class="cell filled"></div><div class="cell filled"></div><div class="cell filled"></div><div class="cell filled"></div><div class="cell filled red"></div>
+        <div class="cell filled red"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <span class="ten-frame-expr">4 + 2 = 6</span>
+    </div>
+    <div class="ten-frame-wrapper">
+      <div class="ten-frame">
+        <div class="cell filled"></div><div class="cell filled"></div><div class="cell filled"></div><div class="cell filled"></div><div class="cell filled"></div>
+        <div class="cell filled red"></div><div class="cell filled red"></div><div class="cell filled red"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <span class="ten-frame-expr">5 + 3 = 8</span>
+    </div>
+  </div>
+
+  <div class="section-title">Trouve le nombre manquant !</div>
+
+  <div class="problems">
+    <div class="problem"><span class="num">1.</span><span class="expr">3 + 3 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">2.</span><span class="expr">4 + 2 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">3.</span><span class="expr">5 + 1 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">4.</span><span class="expr">7 - 3 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">5.</span><span class="expr"><span class="answer-blank"></span> + 2 = 8</span></div>
+    <div class="problem"><span class="num">6.</span><span class="expr">5 + <span class="answer-blank"></span> = 7</span></div>
+    <div class="problem"><span class="num">7.</span><span class="expr">8 - 3 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">8.</span><span class="expr">4 + 3 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">9.</span><span class="expr">6 - 4 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">10.</span><span class="expr"><span class="answer-blank"></span> + 5 = 8</span></div>
+    <div class="problem"><span class="num">11.</span><span class="expr">8 - 5 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">12.</span><span class="expr">3 + <span class="answer-blank"></span> = 7</span></div>
+    <div class="problem"><span class="num">13.</span><span class="expr">6 - 2 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">14.</span><span class="expr">7 - <span class="answer-blank"></span> = 4</span></div>
+    <div class="problem"><span class="num">15.</span><span class="expr">2 + <span class="answer-blank"></span> = 6</span></div>
+  </div>
+
+  <div class="self-assessment">
+    <div class="assessment-option"><span class="face">&#128513;</span><span class="label">Je sais bien !</span></div>
+    <div class="assessment-option"><span class="face">&#128528;</span><span class="label">Un peu difficile</span></div>
+    <div class="assessment-option"><span class="face">&#128543;</span><span class="label">Difficile</span></div>
+  </div>
+  <div class="page-number">3 / 8</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- WEEK 4: Number bonds 9-10, complements to 10                 -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <h1>Semaine 4</h1>
+    <div class="topic">Les amis de 10</div>
+    <div class="info-line">
+      <span>Prenom : <span class="blank"></span></span>
+      <span>Date : <span class="blank"></span></span>
+    </div>
+  </div>
+
+  <div style="display:flex; justify-content:space-around; margin: 3mm 0 4mm 0;">
+    <div class="ten-frame-wrapper">
+      <div class="ten-frame">
+        <div class="cell filled"></div><div class="cell filled"></div><div class="cell filled"></div><div class="cell filled"></div><div class="cell filled"></div>
+        <div class="cell filled red"></div><div class="cell filled red"></div><div class="cell filled red"></div><div class="cell filled red"></div><div class="cell"></div>
+      </div>
+      <span class="ten-frame-expr">5 + 4 = 9</span>
+    </div>
+    <div class="ten-frame-wrapper">
+      <div class="ten-frame">
+        <div class="cell filled"></div><div class="cell filled"></div><div class="cell filled"></div><div class="cell filled"></div><div class="cell filled"></div>
+        <div class="cell filled red"></div><div class="cell filled red"></div><div class="cell filled red"></div><div class="cell filled red"></div><div class="cell filled red"></div>
+      </div>
+      <span class="ten-frame-expr">5 + 5 = 10</span>
+    </div>
+  </div>
+
+  <div class="section-title">Trouve le nombre manquant !</div>
+
+  <div class="problems">
+    <div class="problem"><span class="num">1.</span><span class="expr">5 + 4 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">2.</span><span class="expr">6 + 3 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">3.</span><span class="expr">7 + <span class="answer-blank"></span> = 9</span></div>
+    <div class="problem"><span class="num">4.</span><span class="expr">9 - 4 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">5.</span><span class="expr"><span class="answer-blank"></span> + 3 = 9</span></div>
+    <div class="problem"><span class="num">6.</span><span class="expr">10 - 3 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">7.</span><span class="expr">6 + 4 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">8.</span><span class="expr">10 - 5 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">9.</span><span class="expr">8 + <span class="answer-blank"></span> = 10</span></div>
+    <div class="problem"><span class="num">10.</span><span class="expr">10 - 7 = <span class="answer-blank"></span></span></div>
+  </div>
+
+  <div class="complement-section">
+    <h3>Combien pour faire 10 ?</h3>
+    <div class="complement-problems">
+      <div class="problem"><span class="num">11.</span><span class="expr"><span class="answer-blank"></span> + 9 = 10</span></div>
+      <div class="problem"><span class="num">12.</span><span class="expr">4 + <span class="answer-blank"></span> = 10</span></div>
+      <div class="problem"><span class="num">13.</span><span class="expr"><span class="answer-blank"></span> + 3 = 10</span></div>
+      <div class="problem"><span class="num">14.</span><span class="expr">2 + <span class="answer-blank"></span> = 10</span></div>
+      <div class="problem"><span class="num">15.</span><span class="expr"><span class="answer-blank"></span> + 5 = 10</span></div>
+    </div>
+  </div>
+
+  <div class="self-assessment">
+    <div class="assessment-option"><span class="face">&#128513;</span><span class="label">Je sais bien !</span></div>
+    <div class="assessment-option"><span class="face">&#128528;</span><span class="label">Un peu difficile</span></div>
+    <div class="assessment-option"><span class="face">&#128543;</span><span class="label">Difficile</span></div>
+  </div>
+  <div class="page-number">4 / 8</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- WEEK 5: Two-digit +/-1, +/-2 WITHOUT crossing tens           -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <h1>Semaine 5</h1>
+    <div class="topic">+1, -1, +2, -2 (sans passage de dizaine)</div>
+    <div class="info-line">
+      <span>Prenom : <span class="blank"></span></span>
+      <span>Date : <span class="blank"></span></span>
+    </div>
+  </div>
+
+  <!-- Mini hundred chart -->
+  <div class="hundred-chart-container">
+    <div class="label">Tableau des nombres</div>
+    <div class="hundred-chart">
+      <div class="hc-cell">1</div><div class="hc-cell">2</div><div class="hc-cell">3</div><div class="hc-cell">4</div><div class="hc-cell">5</div><div class="hc-cell">6</div><div class="hc-cell">7</div><div class="hc-cell">8</div><div class="hc-cell">9</div><div class="hc-cell tens">10</div>
+      <div class="hc-cell">11</div><div class="hc-cell">12</div><div class="hc-cell">13</div><div class="hc-cell">14</div><div class="hc-cell">15</div><div class="hc-cell">16</div><div class="hc-cell">17</div><div class="hc-cell">18</div><div class="hc-cell">19</div><div class="hc-cell tens">20</div>
+      <div class="hc-cell">21</div><div class="hc-cell">22</div><div class="hc-cell">23</div><div class="hc-cell">24</div><div class="hc-cell">25</div><div class="hc-cell">26</div><div class="hc-cell">27</div><div class="hc-cell">28</div><div class="hc-cell">29</div><div class="hc-cell tens">30</div>
+      <div class="hc-cell">31</div><div class="hc-cell">32</div><div class="hc-cell">33</div><div class="hc-cell">34</div><div class="hc-cell">35</div><div class="hc-cell">36</div><div class="hc-cell">37</div><div class="hc-cell">38</div><div class="hc-cell">39</div><div class="hc-cell tens">40</div>
+      <div class="hc-cell">41</div><div class="hc-cell">42</div><div class="hc-cell">43</div><div class="hc-cell">44</div><div class="hc-cell">45</div><div class="hc-cell">46</div><div class="hc-cell">47</div><div class="hc-cell">48</div><div class="hc-cell">49</div><div class="hc-cell tens">50</div>
+      <div class="hc-cell">51</div><div class="hc-cell">52</div><div class="hc-cell">53</div><div class="hc-cell">54</div><div class="hc-cell">55</div><div class="hc-cell">56</div><div class="hc-cell">57</div><div class="hc-cell">58</div><div class="hc-cell">59</div><div class="hc-cell tens">60</div>
+      <div class="hc-cell">61</div><div class="hc-cell">62</div><div class="hc-cell">63</div><div class="hc-cell">64</div><div class="hc-cell">65</div><div class="hc-cell">66</div><div class="hc-cell">67</div><div class="hc-cell">68</div><div class="hc-cell">69</div><div class="hc-cell tens">70</div>
+      <div class="hc-cell">71</div><div class="hc-cell">72</div><div class="hc-cell">73</div><div class="hc-cell">74</div><div class="hc-cell">75</div><div class="hc-cell">76</div><div class="hc-cell">77</div><div class="hc-cell">78</div><div class="hc-cell">79</div><div class="hc-cell tens">80</div>
+      <div class="hc-cell">81</div><div class="hc-cell">82</div><div class="hc-cell">83</div><div class="hc-cell">84</div><div class="hc-cell">85</div><div class="hc-cell">86</div><div class="hc-cell">87</div><div class="hc-cell">88</div><div class="hc-cell">89</div><div class="hc-cell tens">90</div>
+      <div class="hc-cell">91</div><div class="hc-cell">92</div><div class="hc-cell">93</div><div class="hc-cell">94</div><div class="hc-cell">95</div><div class="hc-cell">96</div><div class="hc-cell">97</div><div class="hc-cell">98</div><div class="hc-cell">99</div><div class="hc-cell tens">100</div>
+    </div>
+  </div>
+
+  <div class="section-title">Calcule !</div>
+
+  <div class="problems">
+    <div class="problem"><span class="num">1.</span><span class="expr">34 + 1 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">2.</span><span class="expr">67 - 2 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">3.</span><span class="expr">45 + 2 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">4.</span><span class="expr">83 - 1 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">5.</span><span class="expr">52 + 1 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">6.</span><span class="expr">76 - 2 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">7.</span><span class="expr">21 + 2 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">8.</span><span class="expr">58 - 1 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">9.</span><span class="expr">43 + 2 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">10.</span><span class="expr">95 - 2 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">11.</span><span class="expr">62 + 1 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">12.</span><span class="expr">37 - 1 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">13.</span><span class="expr">84 + 2 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">14.</span><span class="expr">56 - 2 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">15.</span><span class="expr">71 + 2 = <span class="answer-blank"></span></span></div>
+  </div>
+
+  <div class="self-assessment">
+    <div class="assessment-option"><span class="face">&#128513;</span><span class="label">Je sais bien !</span></div>
+    <div class="assessment-option"><span class="face">&#128528;</span><span class="label">Un peu difficile</span></div>
+    <div class="assessment-option"><span class="face">&#128543;</span><span class="label">Difficile</span></div>
+  </div>
+  <div class="page-number">5 / 8</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- WEEK 6: Two-digit +/-1, +/-2 WITH crossing tens              -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <h1>Semaine 6</h1>
+    <div class="topic">+1, -1, +2, -2 (avec passage de dizaine)</div>
+    <div class="info-line">
+      <span>Prenom : <span class="blank"></span></span>
+      <span>Date : <span class="blank"></span></span>
+    </div>
+  </div>
+
+  <!-- Mini hundred chart -->
+  <div class="hundred-chart-container">
+    <div class="label">Tableau des nombres</div>
+    <div class="hundred-chart">
+      <div class="hc-cell">1</div><div class="hc-cell">2</div><div class="hc-cell">3</div><div class="hc-cell">4</div><div class="hc-cell">5</div><div class="hc-cell">6</div><div class="hc-cell">7</div><div class="hc-cell">8</div><div class="hc-cell">9</div><div class="hc-cell tens">10</div>
+      <div class="hc-cell">11</div><div class="hc-cell">12</div><div class="hc-cell">13</div><div class="hc-cell">14</div><div class="hc-cell">15</div><div class="hc-cell">16</div><div class="hc-cell">17</div><div class="hc-cell">18</div><div class="hc-cell">19</div><div class="hc-cell tens">20</div>
+      <div class="hc-cell">21</div><div class="hc-cell">22</div><div class="hc-cell">23</div><div class="hc-cell">24</div><div class="hc-cell">25</div><div class="hc-cell">26</div><div class="hc-cell">27</div><div class="hc-cell">28</div><div class="hc-cell">29</div><div class="hc-cell tens">30</div>
+      <div class="hc-cell">31</div><div class="hc-cell">32</div><div class="hc-cell">33</div><div class="hc-cell">34</div><div class="hc-cell">35</div><div class="hc-cell">36</div><div class="hc-cell">37</div><div class="hc-cell">38</div><div class="hc-cell">39</div><div class="hc-cell tens">40</div>
+      <div class="hc-cell">41</div><div class="hc-cell">42</div><div class="hc-cell">43</div><div class="hc-cell">44</div><div class="hc-cell">45</div><div class="hc-cell">46</div><div class="hc-cell">47</div><div class="hc-cell">48</div><div class="hc-cell">49</div><div class="hc-cell tens">50</div>
+      <div class="hc-cell">51</div><div class="hc-cell">52</div><div class="hc-cell">53</div><div class="hc-cell">54</div><div class="hc-cell">55</div><div class="hc-cell">56</div><div class="hc-cell">57</div><div class="hc-cell">58</div><div class="hc-cell">59</div><div class="hc-cell tens">60</div>
+      <div class="hc-cell">61</div><div class="hc-cell">62</div><div class="hc-cell">63</div><div class="hc-cell">64</div><div class="hc-cell">65</div><div class="hc-cell">66</div><div class="hc-cell">67</div><div class="hc-cell">68</div><div class="hc-cell">69</div><div class="hc-cell tens">70</div>
+      <div class="hc-cell">71</div><div class="hc-cell">72</div><div class="hc-cell">73</div><div class="hc-cell">74</div><div class="hc-cell">75</div><div class="hc-cell">76</div><div class="hc-cell">77</div><div class="hc-cell">78</div><div class="hc-cell">79</div><div class="hc-cell tens">80</div>
+      <div class="hc-cell">81</div><div class="hc-cell">82</div><div class="hc-cell">83</div><div class="hc-cell">84</div><div class="hc-cell">85</div><div class="hc-cell">86</div><div class="hc-cell">87</div><div class="hc-cell">88</div><div class="hc-cell">89</div><div class="hc-cell tens">90</div>
+      <div class="hc-cell">91</div><div class="hc-cell">92</div><div class="hc-cell">93</div><div class="hc-cell">94</div><div class="hc-cell">95</div><div class="hc-cell">96</div><div class="hc-cell">97</div><div class="hc-cell">98</div><div class="hc-cell">99</div><div class="hc-cell tens">100</div>
+    </div>
+  </div>
+
+  <div class="section-title">Calcule ! (Attention au passage de dizaine)</div>
+
+  <div class="problems">
+    <div class="problem"><span class="num">1.</span><span class="expr">29 + 1 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">2.</span><span class="expr">38 + 2 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">3.</span><span class="expr">40 - 1 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">4.</span><span class="expr">51 - 2 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">5.</span><span class="expr">59 + 1 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">6.</span><span class="expr">70 - 1 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">7.</span><span class="expr">49 + 2 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">8.</span><span class="expr">30 - 2 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">9.</span><span class="expr">79 + 1 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">10.</span><span class="expr">60 - 2 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">11.</span><span class="expr">89 + 2 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">12.</span><span class="expr">50 - 1 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">13.</span><span class="expr">69 + 1 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">14.</span><span class="expr">20 - 2 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">15.</span><span class="expr">99 + 1 = <span class="answer-blank"></span></span></div>
+  </div>
+
+  <div class="self-assessment">
+    <div class="assessment-option"><span class="face">&#128513;</span><span class="label">Je sais bien !</span></div>
+    <div class="assessment-option"><span class="face">&#128528;</span><span class="label">Un peu difficile</span></div>
+    <div class="assessment-option"><span class="face">&#128543;</span><span class="label">Difficile</span></div>
+  </div>
+  <div class="page-number">6 / 8</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- WEEK 7: +/-10                                                -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <h1>Semaine 7</h1>
+    <div class="topic">+10 et -10</div>
+    <div class="info-line">
+      <span>Prenom : <span class="blank"></span></span>
+      <span>Date : <span class="blank"></span></span>
+    </div>
+  </div>
+
+  <div class="hint-box">
+    <div class="hint-title">Astuce : Quand on ajoute 10, le chiffre des dizaines change, pas les unites !</div>
+    <div class="hint-example">34 + 10 = 44 &nbsp;&nbsp;&nbsp; 67 - 10 = 57</div>
+  </div>
+
+  <!-- Mini hundred chart -->
+  <div class="hundred-chart-container">
+    <div class="label">Tableau des nombres (regarde les colonnes !)</div>
+    <div class="hundred-chart">
+      <div class="hc-cell">1</div><div class="hc-cell">2</div><div class="hc-cell">3</div><div class="hc-cell">4</div><div class="hc-cell">5</div><div class="hc-cell">6</div><div class="hc-cell">7</div><div class="hc-cell">8</div><div class="hc-cell">9</div><div class="hc-cell tens">10</div>
+      <div class="hc-cell">11</div><div class="hc-cell">12</div><div class="hc-cell">13</div><div class="hc-cell">14</div><div class="hc-cell">15</div><div class="hc-cell">16</div><div class="hc-cell">17</div><div class="hc-cell">18</div><div class="hc-cell">19</div><div class="hc-cell tens">20</div>
+      <div class="hc-cell">21</div><div class="hc-cell">22</div><div class="hc-cell">23</div><div class="hc-cell">24</div><div class="hc-cell">25</div><div class="hc-cell">26</div><div class="hc-cell">27</div><div class="hc-cell">28</div><div class="hc-cell">29</div><div class="hc-cell tens">30</div>
+      <div class="hc-cell">31</div><div class="hc-cell">32</div><div class="hc-cell">33</div><div class="hc-cell">34</div><div class="hc-cell">35</div><div class="hc-cell">36</div><div class="hc-cell">37</div><div class="hc-cell">38</div><div class="hc-cell">39</div><div class="hc-cell tens">40</div>
+      <div class="hc-cell">41</div><div class="hc-cell">42</div><div class="hc-cell">43</div><div class="hc-cell">44</div><div class="hc-cell">45</div><div class="hc-cell">46</div><div class="hc-cell">47</div><div class="hc-cell">48</div><div class="hc-cell">49</div><div class="hc-cell tens">50</div>
+      <div class="hc-cell">51</div><div class="hc-cell">52</div><div class="hc-cell">53</div><div class="hc-cell">54</div><div class="hc-cell">55</div><div class="hc-cell">56</div><div class="hc-cell">57</div><div class="hc-cell">58</div><div class="hc-cell">59</div><div class="hc-cell tens">60</div>
+      <div class="hc-cell">61</div><div class="hc-cell">62</div><div class="hc-cell">63</div><div class="hc-cell">64</div><div class="hc-cell">65</div><div class="hc-cell">66</div><div class="hc-cell">67</div><div class="hc-cell">68</div><div class="hc-cell">69</div><div class="hc-cell tens">70</div>
+      <div class="hc-cell">71</div><div class="hc-cell">72</div><div class="hc-cell">73</div><div class="hc-cell">74</div><div class="hc-cell">75</div><div class="hc-cell">76</div><div class="hc-cell">77</div><div class="hc-cell">78</div><div class="hc-cell">79</div><div class="hc-cell tens">80</div>
+      <div class="hc-cell">81</div><div class="hc-cell">82</div><div class="hc-cell">83</div><div class="hc-cell">84</div><div class="hc-cell">85</div><div class="hc-cell">86</div><div class="hc-cell">87</div><div class="hc-cell">88</div><div class="hc-cell">89</div><div class="hc-cell tens">90</div>
+      <div class="hc-cell">91</div><div class="hc-cell">92</div><div class="hc-cell">93</div><div class="hc-cell">94</div><div class="hc-cell">95</div><div class="hc-cell">96</div><div class="hc-cell">97</div><div class="hc-cell">98</div><div class="hc-cell">99</div><div class="hc-cell tens">100</div>
+    </div>
+  </div>
+
+  <div class="section-title">Calcule !</div>
+
+  <div class="problems">
+    <div class="problem"><span class="num">1.</span><span class="expr">34 + 10 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">2.</span><span class="expr">67 - 10 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">3.</span><span class="expr">45 + 10 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">4.</span><span class="expr">81 - 10 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">5.</span><span class="expr">23 + 10 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">6.</span><span class="expr">56 - 10 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">7.</span><span class="expr">72 + 10 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">8.</span><span class="expr">90 - 10 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">9.</span><span class="expr">15 + 10 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">10.</span><span class="expr">48 - 10 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">11.</span><span class="expr">63 + 10 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">12.</span><span class="expr">39 - 10 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">13.</span><span class="expr">54 + 10 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">14.</span><span class="expr">77 - 10 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">15.</span><span class="expr">86 + 10 = <span class="answer-blank"></span></span></div>
+  </div>
+
+  <div class="self-assessment">
+    <div class="assessment-option"><span class="face">&#128513;</span><span class="label">Je sais bien !</span></div>
+    <div class="assessment-option"><span class="face">&#128528;</span><span class="label">Un peu difficile</span></div>
+    <div class="assessment-option"><span class="face">&#128543;</span><span class="label">Difficile</span></div>
+  </div>
+  <div class="page-number">7 / 8</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- WEEK 8: +/-5 with decomposition                              -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <h1>Semaine 8</h1>
+    <div class="topic">+5 et -5 (decomposition)</div>
+    <div class="info-line">
+      <span>Prenom : <span class="blank"></span></span>
+      <span>Date : <span class="blank"></span></span>
+    </div>
+  </div>
+
+  <div class="hint-box">
+    <div class="hint-title">Astuce : Decompose le 5 pour passer par la dizaine !</div>
+    <div class="hint-example">
+      36 + 5 = 36 + <strong>4</strong> + <strong>1</strong> = 40 + 1 = <strong>41</strong><br>
+      53 - 5 = 53 - <strong>3</strong> - <strong>2</strong> = 50 - 2 = <strong>48</strong>
+    </div>
+  </div>
+
+  <div class="section-title">Utilise l'astuce pour calculer !</div>
+
+  <div class="problems single-col">
+    <div class="problem" style="flex-direction:column; align-items:flex-start;">
+      <div><span class="num">1.</span><span class="expr">36 + 5 = 36 + <span class="answer-blank" style="width:10mm;"></span> + <span class="answer-blank" style="width:10mm;"></span> = <span class="answer-blank"></span></span></div>
+    </div>
+    <div class="problem" style="flex-direction:column; align-items:flex-start;">
+      <div><span class="num">2.</span><span class="expr">42 - 5 = 42 - <span class="answer-blank" style="width:10mm;"></span> - <span class="answer-blank" style="width:10mm;"></span> = <span class="answer-blank"></span></span></div>
+    </div>
+    <div class="problem" style="flex-direction:column; align-items:flex-start;">
+      <div><span class="num">3.</span><span class="expr">57 + 5 = 57 + <span class="answer-blank" style="width:10mm;"></span> + <span class="answer-blank" style="width:10mm;"></span> = <span class="answer-blank"></span></span></div>
+    </div>
+    <div class="problem" style="flex-direction:column; align-items:flex-start;">
+      <div><span class="num">4.</span><span class="expr">82 - 5 = 82 - <span class="answer-blank" style="width:10mm;"></span> - <span class="answer-blank" style="width:10mm;"></span> = <span class="answer-blank"></span></span></div>
+    </div>
+    <div class="problem" style="flex-direction:column; align-items:flex-start;">
+      <div><span class="num">5.</span><span class="expr">28 + 5 = 28 + <span class="answer-blank" style="width:10mm;"></span> + <span class="answer-blank" style="width:10mm;"></span> = <span class="answer-blank"></span></span></div>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:4mm;">Calcule directement !</div>
+
+  <div class="problems">
+    <div class="problem"><span class="num">6.</span><span class="expr">45 + 5 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">7.</span><span class="expr">63 - 5 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">8.</span><span class="expr">17 + 5 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">9.</span><span class="expr">74 - 5 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">10.</span><span class="expr">56 + 5 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">11.</span><span class="expr">91 - 5 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">12.</span><span class="expr">38 + 5 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">13.</span><span class="expr">65 - 5 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">14.</span><span class="expr">49 + 5 = <span class="answer-blank"></span></span></div>
+    <div class="problem"><span class="num">15.</span><span class="expr">83 - 5 = <span class="answer-blank"></span></span></div>
+  </div>
+
+  <div class="self-assessment">
+    <div class="assessment-option"><span class="face">&#128513;</span><span class="label">Je sais bien !</span></div>
+    <div class="assessment-option"><span class="face">&#128528;</span><span class="label">Un peu difficile</span></div>
+    <div class="assessment-option"><span class="face">&#128543;</span><span class="label">Difficile</span></div>
+  </div>
+  <div class="page-number">8 / 8</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ANSWERS PAGE (for parents)                                   -->
+<!-- ============================================================ -->
+<div class="page answers-page">
+  <h1>Reponses (pour les parents)</h1>
+
+  <div class="week-answers">
+    <h3>Semaine 1 -- Les amis des nombres (jusqu'a 4)</h3>
+    <div class="answer-list">
+      <span>1. 2</span> <span>2. 3</span> <span>3. 3</span> <span>4. 2</span> <span>5. 1</span>
+      <span>6. 2</span> <span>7. 3</span> <span>8. 4</span> <span>9. 3</span> <span>10. 2</span>
+      <span>11. 2</span> <span>12. 4</span> <span>13. 1</span> <span>14. 2</span> <span>15. 3</span>
+    </div>
+  </div>
+
+  <div class="week-answers">
+    <h3>Semaine 2 -- Les amis des nombres (jusqu'a 5)</h3>
+    <div class="answer-list">
+      <span>1. 5</span> <span>2. 5</span> <span>3. 3</span> <span>4. 2</span> <span>5. 2</span>
+      <span>6. 4</span> <span>7. 4</span> <span>8. 2</span> <span>9. 1</span> <span>10. 4</span>
+      <span>11. 3</span> <span>12. 0</span> <span>13. 1</span> <span>14. 5</span> <span>15. 3</span>
+    </div>
+  </div>
+
+  <div class="week-answers">
+    <h3>Semaine 3 -- Les amis des nombres (6, 7, 8)</h3>
+    <div class="answer-list">
+      <span>1. 6</span> <span>2. 6</span> <span>3. 6</span> <span>4. 4</span> <span>5. 6</span>
+      <span>6. 2</span> <span>7. 5</span> <span>8. 7</span> <span>9. 2</span> <span>10. 3</span>
+      <span>11. 3</span> <span>12. 4</span> <span>13. 4</span> <span>14. 3</span> <span>15. 4</span>
+    </div>
+  </div>
+
+  <div class="week-answers">
+    <h3>Semaine 4 -- Les amis de 10</h3>
+    <div class="answer-list">
+      <span>1. 9</span> <span>2. 9</span> <span>3. 2</span> <span>4. 5</span> <span>5. 6</span>
+      <span>6. 7</span> <span>7. 10</span> <span>8. 5</span> <span>9. 2</span> <span>10. 3</span>
+      <span>11. 1</span> <span>12. 6</span> <span>13. 7</span> <span>14. 8</span> <span>15. 5</span>
+    </div>
+  </div>
+
+  <div class="week-answers">
+    <h3>Semaine 5 -- +1, -1, +2, -2 (sans passage)</h3>
+    <div class="answer-list">
+      <span>1. 35</span> <span>2. 65</span> <span>3. 47</span> <span>4. 82</span> <span>5. 53</span>
+      <span>6. 74</span> <span>7. 23</span> <span>8. 57</span> <span>9. 45</span> <span>10. 93</span>
+      <span>11. 63</span> <span>12. 36</span> <span>13. 86</span> <span>14. 54</span> <span>15. 73</span>
+    </div>
+  </div>
+
+  <div class="week-answers">
+    <h3>Semaine 6 -- +1, -1, +2, -2 (avec passage)</h3>
+    <div class="answer-list">
+      <span>1. 30</span> <span>2. 40</span> <span>3. 39</span> <span>4. 49</span> <span>5. 60</span>
+      <span>6. 69</span> <span>7. 51</span> <span>8. 28</span> <span>9. 80</span> <span>10. 58</span>
+      <span>11. 91</span> <span>12. 49</span> <span>13. 70</span> <span>14. 18</span> <span>15. 100</span>
+    </div>
+  </div>
+
+  <div class="week-answers">
+    <h3>Semaine 7 -- +10, -10</h3>
+    <div class="answer-list">
+      <span>1. 44</span> <span>2. 57</span> <span>3. 55</span> <span>4. 71</span> <span>5. 33</span>
+      <span>6. 46</span> <span>7. 82</span> <span>8. 80</span> <span>9. 25</span> <span>10. 38</span>
+      <span>11. 73</span> <span>12. 29</span> <span>13. 64</span> <span>14. 67</span> <span>15. 96</span>
+    </div>
+  </div>
+
+  <div class="week-answers">
+    <h3>Semaine 8 -- +5, -5</h3>
+    <div class="answer-list">
+      <span>1. 36+4+1 = 41</span> <span>2. 42-2-3 = 37</span> <span>3. 57+3+2 = 62</span>
+      <span>4. 82-2-3 = 77</span> <span>5. 28+2+3 = 33</span>
+      <span>6. 50</span> <span>7. 58</span> <span>8. 22</span> <span>9. 69</span> <span>10. 61</span>
+      <span>11. 86</span> <span>12. 43</span> <span>13. 60</span> <span>14. 54</span> <span>15. 78</span>
+    </div>
+  </div>
+
+  <div class="page-number" style="font-size:9pt; color:#bbb;">Reponses</div>
+</div>
+
+</body>
+</html>
