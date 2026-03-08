@@ -569,28 +569,6 @@ const DIFFICULTIES = [
 ];
 const MODES = [
   {
-    id: 'facts5',
-    pill: 'green',
-    title: 'Additions et soustractions 0-5',
-    zh: '0到5加减法',
-    desc: '20 questions de faits de base. / 20道0到5基础加减法。',
-    prompt: 'On calcule avec les faits, on ne compte pas. / 用“数的组成”来算，不靠数数。',
-    count: 20,
-    fixedCount: true,
-    generator: genFacts5
-  },
-  {
-    id: 'facts10',
-    pill: 'green',
-    title: 'Additions et soustractions 0-10',
-    zh: '0到10加减法',
-    desc: '20 questions de faits de base. / 20道0到10基础加减法。',
-    prompt: 'On cherche les nombres amis et les decompositions. / 找朋友数和分解关系，不靠往后数。',
-    count: 20,
-    fixedCount: true,
-    generator: genFacts10
-  },
-  {
     id: 'pm10',
     pill: 'blue',
     title: 'Plus 10, moins 10',
@@ -659,6 +637,28 @@ const MODES = [
     prompt: 'Va a la dizaine, puis termine. / 先到整十，再走剩下的。',
     count: 8,
     generator: genPm5
+  },
+  {
+    id: 'facts5',
+    pill: 'green',
+    title: 'Additions et soustractions 0-5',
+    zh: '0到5加减法',
+    desc: '20 questions de faits de base. / 20道0到5基础加减法。',
+    prompt: 'On calcule avec les faits, on ne compte pas. / 用“数的组成”来算，不靠数数。',
+    count: 20,
+    fixedCount: true,
+    generator: genFacts5
+  },
+  {
+    id: 'facts10',
+    pill: 'green',
+    title: 'Additions et soustractions 0-10',
+    zh: '0到10加减法',
+    desc: '20 questions de faits de base. / 20道0到10基础加减法。',
+    prompt: 'On cherche les nombres amis et les decompositions. / 找朋友数和分解关系，不靠往后数。',
+    count: 20,
+    fixedCount: true,
+    generator: genFacts10
   },
   {
     id: 'mix',
