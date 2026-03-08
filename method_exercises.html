@@ -639,6 +639,17 @@ const MODES = [
     generator: genPm5
   },
   {
+    id: 'pm12_100',
+    pill: 'orange',
+    title: 'Plus 1, moins 1, plus 2, moins 2 jusqu\'a 100',
+    zh: '100以内 ±1 和 ±2',
+    desc: '30 questions sur les nombres jusqu\'a 100. / 30道100以内的±1和±2练习。',
+    prompt: 'On regarde les unites, les dizaines et les passages. / 看个位、十位和是否跨整十，不靠数数。',
+    count: 30,
+    fixedCount: true,
+    generator: genPm12To100
+  },
+  {
     id: 'facts5',
     pill: 'green',
     title: 'Additions et soustractions 0-5',
@@ -898,8 +909,44 @@ function genPm5(difficulty) {
   return packQuestion({ type: 'pm5_sub', text: `${a} - 5 = ?`, answer: a - 5, a });
 }
 
+function genPm12To100() {
+  const kind = randInt(1, 6);
+  if (kind === 1) {
+    const tens = randInt(1, 8) * 10;
+    const ones = randInt(1, 7);
+    const a = tens + ones;
+    return packQuestion({ type: 'pm1_easy_add', text: `${a} + 1 = ?`, answer: a + 1, a });
+  }
+  if (kind === 2) {
+    const tens = randInt(2, 10) * 10;
+    const a = tens;
+    return packQuestion({ type: 'pm1_cross_sub', text: `${a} - 1 = ?`, answer: a - 1, a });
+  }
+  if (kind === 3) {
+    const tens = randInt(1, 8) * 10;
+    const a = tens + 9;
+    return packQuestion({ type: 'pm1_cross_add', text: `${a} + 1 = ?`, answer: a + 1, a });
+  }
+  if (kind === 4) {
+    const tens = randInt(1, 8) * 10;
+    const ones = randInt(1, 6);
+    const a = tens + ones;
+    return packQuestion({ type: 'pm2_easy_add', text: `${a} + 2 = ?`, answer: a + 2, a });
+  }
+  if (kind === 5) {
+    const tens = randInt(2, 9) * 10;
+    const ones = randInt(1, 2);
+    const a = tens + ones;
+    return packQuestion({ type: 'pm2_cross_sub', text: `${a} - 2 = ?`, answer: a - 2, a });
+  }
+  const tens = randInt(1, 8) * 10;
+  const ones = randInt(8, 9);
+  const a = tens + ones;
+  return packQuestion({ type: 'pm2_cross_add', text: `${a} + 2 = ?`, answer: a + 2, a });
+}
+
 function genMix(difficulty) {
-  const gens = [genPm10, genPm1Easy, genPm1Cross, genPm2Easy, genBridge10, genBack10, genPm5];
+  const gens = [genPm10, genPm1Easy, genPm1Cross, genPm2Easy, genBridge10, genBack10, genPm5, genPm12To100];
   return gens[randInt(0, gens.length - 1)](difficulty);
 }
 
@@ -944,6 +991,19 @@ function explainSteps(q) {
     steps.push({ fr: add ? `${q.a % 10} + 2 = ${q.answer % 10}` : `${q.a % 10} - 2 = ${q.answer % 10}`, zh: add ? `${q.a % 10} + 2 = ${q.answer % 10}` : `${q.a % 10} - 2 = ${q.answer % 10}` });
     steps.push({ fr: `On ne passe pas une nouvelle dizaine, donc la dizaine reste la meme.`, zh: `这里不跨整十，所以十位不变。` });
     steps.push({ fr: `Reponse : ${q.answer}.`, zh: `答案是 ${q.answer}。` });
+  } else if (q.type === 'pm2_cross_add') {
+    const ones = q.a % 10;
+    const toTen = 10 - ones;
+    const rest = 2 - toTen;
+    steps.push({ fr: `On va d'abord jusqu'a la dizaine suivante.`, zh: `先到下一个整十。` });
+    steps.push({ fr: `${q.a} + ${toTen} = ${q.a + toTen}.`, zh: `${q.a} + ${toTen} = ${q.a + toTen}` });
+    steps.push({ fr: `Il reste ${rest}, donc ${q.a + toTen} + ${rest} = ${q.answer}.`, zh: `还剩 ${rest}，所以 ${q.a + toTen} + ${rest} = ${q.answer}` });
+  } else if (q.type === 'pm2_cross_sub') {
+    const ones = q.a % 10;
+    const rest = 2 - ones;
+    steps.push({ fr: `On recule d'abord jusqu'a la dizaine.`, zh: `先退回整十。` });
+    steps.push({ fr: `${q.a} - ${ones} = ${q.a - ones}.`, zh: `${q.a} - ${ones} = ${q.a - ones}` });
+    steps.push({ fr: `Il reste ${rest}, donc ${q.a - ones} - ${rest} = ${q.answer}.`, zh: `还剩 ${rest}，所以 ${q.a - ones} - ${rest} = ${q.answer}` });
   } else if (q.type === 'bridge10') {
     steps.push({ fr: `On veut aller a la dizaine suivante.`, zh: `这题先要到下一个整十。` });
     steps.push({ fr: `${q.a % 10} a besoin de ${q.needed} pour faire 10.`, zh: `${q.a % 10} 还差 ${q.needed} 才到 10。` });
@@ -1019,6 +1079,25 @@ function buildVisualFrames(q) {
   if (q.type === 'pm2_easy_add' || q.type === 'pm2_easy_sub') {
     return [
       { values: [q.a, q.answer], captionFr: 'On bouge de 2 sans changer de dizaine.', captionZh: '移动2，但不跨整十。' }
+    ];
+  }
+  if (q.type === 'pm2_cross_add') {
+    const ones = q.a % 10;
+    const toTen = 10 - ones;
+    const mid = q.a + toTen;
+    return [
+      { values: [q.a], captionFr: 'On est proche de la dizaine suivante.', captionZh: '先看到下一个整十很近。' },
+      { values: [q.a, mid], captionFr: `On ajoute ${toTen} pour atteindre ${mid}.`, captionZh: `先加 ${toTen} 到 ${mid}。` },
+      { values: [q.a, mid, q.answer], captionFr: 'Puis on ajoute le reste.', captionZh: '再加剩下的一点。' }
+    ];
+  }
+  if (q.type === 'pm2_cross_sub') {
+    const ones = q.a % 10;
+    const mid = q.a - ones;
+    return [
+      { values: [q.a], captionFr: 'On recule d’abord jusqu’a la dizaine.', captionZh: '先退回整十。' },
+      { values: [q.a, mid], captionFr: `On retire ${ones} pour atteindre ${mid}.`, captionZh: `先减 ${ones} 到 ${mid}。` },
+      { values: [q.a, mid, q.answer], captionFr: 'Puis on retire le reste.', captionZh: '再减剩下的一点。' }
     ];
   }
   if (q.type === 'bridge10') {
