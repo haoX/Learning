@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercices passerelle - Calcul mental CP</title>
+<style>
+:root{
+  --bg1:#edf7ff;
+  --bg2:#f8f1ff;
+  --bg3:#fff7eb;
+  --card:#ffffff;
+  --ink:#223447;
+  --muted:#6b7280;
+  --line:#e7eaf1;
+  --blue:#1d4ed8;
+  --pink:#ec4899;
+  --green:#e8f7e9;
+  --yellow:#fff5db;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Helvetica Neue",sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at right top, rgba(236,72,153,.10), transparent 22%),
+    radial-gradient(circle at left top, rgba(29,78,216,.10), transparent 22%),
+    linear-gradient(160deg,var(--bg1),var(--bg2) 55%,var(--bg3));
+  min-height:100vh;
+  padding:20px 16px 44px;
+}
+.page{max-width:1040px;margin:0 auto}
+.hero,.section,.block{
+  background:rgba(255,255,255,.88);
+  border:1px solid rgba(255,255,255,.76);
+  box-shadow:0 12px 30px rgba(63,78,100,.09);
+}
+.hero{border-radius:28px;padding:28px 22px;margin-bottom:18px}
+.eyebrow{display:inline-block;color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+h1{font-size:31px;line-height:1.15;margin-bottom:10px}
+.zh{display:block;color:var(--muted);font-size:.94em;margin-top:4px}
+.subtitle{font-size:15px;line-height:1.68;color:#334155}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.btn{text-decoration:none;border-radius:999px;padding:11px 16px;font-size:14px;font-weight:700;display:inline-flex;align-items:center;gap:8px}
+.btn.primary{background:linear-gradient(135deg,var(--blue),var(--pink));color:#fff}
+.btn.secondary{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.section{border-radius:24px;padding:22px 18px;margin-top:16px}
+.section h2{font-size:23px;margin-bottom:10px}
+.section p,.section li{font-size:15px;line-height:1.7;color:#334155}
+.section ul{padding-left:20px;margin:10px 0}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.block{grid-column:span 12;border-radius:22px;padding:18px 16px}
+.block h3{font-size:18px;margin-bottom:8px}
+.badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#edf3ff;color:var(--blue);font-size:12px;font-weight:800;margin-bottom:10px}
+.hint{background:var(--yellow);padding:12px;border-radius:16px;font-size:14px;line-height:1.6;margin:10px 0}
+.demo{
+  background:var(--green);
+  border-radius:16px;
+  padding:12px;
+  font-size:14px;
+  line-height:1.65;
+  margin:10px 0;
+}
+.practice{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px 14px;
+  margin-top:12px;
+  font-size:22px;
+  font-weight:800;
+}
+.practice div{
+  background:#fff;
+  border:1px dashed #cfd8e3;
+  border-radius:14px;
+  padding:12px 10px;
+  text-align:center;
+  min-height:56px;
+}
+details{
+  margin-top:12px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:#fff;
+  padding:10px 12px;
+}
+summary{cursor:pointer;font-weight:800}
+.answers{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px 14px;
+  margin-top:10px;
+  font-size:14px;
+}
+.answers div{padding:6px 0;border-bottom:1px solid #eef2f7}
+.footer{text-align:center;color:var(--muted);font-size:13px;margin-top:18px}
+@media (min-width:860px){
+  .block.half{grid-column:span 6}
+}
+@media (max-width:760px){
+  h1{font-size:26px}
+  .practice,.answers{grid-template-columns:1fr 1fr}
+}
+@media (max-width:520px){
+  .practice,.answers{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <section class="hero">
+    <div class="eyebrow">CP Bridge Exercises</div>
+    <h1>Exercices pour l'enfant<span class="zh">给孩子做的桥接练习</span></h1>
+    <p class="subtitle">Ces exercices suivent la methode : d'abord voir la structure, ensuite transferer, enfin aller vers l'automatisation, y compris pour <code>+5</code> et <code>-5</code>.<span class="zh">这些练习按“先看结构、再做迁移、最后自动化”的顺序设计，现在也把 <code>+5</code>、<code>-5</code> 加进来了，重点不是刷很多，而是让孩子真正从数数转向计算。</span></p>
+    <div class="actions">
+      <a class="btn primary" href="two_week_training_plan.html">🗓️ Plan 2 semaines / 两周计划</a>
+      <a class="btn secondary" href="method_report.html">📘 Rapport / 方法报告</a>
+      <a class="btn secondary" href="index.html">⬅ Accueil / 首页</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>1. Comment utiliser cette page<span class="zh">1. 这页怎么用</span></h2>
+    <ul>
+      <li>Faire un seul bloc a la fois.<span class="zh">一次只做一个练习块。</span></li>
+      <li>D'abord sans chrono, puis en petite serie rapide.<span class="zh">先不计时，稳定后再做快答。</span></li>
+      <li>Si l'enfant recompte, revenir au hundred chart.<span class="zh">如果孩子又回到数数，就先退回百数表。</span></li>
+      <li>Les reponses sont cachees en bas de chaque bloc pour les parents.<span class="zh">每组答案都折叠在下面，方便家长看，不直接暴露给孩子。</span></li>
+    </ul>
+  </section>
+
+  <div class="grid">
+    <section class="block half">
+      <div class="badge">Bloc A / A组</div>
+      <h3>+10 et -10<span class="zh">先练 ±10</span></h3>
+      <p>Objectif : voir que seule la dizaine change.<span class="zh">目标：看到只有十位变化。</span></p>
+      <div class="hint">Dire / 提示语： "Qu'est-ce qui change ? Les dizaines ou les unites ?" / “哪一位变了？”</div>
+      <div class="practice">
+        <div>24 + 10 = ___</div><div>36 + 10 = ___</div><div>51 + 10 = ___</div>
+        <div>78 - 10 = ___</div><div>64 - 10 = ___</div><div>90 - 10 = ___</div>
+        <div>13 + 10 = ___</div><div>47 + 10 = ___</div><div>82 - 10 = ___</div>
+      </div>
+      <details><summary>Reponses / 答案</summary><div class="answers"><div>24+10=34</div><div>36+10=46</div><div>51+10=61</div><div>78-10=68</div><div>64-10=54</div><div>90-10=80</div><div>13+10=23</div><div>47+10=57</div><div>82-10=72</div></div></details>
+    </section>
+
+    <section class="block half">
+      <div class="badge">Bloc B / B组</div>
+      <h3>+1 et -1 sans passage<span class="zh">±1 不过整十</span></h3>
+      <p>Objectif : changer seulement les unites.<span class="zh">目标：只改变个位。</span></p>
+      <div class="practice">
+        <div>23 + 1 = ___</div><div>45 + 1 = ___</div><div>67 - 1 = ___</div>
+        <div>84 - 1 = ___</div><div>31 + 1 = ___</div><div>56 - 1 = ___</div>
+        <div>72 + 1 = ___</div><div>18 + 1 = ___</div><div>95 - 1 = ___</div>
+      </div>
+      <details><summary>Reponses / 答案</summary><div class="answers"><div>24</div><div>46</div><div>66</div><div>83</div><div>32</div><div>55</div><div>73</div><div>19</div><div>94</div></div></details>
+    </section>
+
+    <section class="block half">
+      <div class="badge">Bloc C / C组</div>
+      <h3>+1 et -1 avec passage<span class="zh">±1 过整十</span></h3>
+      <p>Objectif : stabiliser le bord de la dizaine.<span class="zh">目标：稳定跨整十的边界变化。</span></p>
+      <div class="hint">Dire / 提示语： "9 plus 1 va a la dizaine suivante." / “9再加1，到下一个整十。”</div>
+      <div class="practice">
+        <div>29 + 1 = ___</div><div>39 + 1 = ___</div><div>49 + 1 = ___</div>
+        <div>50 - 1 = ___</div><div>70 - 1 = ___</div><div>40 - 1 = ___</div>
+        <div>89 + 1 = ___</div><div>60 - 1 = ___</div><div>19 + 1 = ___</div>
+      </div>
+      <details><summary>Reponses / 答案</summary><div class="answers"><div>30</div><div>40</div><div>50</div><div>49</div><div>69</div><div>39</div><div>90</div><div>59</div><div>20</div></div></details>
+    </section>
+
+    <section class="block half">
+      <div class="badge">Bloc D / D组</div>
+      <h3>+2 et -2 sans passage<span class="zh">±2 不过整十</span></h3>
+      <p>Objectif : bouger de deux sans recompter toute la suite.<span class="zh">目标：移动两格，但不从头数整条数列。</span></p>
+      <div class="practice">
+        <div>34 + 2 = ___</div><div>52 + 2 = ___</div><div>76 - 2 = ___</div>
+        <div>93 - 2 = ___</div><div>41 + 2 = ___</div><div>68 - 2 = ___</div>
+        <div>22 + 2 = ___</div><div>57 - 2 = ___</div><div>84 + 2 = ___</div>
+      </div>
+      <details><summary>Reponses / 答案</summary><div class="answers"><div>36</div><div>54</div><div>74</div><div>91</div><div>43</div><div>66</div><div>24</div><div>55</div><div>86</div></div></details>
+    </section>
+
+    <section class="block half">
+      <div class="badge">Bloc E / E组</div>
+      <h3>Ponts avec decomposer 10<span class="zh">用“凑10”搭桥</span></h3>
+      <p>Objectif : faire le lien entre petits faits et grands nombres.<span class="zh">目标：把小数事实迁移到两位数。</span></p>
+      <div class="hint">Dire / 提示语： "8 a besoin de 2 pour faire 10." / “8还差2到10。”</div>
+      <div class="practice">
+        <div>28 + 2 = ___</div><div>39 + 1 = ___</div><div>47 + 3 = ___</div>
+        <div>56 + 4 = ___</div><div>68 + 2 = ___</div><div>75 + 5 = ___</div>
+        <div>84 + 6 = ___</div><div>97 + 3 = ___</div><div>58 + 2 = ___</div>
+      </div>
+      <details><summary>Reponses / 答案</summary><div class="answers"><div>30</div><div>40</div><div>50</div><div>60</div><div>70</div><div>80</div><div>90</div><div>100</div><div>60</div></div></details>
+    </section>
+
+    <section class="block half">
+      <div class="badge">Bloc F / F组</div>
+      <h3>Version soustractive<span class="zh">从整十退回来</span></h3>
+      <p>Objectif : revenir depuis une dizaine sans recompter tout.<span class="zh">目标：从整十往回退，不靠逐个数。</span></p>
+      <div class="practice">
+        <div>30 - 2 = ___</div><div>40 - 1 = ___</div><div>50 - 3 = ___</div>
+        <div>60 - 4 = ___</div><div>70 - 2 = ___</div><div>80 - 5 = ___</div>
+        <div>90 - 1 = ___</div><div>100 - 2 = ___</div><div>60 - 3 = ___</div>
+      </div>
+      <details><summary>Reponses / 答案</summary><div class="answers"><div>28</div><div>39</div><div>47</div><div>56</div><div>68</div><div>75</div><div>89</div><div>98</div><div>57</div></div></details>
+    </section>
+
+    <section class="block half">
+      <div class="badge">Bloc G / G组</div>
+      <h3>+5 et -5<span class="zh">±5 练习</span></h3>
+      <p>Objectif : passer d'abord par la dizaine, puis faire le petit reste.<span class="zh">目标：先桥接到整十，再走剩下的一小步。</span></p>
+      <div class="hint">Dire / 提示语： <code>36+5 = 36+4+1</code> ; <code>42-5 = 42-2-3</code> / “先到整十，再补剩下的步数。”</div>
+      <div class="demo">
+        <div><strong>Demo / 示意：</strong> <code>36 + 5</code> → <code>36 + 4 = 40</code> → <code>40 + 1 = 41</code></div>
+        <div><strong>Demo / 示意：</strong> <code>42 - 5</code> → <code>42 - 2 = 40</code> → <code>40 - 3 = 37</code></div>
+      </div>
+      <div class="practice">
+        <div>36 + 5 = ___</div><div>42 - 5 = ___</div><div>57 + 5 = ___</div>
+        <div>63 - 5 = ___</div><div>28 + 5 = ___</div><div>71 - 5 = ___</div>
+        <div>45 + 5 = ___</div><div>80 - 5 = ___</div><div>94 - 5 = ___</div>
+      </div>
+      <details><summary>Reponses / 答案</summary><div class="answers"><div>41</div><div>37</div><div>62</div><div>58</div><div>33</div><div>66</div><div>50</div><div>75</div><div>89</div></div></details>
+    </section>
+
+    <section class="block">
+      <div class="badge">Bloc H / H组</div>
+      <h3>Melange final court<span class="zh">最后的小混合练习</span></h3>
+      <p>Objectif : verifier si l'enfant garde la bonne strategie quand les types se melangent.<span class="zh">目标：看孩子在混合情况下，是否还能保持正确策略。</span></p>
+      <div class="practice">
+        <div>24 + 10 = ___</div><div>39 + 1 = ___</div><div>52 - 1 = ___</div>
+        <div>48 + 2 = ___</div><div>73 - 10 = ___</div><div>60 - 2 = ___</div>
+        <div>67 + 1 = ___</div><div>29 + 1 = ___</div><div>41 - 2 = ___</div>
+        <div>85 - 10 = ___</div><div>34 + 2 = ___</div><div>50 - 1 = ___</div>
+        <div>36 + 5 = ___</div><div>42 - 5 = ___</div><div>57 + 5 = ___</div>
+      </div>
+      <details><summary>Reponses / 答案</summary><div class="answers"><div>34</div><div>40</div><div>51</div><div>50</div><div>63</div><div>58</div><div>68</div><div>30</div><div>39</div><div>75</div><div>36</div><div>49</div><div>41</div><div>37</div><div>62</div></div></details>
+    </section>
+  </div>
+
+  <section class="section">
+    <h2>2. Conseils pour les parents<span class="zh">2. 给家长的使用建议</span></h2>
+    <ul>
+      <li>Choisir 1 ou 2 blocs par jour seulement.<span class="zh">每天只做 1 到 2 组。</span></li>
+      <li>Quand l'enfant hesite, demander : "Qu'est-ce qui change ?"<span class="zh">当孩子犹豫时，先问“哪一位变了？”</span></li>
+      <li>Si l'enfant recompte, ne pas corriger trop vite : revenir au tableau des 100.<span class="zh">如果又开始数数，不要急着纠错，先退回百数表。</span></li>
+      <li>Quand la strategie devient stable, refaire le meme bloc en version rapide.<span class="zh">当思路稳定后，再把同一组做成快答。</span></li>
+    </ul>
+    <div class="hint"><strong>Objectif / 目标：</strong> moins de doigts, moins de pauses, plus de reponses directes.<span class="zh">手指变少、停顿变少、直接反应变多。</span></div>
+  </section>
+
+  <div class="footer">Exercices passerelle bilingues - 双语桥接练习</div>
+</div>
+</body>
+</html>

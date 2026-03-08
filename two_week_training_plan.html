@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plan 2 semaines - Calcul mental CP</title>
+<title>Plan bilingue 2 semaines - Calcul mental CP</title>
 <style>
 :root{
   --bg1:#eef6ff;
@@ -17,12 +17,11 @@
   --violet:#8b5cf6;
   --green:#eaf8ec;
   --yellow:#fff6dc;
-  --red:#fff0ef;
   --soft:#eff5ff;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Helvetica Neue",sans-serif;
   color:var(--ink);
   background:
     radial-gradient(circle at 100% 0, rgba(139,92,246,.14), transparent 30%),
@@ -32,480 +31,214 @@ body{
   padding:20px 16px 44px;
 }
 .page{max-width:980px;margin:0 auto}
-.hero{
-  background:rgba(255,255,255,.84);
-  backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,.72);
-  box-shadow:0 16px 40px rgba(63,78,100,.12);
-  border-radius:28px;
-  padding:28px 22px;
-  margin-bottom:18px;
+.hero,.card,.day{
+  background:rgba(255,255,255,.86);
+  border:1px solid rgba(255,255,255,.76);
+  box-shadow:0 12px 32px rgba(63,78,100,.09);
 }
-.eyebrow{
-  display:inline-block;
-  color:var(--blue);
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  margin-bottom:10px;
-}
-h1{
-  font-size:30px;
-  line-height:1.15;
-  margin-bottom:10px;
-}
-.subtitle{
-  color:var(--muted);
-  font-size:15px;
-  line-height:1.65;
-}
-.hero-actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:18px;
-}
-.btn{
-  text-decoration:none;
-  border-radius:999px;
-  padding:11px 16px;
-  font-size:14px;
-  font-weight:700;
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-}
+.hero{border-radius:28px;padding:28px 22px;margin-bottom:18px}
+.eyebrow{display:inline-block;color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+h1{font-size:30px;line-height:1.15;margin-bottom:10px}
+.zh{display:block;color:var(--muted);font-size:.94em;margin-top:4px}
+.subtitle{font-size:15px;line-height:1.65;color:#334155}
+.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.btn{text-decoration:none;border-radius:999px;padding:11px 16px;font-size:14px;font-weight:700;display:inline-flex;align-items:center;gap:8px}
 .btn.primary{background:linear-gradient(135deg,var(--blue),var(--violet));color:#fff}
 .btn.secondary{background:#fff;color:var(--ink);border:1px solid var(--line)}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(12,1fr);
-  gap:16px;
-}
-.card{
-  grid-column:span 12;
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:24px;
-  padding:22px 18px;
-  box-shadow:0 10px 28px rgba(63,78,100,.08);
-}
-.card h2{font-size:22px;margin-bottom:12px}
-.card h3{font-size:17px;margin:16px 0 8px}
-.card p{font-size:15px;line-height:1.7;color:#334155;margin-bottom:10px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.card{grid-column:span 12;border-radius:24px;padding:22px 18px}
+.wide,.side{grid-column:span 12}
+.card h2{font-size:22px;margin-bottom:10px}
+.card p,.card li{font-size:15px;line-height:1.7;color:#334155}
 .card ul{padding-left:20px;margin:10px 0}
-.card li{margin:8px 0;line-height:1.6;color:#334155}
-.callout{
-  padding:14px;
-  border-radius:18px;
-  font-size:14px;
-  line-height:1.65;
-  margin:12px 0;
-}
-.callout.green{background:var(--green)}
-.callout.yellow{background:var(--yellow)}
-.callout.red{background:var(--red)}
-.callout.soft{background:var(--soft)}
-.week-tag{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:7px 12px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:800;
-  text-transform:uppercase;
-  letter-spacing:.05em;
-  background:#edf3ff;
-  color:var(--blue);
-  margin-bottom:10px;
-}
-.day{
-  border:1px solid var(--line);
-  border-radius:22px;
-  padding:18px 16px;
-  margin-top:14px;
-}
-.day-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:12px;
-  margin-bottom:10px;
-}
-.day-title{
-  font-size:18px;
-  font-weight:800;
-}
-.focus{
-  font-size:13px;
-  color:var(--muted);
-  font-weight:700;
-}
-.pill{
-  flex:0 0 auto;
-  padding:7px 10px;
-  border-radius:999px;
-  background:#f8fafc;
-  border:1px solid var(--line);
-  font-size:12px;
-  font-weight:700;
-}
-.mini-list{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:10px;
-  margin-top:12px;
-}
-.mini{
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:12px;
-  background:#fff;
-}
-.mini .label{
-  font-size:12px;
-  font-weight:800;
-  color:var(--muted);
-  text-transform:uppercase;
-  letter-spacing:.05em;
-  margin-bottom:6px;
-}
-.mini .text{
-  font-size:14px;
-  line-height:1.55;
-}
-table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:14px;
-  margin-top:10px;
-}
-th,td{
-  border:1px solid var(--line);
-  padding:11px 10px;
-  text-align:left;
-  vertical-align:top;
-  line-height:1.55;
-}
+.week-tag{display:inline-flex;padding:7px 12px;border-radius:999px;background:#edf3ff;color:var(--blue);font-size:12px;font-weight:800;text-transform:uppercase;margin-bottom:10px}
+.day{border:1px solid var(--line);border-radius:22px;padding:18px 16px;margin-top:14px}
+.day-head{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px}
+.day-title{font-size:18px;font-weight:800}
+.focus{font-size:13px;color:var(--muted);font-weight:700}
+.pill{padding:7px 10px;border-radius:999px;background:#f8fafc;border:1px solid var(--line);font-size:12px;font-weight:700}
+.mini-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.mini{border:1px solid var(--line);border-radius:16px;padding:12px;background:#fff}
+.mini .label{font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.mini .text{font-size:14px;line-height:1.55}
+.callout{padding:14px;border-radius:18px;font-size:14px;line-height:1.65;margin:12px 0}
+.green{background:var(--green)} .yellow{background:var(--yellow)} .soft{background:var(--soft)}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:10px}
+th,td{border:1px solid var(--line);padding:11px 10px;text-align:left;vertical-align:top;line-height:1.55}
 th{background:#f8fafc;font-size:13px}
-.footer{
-  text-align:center;
-  color:var(--muted);
-  font-size:13px;
-  margin-top:18px;
-}
-@media (min-width:820px){
-  .card.wide{grid-column:span 8}
-  .card.side{grid-column:span 4}
-}
-@media (max-width:700px){
-  h1{font-size:26px}
-  .mini-list{grid-template-columns:1fr}
-  .day-head{flex-direction:column}
-}
+.footer{text-align:center;color:var(--muted);font-size:13px;margin-top:18px}
+@media (min-width:820px){.wide{grid-column:span 8}.side{grid-column:span 4}}
+@media (max-width:700px){h1{font-size:26px}.mini-list{grid-template-columns:1fr}.day-head{flex-direction:column}}
 </style>
 </head>
 <body>
 <div class="page">
   <section class="hero">
     <div class="eyebrow">CP Training Plan</div>
-    <h1>Plan de 2 semaines pour passer de compter a calculer</h1>
-    <p class="subtitle">Plan court, concret et repetable. Il s'appuie sur les complements a 10 deja acquis et vise l'automatisation de <code>+1</code>, <code>-1</code>, <code>+2</code>, <code>-2</code>, <code>+10</code>, <code>-10</code> jusqu'a 100, surtout autour des passages de dizaine.</p>
+    <h1>Plan de 2 semaines<span class="zh">两周训练计划</span></h1>
+    <p class="subtitle">Plan court, concret et repetable pour passer de compter a calculer.<span class="zh">这是一个短、小、可重复执行的训练计划，目标是让孩子从“数数”过渡到“真正计算”。</span></p>
     <div class="hero-actions">
-      <a class="btn primary" href="method_report.html">📘 Lire le rapport methode</a>
-      <a class="btn secondary" href="progress_tracker.html">📊 Aller au suivi</a>
-      <a class="btn secondary" href="index.html">⬅ Retour a l'accueil</a>
+      <a class="btn primary" href="method_exercises.html">🧩 Exercices / 练习页</a>
+      <a class="btn secondary" href="method_report.html">📘 Rapport / 方法报告</a>
+      <a class="btn secondary" href="index.html">⬅ Accueil / 首页</a>
     </div>
   </section>
 
   <div class="grid">
     <section class="card wide">
-      <h2>1. Regles du plan</h2>
+      <h2>1. Regles du plan<span class="zh">1. 训练规则</span></h2>
       <ul>
-        <li>Chaque seance dure entre 10 et 15 minutes maximum.</li>
-        <li>On travaille une structure a la fois.</li>
-        <li>On verbalise avant de chronometrer.</li>
-        <li>Si l'enfant recompte, on ralentit et on revient au support visuel.</li>
+        <li>Chaque seance dure 10 a 15 minutes maximum.<span class="zh">每次训练控制在 10 到 15 分钟。</span></li>
+        <li>On travaille une structure a la fois.<span class="zh">一次只练一种结构。</span></li>
+        <li>On verbalise avant de chronometrer.<span class="zh">先会说清思路，再开始计时。</span></li>
+        <li>Si l'enfant recompte, on revient au support visuel.<span class="zh">如果又回到数数，就退回百数表或图示。</span></li>
       </ul>
-      <div class="callout yellow"><strong>Point important :</strong> la bonne reponse ne suffit pas. On observe la strategie. Si l'enfant trouve en comptant, l'objectif de la seance n'est pas encore atteint.</div>
+      <div class="callout yellow"><strong>Important / 重要：</strong> la bonne reponse ne suffit pas. <span class="zh">做对还不够，更要看孩子用的是什么策略。</span></div>
     </section>
 
     <section class="card side">
-      <h2>2. Materiel</h2>
+      <h2>2. Materiel<span class="zh">2. 材料</span></h2>
       <ul>
         <li><a href="hundred_chart.html">hundred_chart.html</a></li>
         <li><a href="number_bonds.html">number_bonds.html</a></li>
-        <li><a href="flash_cards.html">flash_cards.html</a></li>
-        <li>Papier + crayon</li>
-        <li>Chrono de 1 minute</li>
+        <li><a href="method_exercises.html">method_exercises.html</a></li>
+        <li>Papier + crayon<span class="zh">纸和笔</span></li>
+        <li>Chrono 1 minute<span class="zh">1分钟计时器</span></li>
       </ul>
     </section>
 
     <section class="card wide">
-      <div class="week-tag">Semaine 1</div>
-      <h2>3. Construire les ponts</h2>
-      <p>Objectif : stabiliser la valeur de position et les passages de dizaine. On commence par ce qui est le plus structurel et le plus facile a automatiser.</p>
+      <div class="week-tag">Semaine 1 / 第1周</div>
+      <h2>3. Construire les ponts<span class="zh">3. 先搭桥</span></h2>
+      <p>Objectif : stabiliser la valeur de position et les passages de dizaine.<span class="zh">目标：先稳定“十位/个位”的结构感，以及跨整十时的桥接意识。</span></p>
 
       <div class="day">
-        <div class="day-head">
-          <div>
-            <div class="day-title">Jour 1</div>
-            <div class="focus">Focus : <code>+10</code> et <code>-10</code></div>
-          </div>
-          <div class="pill">10-12 min</div>
-        </div>
-        <p>Sur le hundred chart, faire descendre ou remonter le doigt d'une ligne. L'enfant dit ce qui change.</p>
+        <div class="day-head"><div><div class="day-title">Jour 1 / 第1天</div><div class="focus">+10 et -10</div></div><div class="pill">10-12 min</div></div>
+        <p>Travailler uniquement <code>+10</code> et <code>-10</code>.<span class="zh">当天只练 <code>+10</code> 和 <code>-10</code>。</span></p>
         <div class="mini-list">
-          <div class="mini"><div class="label">Dire</div><div class="text">"Qu'est-ce qui change ? Les dizaines ou les unites ?"</div></div>
-          <div class="mini"><div class="label">Exemples</div><div class="text"><code>24+10</code>, <code>36+10</code>, <code>78-10</code>, <code>91-10</code></div></div>
-          <div class="mini"><div class="label">Critere</div><div class="text">L'enfant dit rapidement : "les dizaines changent, les unites restent".</div></div>
+          <div class="mini"><div class="label">Dire / 提示语</div><div class="text">Qu'est-ce qui change ?<span class="zh">哪一位变了？</span></div></div>
+          <div class="mini"><div class="label">Exemples / 例子</div><div class="text"><code>24+10</code>, <code>36+10</code>, <code>78-10</code></div></div>
+          <div class="mini"><div class="label">But / 目标</div><div class="text">Voir que seule la dizaine change.<span class="zh">看清只有十位变化。</span></div></div>
         </div>
       </div>
 
       <div class="day">
-        <div class="day-head">
-          <div>
-            <div class="day-title">Jour 2</div>
-            <div class="focus">Focus : <code>+1</code> et <code>-1</code> sans passage</div>
-          </div>
-          <div class="pill">10-12 min</div>
-        </div>
-        <p>Travailler seulement des nombres qui ne franchissent pas de dizaine.</p>
+        <div class="day-head"><div><div class="day-title">Jour 2 / 第2天</div><div class="focus">+1 et -1 sans passage</div></div><div class="pill">10-12 min</div></div>
+        <p>Seulement des nombres qui ne franchissent pas de dizaine.<span class="zh">只做不过整十的题。</span></p>
         <div class="mini-list">
-          <div class="mini"><div class="label">Exemples</div><div class="text"><code>23+1</code>, <code>45+1</code>, <code>67-1</code>, <code>84-1</code></div></div>
-          <div class="mini"><div class="label">Dire</div><div class="text">"Je change seulement les unites."</div></div>
-          <div class="mini"><div class="label">A surveiller</div><div class="text">Eviter le comptage oral : 23, 24...</div></div>
+          <div class="mini"><div class="label">Exemples</div><div class="text"><code>23+1</code>, <code>45+1</code>, <code>67-1</code></div></div>
+          <div class="mini"><div class="label">Dire</div><div class="text">Je change seulement les unites.<span class="zh">只变个位。</span></div></div>
+          <div class="mini"><div class="label">A surveiller</div><div class="text">Pas de comptage oral.<span class="zh">不要从头数。</span></div></div>
         </div>
       </div>
 
       <div class="day">
-        <div class="day-head">
-          <div>
-            <div class="day-title">Jour 3</div>
-            <div class="focus">Focus : <code>+1</code> et <code>-1</code> avec passage</div>
-          </div>
-          <div class="pill">12 min</div>
-        </div>
-        <p>Ici, on travaille le bord de la dizaine. C'est un vrai test de strategie.</p>
+        <div class="day-head"><div><div class="day-title">Jour 3 / 第3天</div><div class="focus">+1 et -1 avec passage</div></div><div class="pill">12 min</div></div>
+        <p>Travailler le bord de la dizaine.<span class="zh">专练跨整十边界。</span></p>
         <div class="mini-list">
-          <div class="mini"><div class="label">Exemples</div><div class="text"><code>29+1</code>, <code>39+1</code>, <code>50-1</code>, <code>70-1</code></div></div>
-          <div class="mini"><div class="label">Dire</div><div class="text">"9 plus 1 va a la dizaine suivante."</div></div>
-          <div class="mini"><div class="label">Support</div><div class="text">Hundred chart ou mini ligne numerique si besoin.</div></div>
+          <div class="mini"><div class="label">Exemples</div><div class="text"><code>29+1</code>, <code>39+1</code>, <code>50-1</code></div></div>
+          <div class="mini"><div class="label">Dire</div><div class="text">9 plus 1 va a la dizaine suivante.<span class="zh">9再加1，就到下一个整十。</span></div></div>
+          <div class="mini"><div class="label">Support</div><div class="text">Hundred chart si besoin.<span class="zh">需要时回到百数表。</span></div></div>
         </div>
       </div>
 
       <div class="day">
-        <div class="day-head">
-          <div>
-            <div class="day-title">Jour 4</div>
-            <div class="focus">Focus : <code>+2</code> et <code>-2</code> sans passage</div>
-          </div>
-          <div class="pill">12 min</div>
-        </div>
-        <p>On avance ou on recule de deux sans franchir de dizaine.</p>
+        <div class="day-head"><div><div class="day-title">Jour 4 / 第4天</div><div class="focus">+2 et -2 sans passage</div></div><div class="pill">12 min</div></div>
+        <p>On bouge de deux sans franchir de dizaine.<span class="zh">练移动两格，但先不过整十。</span></p>
         <div class="mini-list">
-          <div class="mini"><div class="label">Exemples</div><div class="text"><code>34+2</code>, <code>52+2</code>, <code>76-2</code>, <code>93-2</code></div></div>
-          <div class="mini"><div class="label">Dire</div><div class="text">"Je bouge de deux unites."</div></div>
-          <div class="mini"><div class="label">Attention</div><div class="text">Ne pas melanger avec les passages de dizaine ce jour-la.</div></div>
+          <div class="mini"><div class="label">Exemples</div><div class="text"><code>34+2</code>, <code>52+2</code>, <code>76-2</code></div></div>
+          <div class="mini"><div class="label">Dire</div><div class="text">Je bouge de deux unites.<span class="zh">我移动两个一。</span></div></div>
+          <div class="mini"><div class="label">Attention</div><div class="text">Pas de melange avec les passages.<span class="zh">不要和跨整十混练。</span></div></div>
         </div>
       </div>
 
       <div class="day">
-        <div class="day-head">
-          <div>
-            <div class="day-title">Jour 5</div>
-            <div class="focus">Focus : utiliser <code>decomposer 10</code> sur les grands nombres</div>
-          </div>
-          <div class="pill">12-15 min</div>
-        </div>
-        <p>Faire le pont explicitement entre les complements a 10 et les dizaines suivantes.</p>
+        <div class="day-head"><div><div class="day-title">Jour 5 / 第5天</div><div class="focus">Pont avec decomposer 10</div></div><div class="pill">12-15 min</div></div>
+        <p>Faire explicitement le lien entre complements a 10 et dizaines suivantes.<span class="zh">把“凑10”明确迁移到两位数。</span></p>
         <div class="mini-list">
-          <div class="mini"><div class="label">Exemples</div><div class="text"><code>28+2</code>, <code>39+1</code>, <code>47+3</code>, <code>56+4</code></div></div>
-          <div class="mini"><div class="label">Dire</div><div class="text">"8 a besoin de 2 pour faire 10, donc 28 va a 30."</div></div>
-          <div class="mini"><div class="label">But</div><div class="text">L'enfant doit voir que les complements a 10 servent encore.</div></div>
+          <div class="mini"><div class="label">Exemples</div><div class="text"><code>28+2</code>, <code>39+1</code>, <code>47+3</code></div></div>
+          <div class="mini"><div class="label">Dire</div><div class="text">8 a besoin de 2 pour faire 10.<span class="zh">8还差2到10。</span></div></div>
+          <div class="mini"><div class="label">But</div><div class="text">Voir le transfert.<span class="zh">让孩子真正看到迁移。</span></div></div>
         </div>
       </div>
 
       <div class="day">
-        <div class="day-head">
-          <div>
-            <div class="day-title">Jour 6</div>
-            <div class="focus">Focus : version soustractive du pont</div>
-          </div>
-          <div class="pill">12 min</div>
-        </div>
-        <p>On revient d'une dizaine vers un nombre juste en dessous.</p>
+        <div class="day-head"><div><div class="day-title">Jour 6 / 第6天</div><div class="focus">Version soustractive</div></div><div class="pill">12 min</div></div>
+        <p>Revenir d'une dizaine vers un nombre juste en dessous.<span class="zh">从整十数往回退。</span></p>
         <div class="mini-list">
-          <div class="mini"><div class="label">Exemples</div><div class="text"><code>30-2</code>, <code>40-1</code>, <code>50-3</code>, <code>60-4</code></div></div>
-          <div class="mini"><div class="label">Dire</div><div class="text">"Depuis 50, j'enleve 3, donc j'arrive a 47."</div></div>
-          <div class="mini"><div class="label">But</div><div class="text">Stabiliser les retours en arriere sans recompter toute la suite.</div></div>
+          <div class="mini"><div class="label">Exemples</div><div class="text"><code>30-2</code>, <code>40-1</code>, <code>50-3</code></div></div>
+          <div class="mini"><div class="label">Dire</div><div class="text">Depuis 50, j'enleve 3.<span class="zh">从50退3步。</span></div></div>
+          <div class="mini"><div class="label">But</div><div class="text">Stabiliser le retour arriere.<span class="zh">稳定退回整十以下的思路。</span></div></div>
         </div>
       </div>
 
       <div class="day">
-        <div class="day-head">
-          <div>
-            <div class="day-title">Jour 7</div>
-            <div class="focus">Focus : mini bilan de semaine</div>
-          </div>
-          <div class="pill">10 min</div>
-        </div>
-        <p>Faire 3 petites series de 6 questions : <code>+10/-10</code>, <code>+1/-1</code>, ponts de dizaine.</p>
-        <div class="callout soft"><strong>Observation :</strong> noter ce qui est immediat, ce qui est encore lent, et ce qui declenche encore le comptage.</div>
+        <div class="day-head"><div><div class="day-title">Jour 7 / 第7天</div><div class="focus">Mini bilan</div></div><div class="pill">10 min</div></div>
+        <p>Faire 3 petites series de 6 questions.<span class="zh">做3组短练，每组6题。</span></p>
       </div>
     </section>
 
     <section class="card wide">
-      <div class="week-tag">Semaine 2</div>
-      <h2>4. Aller vers l'automatisation</h2>
-      <p>Objectif : garder la structure, mais raccourcir le temps de reponse. On introduit plus de melange, sans noyer l'enfant.</p>
+      <div class="week-tag">Semaine 2 / 第2周</div>
+      <h2>4. Aller vers l'automatisation<span class="zh">4. 走向自动化</span></h2>
+      <p>Objectif : garder la structure mais repondre plus vite, puis introduire <code>+5</code> et <code>-5</code> comme un nouveau pont vers la dizaine.<span class="zh">目标：在不丢结构的前提下加快反应速度，并把 <code>+5</code>、<code>-5</code> 也纳入“先到整十”的桥接思路。</span></p>
 
       <div class="day">
-        <div class="day-head">
-          <div>
-            <div class="day-title">Jour 8</div>
-            <div class="focus">Focus : <code>+2</code> et <code>-2</code> avec passage</div>
-          </div>
-          <div class="pill">12-15 min</div>
-        </div>
-        <p>Le coeur de la semaine : <code>38+2</code>, <code>49+2</code>, <code>41-2</code>, <code>60-2</code>.</p>
+        <div class="day-head"><div><div class="day-title">Jour 8 / 第8天</div><div class="focus">+2 et -2 avec passage</div></div><div class="pill">12-15 min</div></div>
+        <p>Le coeur de la semaine : <code>38+2</code>, <code>49+2</code>, <code>41-2</code>.<span class="zh">这一周的核心是跨整十的 ±2。</span></p>
+      </div>
+
+      <div class="day">
+        <div class="day-head"><div><div class="day-title">Jour 9 / 第9天</div><div class="focus">Completer et revenir</div></div><div class="pill">10-12 min</div></div>
+        <p><code>48 + ? = 50</code> puis <code>48+2</code>.<span class="zh">把“补空题”和“直接计算题”对应起来。</span></p>
+      </div>
+
+      <div class="day">
+        <div class="day-head"><div><div class="day-title">Jour 10 / 第10天</div><div class="focus">Melange simple</div></div><div class="pill">12 min</div></div>
+        <p>Melanger <code>+10/-10</code>, <code>+1/-1</code> et quelques ponts.<span class="zh">开始小范围混练。</span></p>
+      </div>
+
+      <div class="day">
+        <div class="day-head"><div><div class="day-title">Jour 11 / 第11天</div><div class="focus">Introduction a +5 et -5</div></div><div class="pill">10-12 min</div></div>
+        <p>Montrer que <code>+5</code> et <code>-5</code> se traitent en passant d'abord par la dizaine.<span class="zh">引入 <code>+5</code> 和 <code>-5</code>：先到整十，再多一点或少一点。</span></p>
         <div class="mini-list">
-          <div class="mini"><div class="label">Dire</div><div class="text">"Je passe par la dizaine."</div></div>
-          <div class="mini"><div class="label">Exemples</div><div class="text"><code>38+2</code>, <code>49+2</code>, <code>41-2</code>, <code>70-2</code></div></div>
-          <div class="mini"><div class="label">Support</div><div class="text">Hundred chart si la strategie n'est pas stable.</div></div>
+          <div class="mini"><div class="label">Exemples</div><div class="text"><code>36+5</code>, <code>42-5</code>, <code>57+5</code></div></div>
+          <div class="mini"><div class="label">Dire</div><div class="text"><code>36+4+1</code>, <code>42-2-3</code><span class="zh">先到整十，再走剩下的步数。</span></div></div>
+          <div class="mini"><div class="label">But</div><div class="text">Ne pas memoriser brutalement.<span class="zh">不把 ±5 当死记结果。</span></div></div>
         </div>
       </div>
 
       <div class="day">
-        <div class="day-head">
-          <div>
-            <div class="day-title">Jour 9</div>
-            <div class="focus">Focus : completions et retours</div>
-          </div>
-          <div class="pill">10-12 min</div>
-        </div>
-        <p>On alterne les questions ouvertes et les calculs directs.</p>
-        <div class="mini-list">
-          <div class="mini"><div class="label">Forme 1</div><div class="text"><code>48 + ? = 50</code>, <code>60 - ? = 58</code></div></div>
-          <div class="mini"><div class="label">Forme 2</div><div class="text"><code>48+2</code>, <code>60-2</code></div></div>
-          <div class="mini"><div class="label">But</div><div class="text">Faire apparaitre la meme structure sous deux formes.</div></div>
-        </div>
+        <div class="day-head"><div><div class="day-title">Jour 12 / 第12天</div><div class="focus">Vitesse controlee</div></div><div class="pill">10 min</div></div>
+        <p>3 series de 6 questions chronometrees.<span class="zh">做3组6题计时，但一旦回到数数就暂停计时。</span></p>
       </div>
 
       <div class="day">
-        <div class="day-head">
-          <div>
-            <div class="day-title">Jour 10</div>
-            <div class="focus">Focus : melange simple</div>
-          </div>
-          <div class="pill">12 min</div>
-        </div>
-        <p>On melange seulement trois familles : <code>+10/-10</code>, <code>+1/-1</code>, ponts de dizaine.</p>
-        <div class="mini-list">
-          <div class="mini"><div class="label">Serie</div><div class="text"><code>24+10</code>, <code>39+1</code>, <code>52-1</code>, <code>48+2</code>, <code>73-10</code>, <code>60-2</code></div></div>
-          <div class="mini"><div class="label">Regle</div><div class="text">6 questions, puis pause courte. Pas de longue feuille.</div></div>
-          <div class="mini"><div class="label">Observation</div><div class="text">La strategie doit rester propre malgre le melange.</div></div>
-        </div>
+        <div class="day-head"><div><div class="day-title">Jour 13 / 第13天</div><div class="focus">Moins parler, repondre plus vite</div></div><div class="pill">10-12 min</div></div>
+        <p>L'enfant explique seulement les calculs difficiles.<span class="zh">只让孩子解释最难的2到3题。</span></p>
       </div>
 
       <div class="day">
-        <div class="day-head">
-          <div>
-            <div class="day-title">Jour 11</div>
-            <div class="focus">Focus : vitesse controlee</div>
-          </div>
-          <div class="pill">10 min</div>
-        </div>
-        <p>Premier vrai travail chronometre, mais sur une petite dose.</p>
-        <div class="callout yellow"><strong>Format :</strong> 3 series de 6 questions. Si l'enfant recompte, on retire le chrono a la serie suivante.</div>
-      </div>
-
-      <div class="day">
-        <div class="day-head">
-          <div>
-            <div class="day-title">Jour 12</div>
-            <div class="focus">Focus : verbalisation reduite</div>
-          </div>
-          <div class="pill">10-12 min</div>
-        </div>
-        <p>L'enfant repond plus vite, puis explique seulement 2 ou 3 calculs qui ont ete difficiles.</p>
-        <div class="mini-list">
-          <div class="mini"><div class="label">But</div><div class="text">Passer de l'explication systematique a une reponse plus automatique.</div></div>
-          <div class="mini"><div class="label">Questions</div><div class="text"><code>29+1</code>, <code>38+2</code>, <code>67-10</code>, <code>50-1</code>, <code>41-2</code></div></div>
-          <div class="mini"><div class="label">Verifier</div><div class="text">Le comptage visible doit diminuer nettement.</div></div>
-        </div>
-      </div>
-
-      <div class="day">
-        <div class="day-head">
-          <div>
-            <div class="day-title">Jour 13</div>
-            <div class="focus">Focus : simulation mini evaluation</div>
-          </div>
-          <div class="pill">8-10 min</div>
-        </div>
-        <p>Une petite serie de 12 calculs, sans aide visuelle immediate, puis correction orale.</p>
-        <div class="callout soft"><strong>Apres la serie :</strong> identifier non seulement les erreurs, mais surtout les questions ou la strategie a eté lente.</div>
-      </div>
-
-      <div class="day">
-        <div class="day-head">
-          <div>
-            <div class="day-title">Jour 14</div>
-            <div class="focus">Focus : bilan final</div>
-          </div>
-          <div class="pill">10 min</div>
-        </div>
-        <p>Comparer avec le jour 1 : temps de reponse, passages de dizaine, besoin d'aide visuelle, confiance.</p>
-        <div class="callout green"><strong>Succes attendu :</strong> l'enfant repond plus vite, surtout sur <code>+10/-10</code>, <code>+1/-1</code> et plusieurs ponts comme <code>38+2</code> ou <code>50-1</code>, avec beaucoup moins de comptage visible.</div>
+        <div class="day-head"><div><div class="day-title">Jour 14 / 第14天</div><div class="focus">Mini evaluation + bilan final</div></div><div class="pill">10 min</div></div>
+        <p>Comparer vitesse, confiance et signes de comptage sur un petit melange incluant aussi <code>+5/-5</code>.<span class="zh">做一个小混合测评，比较速度、信心，以及数数迹象是否明显减少，并加入 <code>+5/-5</code>。</span></p>
+        <div class="callout green"><strong>Succes attendu / 期待结果：</strong> l'enfant repond plus vite, surtout sur <code>+10/-10</code>, <code>+1/-1</code>, les ponts comme <code>38+2</code> et les premiers <code>+5/-5</code>.<span class="zh">孩子在 <code>+10/-10</code>、<code>+1/-1</code>、像 <code>38+2</code> 这样的桥接题，以及第一批 <code>+5/-5</code> 题上，会更快、更稳。</span></div>
       </div>
     </section>
 
     <section class="card wide">
-      <h2>5. Grille d'observation parent</h2>
+      <h2>5. Grille d'observation<span class="zh">5. 家长观察表</span></h2>
       <table>
-        <tr>
-          <th>A observer</th>
-          <th>Debut</th>
-          <th>Apres 2 semaines</th>
-        </tr>
-        <tr>
-          <td><code>+10/-10</code></td>
-          <td>Hesite, recompte ou confond les dizaines</td>
-          <td>Repond vite en voyant que seule la dizaine change</td>
-        </tr>
-        <tr>
-          <td><code>+1/-1</code> avec passage</td>
-          <td>Bloque sur <code>39+1</code>, <code>50-1</code></td>
-          <td>Voit plus naturellement le passage a la dizaine voisine</td>
-        </tr>
-        <tr>
-          <td><code>+2/-2</code> avec passage</td>
-          <td>Compte pas a pas</td>
-          <td>Utilise parfois le pont des complements a 10</td>
-        </tr>
-        <tr>
-          <td>Comportement</td>
-          <td>Doigts, bouche, pauses longues</td>
-          <td>Moins de signes visibles de comptage</td>
-        </tr>
+        <tr><th>A observer / 观察点</th><th>Debut / 开始时</th><th>Apres 2 semaines / 两周后</th></tr>
+        <tr><td><code>+10/-10</code></td><td>Hesite ou recompte<span class="zh">犹豫、重算</span></td><td>Voit que la dizaine change<span class="zh">能直接看出十位变化</span></td></tr>
+        <tr><td><code>+1/-1</code> avec passage</td><td>Bloque sur <code>39+1</code><span class="zh">卡在跨整十</span></td><td>Repond plus vite<span class="zh">反应更快</span></td></tr>
+        <tr><td><code>+2/-2</code> avec passage</td><td>Compte pas a pas<span class="zh">一步一步数</span></td><td>Utilise parfois le pont<span class="zh">开始会用“桥接”</span></td></tr>
+        <tr><td><code>+5/-5</code></td><td>Bloque ou recompte trop<span class="zh">卡住或重新数很多步</span></td><td>Passe par la dizaine puis finit<span class="zh">会先到整十，再完成剩余部分</span></td></tr>
+        <tr><td>Comportement / 行为</td><td>Doigts, bouche, pauses<span class="zh">手指、嘴动、停顿</span></td><td>Moins de signes visibles<span class="zh">明显减少</span></td></tr>
       </table>
-    </section>
-
-    <section class="card side">
-      <h2>6. Si ca bloque encore</h2>
-      <ul>
-        <li>Revenir au hundred chart 2 ou 3 jours.</li>
-        <li>Reduire le nombre de questions.</li>
-        <li>Ne travailler qu'un seul type de passage.</li>
-        <li>Retirer le chrono temporairement.</li>
-      </ul>
     </section>
   </div>
 
-  <div class="footer">Plan statique 2 semaines - projet Learning / CP Maths</div>
+  <div class="footer">Plan bilingue - 双语两周训练计划</div>
 </div>
 </body>
 </html>

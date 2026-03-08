@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Methode de calcul mental - Rapport parents</title>
+<title>Methode bilingue - Calcul mental CP</title>
 <style>
 :root{
   --bg1:#eef6ff;
@@ -14,14 +14,14 @@
   --muted:#6b7280;
   --line:#e7eaf0;
   --accent:#2563eb;
-  --accent-2:#8b5cf6;
+  --accent2:#8b5cf6;
   --good:#e8f7e9;
   --warn:#fff5db;
   --note:#eef4ff;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Helvetica Neue",sans-serif;
   color:var(--ink);
   background:
     radial-gradient(circle at top right, rgba(139,92,246,.14), transparent 26%),
@@ -30,35 +30,32 @@ body{
   min-height:100vh;
   padding:20px 16px 48px;
 }
-.page{max-width:900px;margin:0 auto}
-.hero{
-  background:rgba(255,255,255,.82);
-  backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,.7);
-  box-shadow:0 16px 40px rgba(63,78,100,.12);
-  border-radius:28px;
-  padding:28px 22px;
-  margin-bottom:16px;
+.page{max-width:980px;margin:0 auto}
+.hero,.card{
+  background:rgba(255,255,255,.84);
+  border:1px solid rgba(255,255,255,.74);
+  box-shadow:0 14px 34px rgba(63,78,100,.10);
+  border-radius:26px;
 }
+.hero{padding:30px 24px;margin-bottom:16px}
 .eyebrow{
   display:inline-block;
+  color:var(--accent);
   font-size:12px;
   font-weight:800;
   letter-spacing:.08em;
   text-transform:uppercase;
-  color:var(--accent);
   margin-bottom:10px;
 }
-h1{
-  font-size:30px;
-  line-height:1.15;
-  margin-bottom:10px;
-}
-.subtitle{
+h1{font-size:31px;line-height:1.15;margin-bottom:10px}
+.fr{display:block}
+.zh{
+  display:block;
   color:var(--muted);
-  font-size:15px;
-  line-height:1.6;
+  font-size:.94em;
+  margin-top:4px;
 }
+.subtitle{font-size:15px;line-height:1.7;color:#334155}
 .hero-actions{
   display:flex;
   flex-wrap:wrap;
@@ -75,7 +72,7 @@ h1{
   align-items:center;
   gap:8px;
 }
-.btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff}
+.btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
 .btn.secondary{background:#fff;color:var(--ink);border:1px solid var(--line)}
 .grid{
   display:grid;
@@ -84,43 +81,50 @@ h1{
 }
 .card{
   grid-column:span 12;
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:24px;
   padding:22px 18px;
-  box-shadow:0 10px 28px rgba(63,78,100,.08);
 }
-.card h2{
-  font-size:22px;
-  margin-bottom:12px;
-}
-.card h3{
-  font-size:17px;
-  margin:18px 0 8px;
-}
-.card p{
-  font-size:15px;
-  line-height:1.7;
-  color:#334155;
-  margin-bottom:10px;
-}
-.card ul,.card ol{padding-left:20px;margin:10px 0}
-.card li{margin:8px 0;color:#334155;line-height:1.6}
+.wide{grid-column:span 12}
+.side{grid-column:span 12}
+.card h2{font-size:22px;margin-bottom:10px}
+.card h3{font-size:17px;margin:14px 0 8px}
+.card p,.card li{font-size:15px;line-height:1.72;color:#334155}
+.card ul{padding-left:20px;margin:10px 0}
 .callout{
   border-radius:18px;
-  padding:14px 14px;
+  padding:14px;
   margin:14px 0;
   font-size:14px;
-  line-height:1.65;
+  line-height:1.68;
 }
 .callout.note{background:var(--note)}
-.callout.good{background:var(--good)}
 .callout.warn{background:var(--warn)}
+.callout.good{background:var(--good)}
+.demo{
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:14px;
+  background:#fff;
+  margin:12px 0;
+}
+.demo-row{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  padding:10px 0;
+  border-top:1px solid #eef2f7;
+}
+.demo-row:first-child{border-top:none;padding-top:0}
+.demo-label{
+  flex:0 0 110px;
+  font-size:13px;
+  font-weight:800;
+  color:var(--accent);
+}
 .mini-grid{
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:12px;
-  margin-top:14px;
+  margin-top:12px;
 }
 .mini{
   border:1px solid var(--line);
@@ -130,32 +134,24 @@ h1{
 }
 .mini .label{
   font-size:12px;
+  font-weight:800;
   color:var(--muted);
-  font-weight:700;
   text-transform:uppercase;
   letter-spacing:.05em;
   margin-bottom:6px;
 }
-.mini .value{
-  font-size:15px;
-  line-height:1.5;
-  font-weight:700;
-}
-.table-wrap{overflow:auto;margin-top:12px}
 table{
   width:100%;
   border-collapse:collapse;
   font-size:14px;
-  background:#fff;
-  border-radius:16px;
-  overflow:hidden;
+  margin-top:10px;
 }
 th,td{
   border:1px solid var(--line);
   padding:11px 10px;
   text-align:left;
   vertical-align:top;
-  line-height:1.5;
+  line-height:1.6;
 }
 th{background:#f8fafc;font-size:13px}
 .step{
@@ -166,30 +162,16 @@ th{background:#f8fafc;font-size:13px}
 }
 .step:first-of-type{border-top:none;padding-top:0}
 .step-num{
-  width:32px;
-  height:32px;
-  flex:0 0 32px;
-  border-radius:50%;
-  background:linear-gradient(135deg,var(--accent),var(--accent-2));
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:800;
+  width:32px;height:32px;flex:0 0 32px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;
 }
-.step-body strong{display:block;margin-bottom:4px}
-.footer{
-  text-align:center;
-  color:var(--muted);
-  font-size:13px;
-  margin-top:18px;
+.footer{text-align:center;color:var(--muted);font-size:13px;margin-top:18px}
+@media (min-width:860px){
+  .wide{grid-column:span 8}
+  .side{grid-column:span 4}
 }
-@media (min-width:760px){
-  .hero{padding:34px 30px}
-  .card.wide{grid-column:span 8}
-  .card.side{grid-column:span 4}
-}
-@media (max-width:640px){
+@media (max-width:680px){
   h1{font-size:26px}
   .mini-grid{grid-template-columns:1fr}
 }
@@ -199,211 +181,184 @@ th{background:#f8fafc;font-size:13px}
 <div class="page">
   <section class="hero">
     <div class="eyebrow">CP Maths Report</div>
-    <h1>Passer de "je compte" a "je calcule"</h1>
-    <p class="subtitle">Rapport detaille pour les parents. Objectif : utiliser la base deja acquise sur les complements a 10 pour automatiser le calcul mental en CP sur les nombres jusqu'a 100, surtout <code>+1</code>, <code>-1</code>, <code>+2</code>, <code>-2</code> et <code>+10</code>, <code>-10</code>.</p>
+    <h1>
+      <span class="fr">Passer de "je compte" a "je calcule"</span>
+      <span class="zh">从“数数”过渡到“真正计算”</span>
+    </h1>
+    <p class="subtitle">
+      <span class="fr">Rapport detaille pour les parents. Objectif : utiliser la base deja acquise sur les complements a 10 pour automatiser le calcul mental jusqu'a 100, surtout <code>+1</code>, <code>-1</code>, <code>+2</code>, <code>-2</code>, <code>+5</code>, <code>-5</code>, <code>+10</code> et <code>-10</code>.</span>
+      <span class="zh">这是一份给家长看的详细方法报告。目标是把孩子已经掌握的“凑10/分解10”迁移到100以内心算，重点是 <code>+1</code>、<code>-1</code>、<code>+2</code>、<code>-2</code>、<code>+5</code>、<code>-5</code>、<code>+10</code>、<code>-10</code>。</span>
+    </p>
     <div class="hero-actions">
-      <a class="btn primary" href="progress_tracker.html">📊 Ouvrir le suivi</a>
-      <a class="btn secondary" href="index.html">⬅ Retour a l'accueil</a>
+      <a class="btn primary" href="method_exercises.html">🧩 Entrainement / 练习页</a>
+      <a class="btn secondary" href="two_week_training_plan.html">🗓️ Plan 2 semaines / 两周计划</a>
+      <a class="btn secondary" href="index.html">⬅ Accueil / 首页</a>
     </div>
   </section>
 
   <div class="grid">
     <section class="card wide">
-      <h2>1. Diagnostic</h2>
-      <p>Si l'enfant sait decomposer 10, repond juste a beaucoup de petites additions et soustractions, mais reussit mal les evaluations scolaires, le probleme le plus probable n'est pas "il ne sait pas", mais "il n'a pas encore automatise".</p>
-      <div class="callout warn"><strong>Hypothese centrale :</strong> l'enfant utilise encore une strategie de comptage pour beaucoup de calculs a deux chiffres. Il trouve parfois la bonne reponse, mais trop lentement pour une evaluation rapide.</div>
+      <h2><span class="fr">1. Diagnostic</span><span class="zh">1. 现状判断</span></h2>
+      <p><span class="fr">Si l'enfant sait decomposer 10, repond souvent juste, mais echoue en evaluation rapide, le probleme le plus probable n'est pas "il ne sait pas", mais "il n'a pas encore automatise".</span><span class="zh">如果孩子已经会分解10、很多题也能做对，但在学校限时测评里表现不好，最常见的问题不是“不会”，而是“还没有自动化”。</span></p>
+      <div class="callout warn"><strong>Hypothese centrale / 核心假设：</strong> <span class="fr">l'enfant utilise encore une strategie de comptage pour beaucoup de calculs a deux chiffres.</span><span class="zh">孩子在很多两位数题里仍然依赖“数数策略”，所以虽然能算出来，但速度慢、稳定性差。</span></div>
       <div class="mini-grid">
         <div class="mini">
-          <div class="label">Signe de comptage</div>
-          <div class="value">Pause visible, levres qui bougent, yeux qui "suivent" la suite des nombres, doigts ou petits gestes.</div>
+          <div class="label">Signe de comptage / 数数信号</div>
+          <p><span class="fr">Pause visible, levres qui bougent, doigts, yeux qui suivent la suite des nombres.</span><span class="zh">明显停顿、嘴唇轻动、手指参与、眼神像在追数列。</span></p>
         </div>
         <div class="mini">
-          <div class="label">Signe de calcul</div>
-          <div class="value">Reponse rapide, attention sur les chiffres qui changent, explication du type "le chiffre des unites change".</div>
+          <div class="label">Signe de calcul / 计算信号</div>
+          <p><span class="fr">Reponse rapide, l'enfant parle des dizaines ou des unites qui changent.</span><span class="zh">回答快，能说出“十位变了”或“个位变了”。</span></p>
         </div>
       </div>
     </section>
 
     <section class="card side">
-      <h2>2. Idee cle</h2>
-      <p>Il ne faut pas demander a l'enfant de memoriser brutalement des grands calculs comme <code>38 + 2 = 40</code>. Il faut lui apprendre a reutiliser ce qu'il sait deja.</p>
-      <div class="callout note"><strong>But :</strong> faire le pont entre <code>8 + 2 = 10</code> et <code>38 + 2 = 40</code>.</div>
+      <h2><span class="fr">2. Idee cle</span><span class="zh">2. 核心思路</span></h2>
+      <p><span class="fr">Il ne faut pas demander a l'enfant de memoriser brutalement des grands calculs comme <code>38 + 2 = 40</code>.</span><span class="zh">不要直接要求孩子死记像 <code>38 + 2 = 40</code> 这样的两位数结果。</span></p>
+      <div class="callout note"><strong>But / 目标：</strong> <span class="fr">faire le pont entre <code>8 + 2 = 10</code> et <code>38 + 2 = 40</code>.</span><span class="zh">把 <code>8 + 2 = 10</code> 这类小数事实迁移到 <code>38 + 2 = 40</code> 这样的两位数题上。</span></div>
     </section>
 
     <section class="card wide">
-      <h2>3. La methode</h2>
-      <p>La bonne progression reste celle des mathematiques de Singapour :</p>
+      <h2><span class="fr">3. La methode</span><span class="zh">3. 方法论</span></h2>
+      <p><span class="fr">La progression correcte reste celle des mathematiques de Singapour.</span><span class="zh">正确的路径仍然是新加坡数学的 CPA。</span></p>
       <div class="step">
         <div class="step-num">1</div>
-        <div class="step-body">
+        <div>
           <strong>Concrete</strong>
-          <p>Manipuler des cubes, des jetons, une ligne numerique ou un tableau des 100. L'enfant doit voir ce qui bouge.</p>
+          <p><span class="fr">Manipuler des cubes, des jetons, une ligne numerique ou un tableau des 100.</span><span class="zh">先操作实物、珠子、数线或百数表，让孩子“看见”变化。</span></p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">2</div>
-        <div class="step-body">
+        <div>
           <strong>Pictorial</strong>
-          <p>Representer les nombres par dizaines et unites, ou deplacer le doigt sur un hundred chart. L'enfant apprend a voir la structure.</p>
+          <p><span class="fr">Representer les nombres par dizaines et unites, ou montrer les deplacements sur le hundred chart.</span><span class="zh">再用图示或百数表表示“十位和个位”的结构。</span></p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">3</div>
-        <div class="step-body">
+        <div>
           <strong>Abstract</strong>
-          <p>Passer au calcul pur : <code>38 + 2</code>, <code>54 - 1</code>, <code>67 - 10</code>. La vitesse vient seulement apres la comprehension.</p>
+          <p><span class="fr">Passer ensuite au calcul pur : <code>38 + 2</code>, <code>54 - 1</code>, <code>67 - 10</code>.</span><span class="zh">最后再进入纯数字心算：<code>38 + 2</code>、<code>54 - 1</code>、<code>67 - 10</code>。</span></p>
         </div>
       </div>
-      <div class="callout good"><strong>Point cle :</strong> on ne saute pas directement a la vitesse. On construit d'abord la structure mentale, puis on automatise.</div>
+      <div class="callout good"><strong>Point cle / 关键点：</strong> <span class="fr">d'abord comprendre la structure, ensuite transferer, enfin automatiser.</span><span class="zh">先理解结构，再做迁移，最后才提速自动化。</span></div>
     </section>
 
     <section class="card wide">
-      <h2>4. Ce que l'enfant doit voir</h2>
-      <h3>Valeur de position</h3>
-      <p><code>38</code> n'est pas un bloc opaque. C'est <code>3 dizaines + 8 unites</code>.</p>
-      <h3>Point d'appui</h3>
-      <p>Les dizaines entieres <code>40</code>, <code>50</code>, <code>60</code> servent de reperes.</p>
-      <h3>Pont a partir des complements a 10</h3>
-      <p>Si l'enfant sait deja que <code>8 + 2 = 10</code>, alors il peut apprendre que :</p>
+      <h2><span class="fr">4. Ce que l'enfant doit voir</span><span class="zh">4. 孩子真正要“看见”的东西</span></h2>
+      <h3><span class="fr">Valeur de position</span><span class="zh">位值结构</span></h3>
+      <p><span class="fr"><code>38</code> n'est pas un bloc opaque : c'est <code>3 dizaines + 8 unites</code>.</span><span class="zh"><code>38</code> 不是一个整体块，而是 <code>3个十 + 8个一</code>。</span></p>
+      <h3><span class="fr">Points d'appui</span><span class="zh">整十落点</span></h3>
+      <p><span class="fr">Les dizaines entieres <code>40</code>, <code>50</code>, <code>60</code> servent de reperes.</span><span class="zh"><code>40</code>、<code>50</code>、<code>60</code> 这些整十数是心算的桥和落点。</span></p>
+      <h3><span class="fr">Pont a partir des complements a 10</span><span class="zh">用“凑10”来搭桥</span></h3>
       <div class="callout note"><code>38 + 2 = 30 + (8 + 2) = 40</code></div>
-      <p>Ce n'est pas du par coeur. C'est du transfert.</p>
+      <p><span class="fr">Ce n'est pas du par coeur. C'est du transfert de connaissance.</span><span class="zh">这不是硬背，而是把已知知识迁移到更大的数上。</span></p>
     </section>
 
     <section class="card side">
-      <h2>5. Langage parent</h2>
+      <h2><span class="fr">5. Questions utiles</span><span class="zh">5. 家长提示语</span></h2>
       <ul>
-        <li>"Qu'est-ce qui change, les dizaines ou les unites ?"</li>
-        <li>"De combien manque-t-il pour arriver a la prochaine dizaine ?"</li>
-        <li>"Tu l'as calcule ou tu l'as compte ?"</li>
-        <li>"Montre-moi ou est le pont vers 40."</li>
+        <li><span class="fr">Qu'est-ce qui change, les dizaines ou les unites ?</span><span class="zh">哪一位在变，十位还是个位？</span></li>
+        <li><span class="fr">De combien manque-t-il pour arriver a la prochaine dizaine ?</span><span class="zh">还差多少能到下一个整十？</span></li>
+        <li><span class="fr">Tu l'as calcule ou tu l'as compte ?</span><span class="zh">你是算出来的，还是数出来的？</span></li>
+        <li><span class="fr">Montre-moi le pont vers 40.</span><span class="zh">告诉我你是怎么“桥接”到40的。</span></li>
       </ul>
     </section>
 
     <section class="card wide">
-      <h2>6. Progression recommandee</h2>
-      <div class="table-wrap">
-        <table>
-          <tr>
-            <th>Etape</th>
-            <th>Objectif</th>
-            <th>Exemples</th>
-            <th>Ce qu'on veut entendre</th>
-          </tr>
-          <tr>
-            <td>1. +/-10</td>
-            <td>Voir que seule la dizaine change</td>
-            <td><code>24+10</code>, <code>67-10</code></td>
-            <td>"Je change la dizaine, les unites restent."</td>
-          </tr>
-          <tr>
-            <td>2. +/-1 sans passage</td>
-            <td>Voir la variation des unites</td>
-            <td><code>34+1</code>, <code>52-1</code></td>
-            <td>"Je change juste les unites."</td>
-          </tr>
-          <tr>
-            <td>3. +/-1 avec passage</td>
-            <td>Passer une dizaine</td>
-            <td><code>39+1</code>, <code>50-1</code></td>
-            <td>"9 plus 1 va a la dizaine suivante."</td>
-          </tr>
-          <tr>
-            <td>4. +/-2 sans passage</td>
-            <td>Avancer ou reculer de 2 sans recompter tout</td>
-            <td><code>34+2</code>, <code>76-2</code></td>
-            <td>"Je bouge de deux unites."</td>
-          </tr>
-          <tr>
-            <td>5. +/-2 avec passage</td>
-            <td>Utiliser le pont des complements a 10</td>
-            <td><code>38+2</code>, <code>41-2</code></td>
-            <td>"8 a besoin de 2 pour faire 10."</td>
-          </tr>
-          <tr>
-            <td>6. Melange</td>
-            <td>Automatiser sans perdre la structure</td>
-            <td><code>29+1</code>, <code>48+2</code>, <code>73-10</code></td>
-            <td>Reponse rapide sans comptage visible</td>
-          </tr>
-        </table>
-      </div>
+      <h2><span class="fr">6. Progression recommandee</span><span class="zh">6. 推荐训练顺序</span></h2>
+      <table>
+        <tr>
+          <th>Etape / 阶段</th>
+          <th>Objectif / 目标</th>
+          <th>Exemples / 例子</th>
+        </tr>
+        <tr>
+          <td><span class="fr">1. +/-10</span><span class="zh">1. 先练 ±10</span></td>
+          <td><span class="fr">Voir que seule la dizaine change.</span><span class="zh">看清只有十位变化。</span></td>
+          <td><code>24+10</code>, <code>67-10</code></td>
+        </tr>
+        <tr>
+          <td><span class="fr">2. +/-1 sans passage</span><span class="zh">2. ±1 不过整十</span></td>
+          <td><span class="fr">Voir les unites changer.</span><span class="zh">看到个位变化。</span></td>
+          <td><code>34+1</code>, <code>52-1</code></td>
+        </tr>
+        <tr>
+          <td><span class="fr">3. +/-1 avec passage</span><span class="zh">3. ±1 过整十</span></td>
+          <td><span class="fr">Stabiliser le passage de dizaine.</span><span class="zh">稳定“跨整十”变化。</span></td>
+          <td><code>39+1</code>, <code>50-1</code></td>
+        </tr>
+        <tr>
+          <td><span class="fr">4. +/-2 sans passage</span><span class="zh">4. ±2 不过整十</span></td>
+          <td><span class="fr">Bouger de deux unites sans recompter toute la suite.</span><span class="zh">移动两格，但不靠从头数。</span></td>
+          <td><code>34+2</code>, <code>76-2</code></td>
+        </tr>
+        <tr>
+          <td><span class="fr">5. +/-2 avec passage</span><span class="zh">5. ±2 过整十</span></td>
+          <td><span class="fr">Utiliser le pont des complements a 10.</span><span class="zh">真正调用“凑10”桥接。</span></td>
+          <td><code>38+2</code>, <code>41-2</code></td>
+        </tr>
+        <tr>
+          <td><span class="fr">6. +/-5</span><span class="zh">6. ±5</span></td>
+          <td><span class="fr">Passer d'abord par la dizaine, puis ajouter ou enlever le reste.</span><span class="zh">先到整十，再多一点或少一点。</span></td>
+          <td><code>36+5</code>, <code>42-5</code></td>
+        </tr>
+      </table>
     </section>
 
     <section class="card wide">
-      <h2>7. Exercices passerelle a privilegier</h2>
-      <h3>A. Completer jusqu'a la dizaine suivante</h3>
+      <h2><span class="fr">7. Exercices passerelle a privilegier</span><span class="zh">7. 最值得练的桥接题</span></h2>
+      <h3><span class="fr">A. Completer jusqu'a la dizaine</span><span class="zh">A. 补到整十</span></h3>
       <p><code>28 + ? = 30</code>, <code>39 + ? = 40</code>, <code>47 + ? = 50</code>, <code>58 + ? = 60</code></p>
-      <p>Ces exercices recyclent directement les complements a 10 dans les nombres a deux chiffres.</p>
-      <h3>B. Revenir depuis une dizaine</h3>
+      <h3><span class="fr">B. Revenir depuis une dizaine</span><span class="zh">B. 从整十退回来</span></h3>
       <p><code>30 - ? = 28</code>, <code>40 - ? = 39</code>, <code>50 - ? = 47</code></p>
-      <p>C'est la version soustractive du meme pont.</p>
-      <h3>C. Calculs autour des dizaines</h3>
+      <h3><span class="fr">C. Calculs autour des dizaines</span><span class="zh">C. 整十附近题</span></h3>
       <p><code>29+1</code>, <code>38+2</code>, <code>49+1</code>, <code>61-2</code>, <code>70-1</code></p>
-      <div class="callout warn"><strong>A eviter :</strong> melanger trop tot des calculs de natures tres differentes. On veut d'abord stabiliser une structure mentale a la fois.</div>
+      <h3><span class="fr">D. Methode pour +/-5</span><span class="zh">D. ±5 的方法</span></h3>
+      <p><span class="fr">Pour <code>36+5</code>, on fait <code>36+4+1</code>. Pour <code>42-5</code>, on fait <code>42-2-3</code>. On passe par la dizaine la plus proche.</span><span class="zh">比如 <code>36+5</code> 可以拆成 <code>36+4+1</code>；<code>42-5</code> 可以拆成 <code>42-2-3</code>。核心还是先桥接到整十。</span></p>
+      <div class="demo">
+        <div class="demo-row">
+          <div class="demo-label">36 + 5</div>
+          <div>
+            <div class="fr"><strong>Etape 1 :</strong> <code>36 + 4 = 40</code></div>
+            <div class="zh"><strong>第1步：</strong>先把 <code>36</code> 加到整十，<code>36 + 4 = 40</code></div>
+            <div class="fr"><strong>Etape 2 :</strong> il reste <code>1</code>, donc <code>40 + 1 = 41</code></div>
+            <div class="zh"><strong>第2步：</strong>还剩 <code>1</code>，所以 <code>40 + 1 = 41</code></div>
+          </div>
+        </div>
+        <div class="demo-row">
+          <div class="demo-label">42 - 5</div>
+          <div>
+            <div class="fr"><strong>Etape 1 :</strong> <code>42 - 2 = 40</code></div>
+            <div class="zh"><strong>第1步：</strong>先退到整十，<code>42 - 2 = 40</code></div>
+            <div class="fr"><strong>Etape 2 :</strong> il reste <code>3</code>, donc <code>40 - 3 = 37</code></div>
+            <div class="zh"><strong>第2步：</strong>还要再退 <code>3</code>，所以 <code>40 - 3 = 37</code></div>
+          </div>
+        </div>
+      </div>
+      <div class="callout warn"><strong>A eviter / 避免：</strong> <span class="fr">melanger trop tot trop de structures.</span><span class="zh">不要太早把太多类型混在一起练。</span></div>
     </section>
 
     <section class="card side">
-      <h2>8. Signes de progres</h2>
+      <h2><span class="fr">8. Signes de progres</span><span class="zh">8. 进步信号</span></h2>
       <ul>
-        <li>Moins de mouvements des doigts</li>
-        <li>Moins de pause avant la reponse</li>
-        <li>Explications plus structurelles</li>
-        <li>Reussite stable sur 6 a 10 questions rapides</li>
+        <li><span class="fr">Moins de doigts</span><span class="zh">手指参与变少</span></li>
+        <li><span class="fr">Moins de pauses</span><span class="zh">停顿减少</span></li>
+        <li><span class="fr">Plus de langage structurel</span><span class="zh">更会说“十位、个位、整十”</span></li>
+        <li><span class="fr">Reussite stable sur petites series rapides</span><span class="zh">短组快答更稳定</span></li>
       </ul>
     </section>
 
     <section class="card wide">
-      <h2>9. Routine quotidienne conseillée</h2>
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <strong>3 minutes - rappel rapide</strong>
-          <p>Quelques calculs deja acquis : complements a 10, <code>+10</code>, <code>-10</code>, <code>+1</code>, <code>-1</code>.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <strong>5 minutes - focus du jour</strong>
-          <p>Une seule famille : par exemple <code>38+2</code>, <code>48+2</code>, <code>58+2</code>. On verbalise beaucoup.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <strong>3 minutes - petit sprint</strong>
-          <p>6 questions rapides. Objectif : reponse propre et rapide, sans comptage visible.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <div class="step-body">
-          <strong>2 minutes - retour meta</strong>
-          <p>Demander : "Quelles questions tu as vraiment calculees ? Lesquelles tu as encore comptees ?"</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="card wide">
-      <h2>10. Ce qu'il ne faut pas faire</h2>
-      <ul>
-        <li>Ne pas introduire trop de nouvelles formes en meme temps.</li>
-        <li>Ne pas exiger la vitesse avant que la structure soit comprise.</li>
-        <li>Ne pas faire de longues series fatigantes.</li>
-        <li>Ne pas confondre "bonne reponse" et "bonne strategie".</li>
-      </ul>
-      <div class="callout note"><strong>Regle simple :</strong> d'abord comprendre, ensuite transferer, enfin automatiser.</div>
-    </section>
-
-    <section class="card wide">
-      <h2>11. Conclusion</h2>
-      <p>L'enfant n'a probablement pas besoin de "recommencer depuis zero". Il a deja une base utile : les complements a 10. Le vrai travail consiste maintenant a transformer cette base en outil pour les nombres jusqu'a 100.</p>
-      <p>Le bon cap n'est donc pas le bachotage, mais le passage progressif de <strong>je compte</strong> a <strong>je vois la structure</strong>, puis a <strong>je reponds automatiquement</strong>.</p>
-      <div class="callout good"><strong>Objectif des prochaines semaines :</strong> automatiser <code>+1</code>, <code>-1</code>, <code>+2</code>, <code>-2</code>, <code>+10</code> et <code>-10</code> jusqu'a 100, surtout autour des passages de dizaine.</div>
+      <h2><span class="fr">9. Conclusion</span><span class="zh">9. 结论</span></h2>
+      <p><span class="fr">L'enfant n'a probablement pas besoin de recommencer depuis zero. Il faut surtout transformer une base utile deja acquise en outil pour les nombres jusqu'a 100.</span><span class="zh">孩子大概率不需要从头重学，而是要把已经掌握的“凑10”真正变成处理100以内心算的工具。</span></p>
+      <div class="callout good"><strong>Objectif des prochaines semaines / 接下来几周的目标：</strong> <span class="fr">automatiser <code>+1</code>, <code>-1</code>, <code>+2</code>, <code>-2</code>, <code>+5</code>, <code>-5</code>, <code>+10</code>, <code>-10</code> jusqu'a 100, surtout autour des passages de dizaine.</span><span class="zh">把100以内的 <code>+1</code>、<code>-1</code>、<code>+2</code>、<code>-2</code>、<code>+5</code>、<code>-5</code>、<code>+10</code>、<code>-10</code> 做到稳定、快速，尤其是跨整十的位置。</span></div>
     </section>
   </div>
 
-  <div class="footer">Page statique pour parents - projet Learning / CP Maths</div>
+  <div class="footer">Rapport bilingue parents - 双语家长方法报告</div>
 </div>
 </body>
 </html>
