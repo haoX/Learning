@@ -81,6 +81,12 @@ h1{
   gap:10px;
   margin-top:14px;
 }
+.difficulty-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:14px;
+}
 .summary-chip{
   background:rgba(255,255,255,.92);
   border:1px solid var(--line);
@@ -89,6 +95,22 @@ h1{
   font-size:13px;
   font-weight:800;
   color:#475569;
+}
+.difficulty-btn{
+  border:none;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:9px 12px;
+  font-size:13px;
+  font-weight:800;
+  color:#475569;
+  cursor:pointer;
+}
+.difficulty-btn.active{
+  background:linear-gradient(135deg,var(--blue),var(--pink));
+  color:#fff;
+  border-color:transparent;
 }
 .btn{
   border:none;
@@ -470,6 +492,7 @@ h1{
         <div class="summary-chip" id="totalStarsChip">⭐ 0 etoile / 0星</div>
         <div class="summary-chip" id="completedModesChip">✅ 0 mode termine / 0个模式完成</div>
       </div>
+      <div class="difficulty-bar" id="difficultyBar"></div>
     </section>
 
     <div class="mode-grid" id="modeGrid"></div>
@@ -539,6 +562,11 @@ h1{
 
 <script>
 const STORAGE_KEY = 'bridge_exercises_progress_v1';
+const DIFFICULTIES = [
+  { id: 'easy', label: 'Facile / 简单', countDelta: -2, time: 10 },
+  { id: 'normal', label: 'Standard / 标准', countDelta: 0, time: 8 },
+  { id: 'hard', label: 'Defi / 挑战', countDelta: 2, time: 6 }
+];
 const MODES = [
   {
     id: 'pm10',
@@ -640,10 +668,10 @@ function loadProgress() {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      return { totalStars: 0, completedModes: {}, bestScores: {}, playCount: 0, timerEnabled: true, ...parsed };
+      return { totalStars: 0, completedModes: {}, bestScores: {}, playCount: 0, timerEnabled: true, difficultyId: 'normal', ...parsed };
     }
   } catch (e) {}
-  return { totalStars: 0, completedModes: {}, bestScores: {}, playCount: 0, timerEnabled: true };
+  return { totalStars: 0, completedModes: {}, bestScores: {}, playCount: 0, timerEnabled: true, difficultyId: 'normal' };
 }
 
 function saveProgress() {
@@ -697,6 +725,14 @@ function randInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function currentDifficulty() {
+  return DIFFICULTIES.find(d => d.id === state.progress.difficultyId) || DIFFICULTIES[1];
+}
+
+function bestKey(modeId) {
+  return `${modeId}__${currentDifficulty().id}`;
+}
+
 function shuffle(arr) {
   const copy = [...arr];
   for (let i = copy.length - 1; i > 0; i--) {
@@ -709,10 +745,11 @@ function shuffle(arr) {
 function uniqueQuestions(generator, count) {
   const list = [];
   const seen = new Set();
+  const difficulty = currentDifficulty();
   let guard = 0;
   while (list.length < count && guard < 200) {
     guard++;
-    const q = generator();
+    const q = generator(difficulty);
     const key = q.text;
     if (seen.has(key)) continue;
     seen.add(key);
@@ -738,83 +775,86 @@ function packQuestion(base) {
   return { ...base, choices: genChoices(base.answer) };
 }
 
-function genPm10() {
+function genPm10(difficulty) {
   const add = Math.random() < 0.5;
   if (add) {
-    const a = randInt(11, 89);
+    const max = difficulty.id === 'easy' ? 69 : difficulty.id === 'hard' ? 99 : 89;
+    const a = randInt(11, max);
     return packQuestion({ type: 'pm10_add', text: `${a} + 10 = ?`, answer: a + 10, a });
   }
-  const a = randInt(20, 99);
+  const min = difficulty.id === 'easy' ? 20 : difficulty.id === 'hard' ? 10 : 20;
+  const a = randInt(min, 99);
   return packQuestion({ type: 'pm10_sub', text: `${a} - 10 = ?`, answer: a - 10, a });
 }
 
-function genPm1Easy() {
+function genPm1Easy(difficulty) {
   const add = Math.random() < 0.5;
+  const tensMax = difficulty.id === 'easy' ? 5 : 8;
   if (add) {
-    const tens = randInt(1, 8) * 10;
-    const ones = randInt(1, 7);
+    const tens = randInt(1, tensMax) * 10;
+    const ones = randInt(1, difficulty.id === 'hard' ? 8 : 7);
     const a = tens + ones;
     return packQuestion({ type: 'pm1_easy_add', text: `${a} + 1 = ?`, answer: a + 1, a });
   }
-  const tens = randInt(1, 9) * 10;
+  const tens = randInt(1, difficulty.id === 'easy' ? 6 : 9) * 10;
   const ones = randInt(2, 8);
   const a = tens + ones;
   return packQuestion({ type: 'pm1_easy_sub', text: `${a} - 1 = ?`, answer: a - 1, a });
 }
 
-function genPm1Cross() {
+function genPm1Cross(difficulty) {
   const add = Math.random() < 0.5;
   if (add) {
-    const tens = randInt(1, 8) * 10;
+    const tens = randInt(1, difficulty.id === 'easy' ? 5 : 8) * 10;
     const a = tens + 9;
     return packQuestion({ type: 'pm1_cross_add', text: `${a} + 1 = ?`, answer: a + 1, a });
   }
-  const tens = randInt(2, 10) * 10;
+  const tens = randInt(2, difficulty.id === 'easy' ? 7 : 10) * 10;
   const a = tens;
   return packQuestion({ type: 'pm1_cross_sub', text: `${a} - 1 = ?`, answer: a - 1, a });
 }
 
-function genPm2Easy() {
+function genPm2Easy(difficulty) {
   const add = Math.random() < 0.5;
   if (add) {
-    const tens = randInt(1, 8) * 10;
-    const ones = randInt(1, 6);
+    const tens = randInt(1, difficulty.id === 'easy' ? 5 : 8) * 10;
+    const ones = randInt(1, difficulty.id === 'hard' ? 7 : 6);
     const a = tens + ones;
     return packQuestion({ type: 'pm2_easy_add', text: `${a} + 2 = ?`, answer: a + 2, a });
   }
-  const tens = randInt(1, 9) * 10;
-  const ones = randInt(3, 8);
+  const tens = randInt(1, difficulty.id === 'easy' ? 6 : 9) * 10;
+  const ones = randInt(3, difficulty.id === 'hard' ? 9 : 8);
   const a = tens + ones;
   return packQuestion({ type: 'pm2_easy_sub', text: `${a} - 2 = ?`, answer: a - 2, a });
 }
 
-function genBridge10() {
-  const tens = randInt(2, 9) * 10;
-  const ones = randInt(4, 9);
+function genBridge10(difficulty) {
+  const tens = randInt(2, difficulty.id === 'easy' ? 6 : 9) * 10;
+  const ones = randInt(difficulty.id === 'easy' ? 6 : 4, 9);
   const needed = 10 - ones;
   const a = tens + ones;
   return packQuestion({ type: 'bridge10', text: `${a} + ${needed} = ?`, answer: a + needed, a, needed });
 }
 
-function genBack10() {
-  const tens = randInt(3, 10) * 10;
-  const back = randInt(1, 5);
+function genBack10(difficulty) {
+  const tens = randInt(3, difficulty.id === 'easy' ? 7 : 10) * 10;
+  const back = randInt(1, difficulty.id === 'hard' ? 6 : 5);
   return packQuestion({ type: 'back10', text: `${tens} - ${back} = ?`, answer: tens - back, tens, back });
 }
 
-function genPm5() {
+function genPm5(difficulty) {
   const add = Math.random() < 0.5;
   if (add) {
-    const a = randInt(12, 94);
+    const a = randInt(12, difficulty.id === 'easy' ? 74 : 94);
     return packQuestion({ type: 'pm5_add', text: `${a} + 5 = ?`, answer: a + 5, a });
   }
-  const a = randInt(15, 99);
+  const a = randInt(15, difficulty.id === 'easy' ? 79 : 99);
   return packQuestion({ type: 'pm5_sub', text: `${a} - 5 = ?`, answer: a - 5, a });
 }
 
-function genMix() {
+function genMix(difficulty) {
   const gens = [genPm10, genPm1Easy, genPm1Cross, genPm2Easy, genBridge10, genBack10, genPm5];
-  return gens[randInt(0, gens.length - 1)]();
+  return gens[randInt(0, gens.length - 1)](difficulty);
 }
 
 function explainSteps(q) {
@@ -1008,6 +1048,23 @@ function refreshMenuSummary() {
   document.getElementById('completedModesChip').textContent = `✅ ${completed} mode termine / ${completed}个模式完成`;
 }
 
+function renderDifficultyBar() {
+  const bar = document.getElementById('difficultyBar');
+  bar.innerHTML = '';
+  DIFFICULTIES.forEach(diff => {
+    const btn = document.createElement('button');
+    btn.className = `difficulty-btn${diff.id === currentDifficulty().id ? ' active' : ''}`;
+    btn.textContent = diff.label;
+    btn.addEventListener('click', () => {
+      state.progress.difficultyId = diff.id;
+      saveProgress();
+      renderDifficultyBar();
+      renderModes();
+    });
+    bar.appendChild(btn);
+  });
+}
+
 function updateTimerUI(secondsLeft) {
   const chip = document.getElementById('timerChip');
   const bar = document.getElementById('timerBar');
@@ -1050,8 +1107,10 @@ function renderModes() {
   const grid = document.getElementById('modeGrid');
   grid.innerHTML = '';
   MODES.forEach(mode => {
-    const best = state.progress.bestScores[mode.id];
+    const best = state.progress.bestScores[bestKey(mode.id)];
     const stars = best ? starsForRatio(best.score / best.total) : 0;
+    const diff = currentDifficulty();
+    const questionCount = Math.max(6, mode.count + diff.countDelta);
     const card = document.createElement('button');
     card.className = 'mode-card';
     card.innerHTML = `
@@ -1060,6 +1119,8 @@ function renderModes() {
       <p>${mode.desc}</p>
       <div class="mode-meta">
         <div class="mode-stat">⭐ ${'★'.repeat(stars)}${'☆'.repeat(3 - stars)}</div>
+        <div class="mode-stat">⏱ ${diff.time}s</div>
+        <div class="mode-stat">🧠 ${questionCount} questions</div>
         <div class="mode-stat">${best ? `Meilleur ${best.score}/${best.total}` : 'Pas encore joue / 还没玩过'}</div>
       </div>
     `;
@@ -1076,11 +1137,13 @@ function showScreen(id) {
 
 function startMode(modeId) {
   const mode = MODES.find(m => m.id === modeId);
+  const diff = currentDifficulty();
   state.mode = mode;
-  state.questions = uniqueQuestions(mode.generator, mode.count);
+  state.questions = uniqueQuestions(mode.generator, Math.max(6, mode.count + diff.countDelta));
   state.index = 0;
   state.score = 0;
   state.timerEnabled = state.progress.timerEnabled !== false;
+  state.timeLimit = diff.time;
   state.progress.playCount += 1;
   saveProgress();
   renderQuestion();
@@ -1224,12 +1287,13 @@ function showResult() {
     title = 'On recommence';
     text = 'Retourne aux etapes et au hundred chart. / 先回到步骤讲解和百数表。';
   }
-  const prevBest = state.progress.bestScores[state.mode.id];
+  const progressKey = bestKey(state.mode.id);
+  const prevBest = state.progress.bestScores[progressKey];
   if (!prevBest || state.score > prevBest.score) {
-    state.progress.bestScores[state.mode.id] = { score: state.score, total };
+    state.progress.bestScores[progressKey] = { score: state.score, total };
   }
   if (state.score >= Math.ceil(total * 0.6)) {
-    state.progress.completedModes[state.mode.id] = true;
+    state.progress.completedModes[progressKey] = true;
   }
   const starMap = {};
   Object.keys(state.progress.bestScores).forEach(modeId => {
@@ -1243,7 +1307,7 @@ function showResult() {
   document.getElementById('resultTitle').textContent = title;
   document.getElementById('resultScore').textContent = `${state.score} / ${total}`;
   document.getElementById('resultStars').textContent = stars;
-  document.getElementById('bestModeChip').textContent = `⭐ Meilleur mode / 本模式最佳：${state.progress.bestScores[state.mode.id].score}/${total}`;
+  document.getElementById('bestModeChip').textContent = `⭐ Meilleur mode / 本模式最佳：${state.progress.bestScores[progressKey].score}/${total}`;
   document.getElementById('totalModesChip').textContent = `🌈 Total etoiles / 总星星：${state.progress.totalStars}`;
   document.getElementById('resultText').textContent = text;
   renderModes();
@@ -1274,6 +1338,7 @@ document.getElementById('timerToggleBtn').addEventListener('click', () => {
 });
 
 renderModes();
+renderDifficultyBar();
 </script>
 </body>
 </html>
