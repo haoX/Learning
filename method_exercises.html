@@ -569,6 +569,28 @@ const DIFFICULTIES = [
 ];
 const MODES = [
   {
+    id: 'facts5',
+    pill: 'green',
+    title: 'Additions et soustractions 0-5',
+    zh: '0到5加减法',
+    desc: '20 questions de faits de base. / 20道0到5基础加减法。',
+    prompt: 'On calcule avec les faits, on ne compte pas. / 用“数的组成”来算，不靠数数。',
+    count: 20,
+    fixedCount: true,
+    generator: genFacts5
+  },
+  {
+    id: 'facts10',
+    pill: 'green',
+    title: 'Additions et soustractions 0-10',
+    zh: '0到10加减法',
+    desc: '20 questions de faits de base. / 20道0到10基础加减法。',
+    prompt: 'On cherche les nombres amis et les decompositions. / 找朋友数和分解关系，不靠往后数。',
+    count: 20,
+    fixedCount: true,
+    generator: genFacts10
+  },
+  {
     id: 'pm10',
     pill: 'blue',
     title: 'Plus 10, moins 10',
@@ -787,6 +809,30 @@ function genPm10(difficulty) {
   return packQuestion({ type: 'pm10_sub', text: `${a} - 10 = ?`, answer: a - 10, a });
 }
 
+function genFacts5() {
+  const add = Math.random() < 0.5;
+  if (add) {
+    const a = randInt(0, 5);
+    const b = randInt(0, 5 - a);
+    return packQuestion({ type: 'fact_add', text: `${a} + ${b} = ?`, answer: a + b, a, b, limit: 5 });
+  }
+  const a = randInt(0, 5);
+  const b = randInt(0, a);
+  return packQuestion({ type: 'fact_sub', text: `${a} - ${b} = ?`, answer: a - b, a, b, limit: 5 });
+}
+
+function genFacts10() {
+  const add = Math.random() < 0.5;
+  if (add) {
+    const a = randInt(0, 10);
+    const b = randInt(0, 10 - a);
+    return packQuestion({ type: 'fact_add', text: `${a} + ${b} = ?`, answer: a + b, a, b, limit: 10 });
+  }
+  const a = randInt(0, 10);
+  const b = randInt(0, a);
+  return packQuestion({ type: 'fact_sub', text: `${a} - ${b} = ?`, answer: a - b, a, b, limit: 10 });
+}
+
 function genPm1Easy(difficulty) {
   const add = Math.random() < 0.5;
   const tensMax = difficulty.id === 'easy' ? 5 : 8;
@@ -859,7 +905,15 @@ function genMix(difficulty) {
 
 function explainSteps(q) {
   const steps = [];
-  if (q.type === 'pm10_add') {
+  if (q.type === 'fact_add') {
+    steps.push({ fr: `On reunit ${q.a} et ${q.b}.`, zh: `把 ${q.a} 和 ${q.b} 合起来。` });
+    steps.push({ fr: `${q.a} et ${q.b} font ${q.answer}.`, zh: `${q.a} 和 ${q.b} 一共是 ${q.answer}。` });
+    steps.push({ fr: `On ne compte pas apres ${Math.max(q.a, q.b)} ; on utilise un fait connu.`, zh: `不是从较大的数继续往后数，而是直接调用已知的“数的组成”。` });
+  } else if (q.type === 'fact_sub') {
+    steps.push({ fr: `On cherche comment decomposer ${q.a}.`, zh: `先想 ${q.a} 可以怎样分解。` });
+    steps.push({ fr: `${q.a} = ${q.b} + ${q.answer}.`, zh: `${q.a} = ${q.b} + ${q.answer}` });
+    steps.push({ fr: `Donc ${q.a} - ${q.b} = ${q.answer}. On ne retire pas les nombres un par un.`, zh: `所以 ${q.a} - ${q.b} = ${q.answer}。不是把数字一个个“删掉”。` });
+  } else if (q.type === 'pm10_add') {
     const tens = Math.floor(q.a / 10);
     const ones = q.a % 10;
     steps.push({ fr: `${q.a} = ${tens} dizaines et ${ones} unites.`, zh: `${q.a} = ${tens}个十和${ones}个一。` });
@@ -934,6 +988,18 @@ function explainSteps(q) {
 }
 
 function buildVisualFrames(q) {
+  if (q.type === 'fact_add') {
+    return [
+      { values: [q.a, q.b], captionFr: 'On reunit deux petites quantites.', captionZh: '先把两部分合起来。' },
+      { values: [q.a, q.b, q.answer], captionFr: `Ensemble, cela fait ${q.answer}.`, captionZh: `合起来一共是 ${q.answer}。` }
+    ];
+  }
+  if (q.type === 'fact_sub') {
+    return [
+      { values: [q.a], captionFr: 'On part du tout.', captionZh: '先看整体。' },
+      { values: [q.a, q.b, q.answer], captionFr: `${q.a} se decompose en ${q.b} et ${q.answer}.`, captionZh: `${q.a} 可以分成 ${q.b} 和 ${q.answer}。` }
+    ];
+  }
   if (q.type === 'pm10_add' || q.type === 'pm10_sub') {
     return [
       { values: [q.a, q.answer], captionFr: 'On change seulement la dizaine.', captionZh: '只改变十位。' }
@@ -1110,7 +1176,7 @@ function renderModes() {
     const best = state.progress.bestScores[bestKey(mode.id)];
     const stars = best ? starsForRatio(best.score / best.total) : 0;
     const diff = currentDifficulty();
-    const questionCount = Math.max(6, mode.count + diff.countDelta);
+    const questionCount = mode.fixedCount ? mode.count : Math.max(6, mode.count + diff.countDelta);
     const card = document.createElement('button');
     card.className = 'mode-card';
     card.innerHTML = `
@@ -1119,7 +1185,7 @@ function renderModes() {
       <p>${mode.desc}</p>
       <div class="mode-meta">
         <div class="mode-stat">⭐ ${'★'.repeat(stars)}${'☆'.repeat(3 - stars)}</div>
-        <div class="mode-stat">⏱ ${diff.time}s</div>
+        <div class="mode-stat">⏱ ${mode.fixedCount ? Math.max(diff.time, 7) : diff.time}s</div>
         <div class="mode-stat">🧠 ${questionCount} questions</div>
         <div class="mode-stat">${best ? `Meilleur ${best.score}/${best.total}` : 'Pas encore joue / 还没玩过'}</div>
       </div>
@@ -1139,11 +1205,11 @@ function startMode(modeId) {
   const mode = MODES.find(m => m.id === modeId);
   const diff = currentDifficulty();
   state.mode = mode;
-  state.questions = uniqueQuestions(mode.generator, Math.max(6, mode.count + diff.countDelta));
+  state.questions = uniqueQuestions(mode.generator, mode.fixedCount ? mode.count : Math.max(6, mode.count + diff.countDelta));
   state.index = 0;
   state.score = 0;
   state.timerEnabled = state.progress.timerEnabled !== false;
-  state.timeLimit = diff.time;
+  state.timeLimit = mode.fixedCount ? Math.max(diff.time, 7) : diff.time;
   state.progress.playCount += 1;
   saveProgress();
   renderQuestion();
