@@ -2,253 +2,825 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exercices passerelle - Calcul mental CP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Exercices passerelle interactifs</title>
 <style>
 :root{
-  --bg1:#edf7ff;
-  --bg2:#f8f1ff;
-  --bg3:#fff7eb;
+  --bg1:#ecf7ff;
+  --bg2:#f7efff;
+  --bg3:#fff7ea;
+  --ink:#25364a;
+  --muted:#6c7689;
   --card:#ffffff;
-  --ink:#223447;
-  --muted:#6b7280;
-  --line:#e7eaf1;
-  --blue:#1d4ed8;
+  --line:#e6ebf3;
+  --blue:#2563eb;
   --pink:#ec4899;
-  --green:#e8f7e9;
-  --yellow:#fff5db;
+  --green:#22c55e;
+  --orange:#f59e0b;
+  --red:#ef4444;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{
+html,body{
+  width:100%;
+  min-height:100%;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
   font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Helvetica Neue",sans-serif;
+}
+body{
   color:var(--ink);
   background:
-    radial-gradient(circle at right top, rgba(236,72,153,.10), transparent 22%),
-    radial-gradient(circle at left top, rgba(29,78,216,.10), transparent 22%),
-    linear-gradient(160deg,var(--bg1),var(--bg2) 55%,var(--bg3));
-  min-height:100vh;
-  padding:20px 16px 44px;
+    radial-gradient(circle at top right, rgba(236,72,153,.12), transparent 25%),
+    radial-gradient(circle at top left, rgba(37,99,235,.12), transparent 24%),
+    linear-gradient(160deg,var(--bg1),var(--bg2) 52%,var(--bg3));
 }
-.page{max-width:1040px;margin:0 auto}
-.hero,.section,.block{
+.screen{display:none;min-height:100vh;padding:18px 14px 30px}
+.screen.active{display:flex;flex-direction:column}
+.page{width:100%;max-width:980px;margin:0 auto}
+.hero,.panel,.mode-card,.answer-btn,.step-panel,.result-card{
   background:rgba(255,255,255,.88);
   border:1px solid rgba(255,255,255,.76);
   box-shadow:0 12px 30px rgba(63,78,100,.09);
 }
-.hero{border-radius:28px;padding:28px 22px;margin-bottom:18px}
-.eyebrow{display:inline-block;color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
-h1{font-size:31px;line-height:1.15;margin-bottom:10px}
+.hero{
+  border-radius:28px;
+  padding:24px 20px;
+  margin-bottom:16px;
+}
+.eyebrow{
+  display:inline-block;
+  color:var(--blue);
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+h1{
+  font-size:30px;
+  line-height:1.15;
+  margin-bottom:10px;
+}
 .zh{display:block;color:var(--muted);font-size:.94em;margin-top:4px}
-.subtitle{font-size:15px;line-height:1.68;color:#334155}
-.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
-.btn{text-decoration:none;border-radius:999px;padding:11px 16px;font-size:14px;font-weight:700;display:inline-flex;align-items:center;gap:8px}
+.subtitle{
+  font-size:15px;
+  line-height:1.68;
+  color:#334155;
+}
+.hero-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:18px;
+}
+.btn{
+  border:none;
+  text-decoration:none;
+  border-radius:999px;
+  padding:12px 16px;
+  font-size:14px;
+  font-weight:800;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+}
 .btn.primary{background:linear-gradient(135deg,var(--blue),var(--pink));color:#fff}
 .btn.secondary{background:#fff;color:var(--ink);border:1px solid var(--line)}
-.section{border-radius:24px;padding:22px 18px;margin-top:16px}
-.section h2{font-size:23px;margin-bottom:10px}
-.section p,.section li{font-size:15px;line-height:1.7;color:#334155}
-.section ul{padding-left:20px;margin:10px 0}
-.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
-.block{grid-column:span 12;border-radius:22px;padding:18px 16px}
-.block h3{font-size:18px;margin-bottom:8px}
-.badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#edf3ff;color:var(--blue);font-size:12px;font-weight:800;margin-bottom:10px}
-.hint{background:var(--yellow);padding:12px;border-radius:16px;font-size:14px;line-height:1.6;margin:10px 0}
-.demo{
-  background:var(--green);
-  border-radius:16px;
-  padding:12px;
-  font-size:14px;
-  line-height:1.65;
-  margin:10px 0;
-}
-.practice{
+.btn.ghost{background:#f8fafc;color:var(--ink);border:1px solid var(--line)}
+.mode-grid{
   display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:8px 14px;
-  margin-top:12px;
-  font-size:22px;
+  grid-template-columns:repeat(12,1fr);
+  gap:14px;
+}
+.mode-card{
+  grid-column:span 12;
+  border-radius:22px;
+  padding:18px 16px;
+  cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.mode-card:active{transform:scale(.98)}
+.mode-card h2{
+  font-size:19px;
+  margin-bottom:8px;
+}
+.mode-card p{
+  font-size:14px;
+  line-height:1.6;
+  color:#475569;
+}
+.pill{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:10px;
+}
+.pill.blue{background:#ebf3ff;color:var(--blue)}
+.pill.green{background:#ecfdf3;color:#15803d}
+.pill.orange{background:#fff7e8;color:#b45309}
+.topbar{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:12px;
+}
+.small-btn{
+  border:none;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:10px 14px;
+  font-size:14px;
+  font-weight:700;
+  color:#475569;
+  cursor:pointer;
+}
+.panel{
+  border-radius:28px;
+  padding:18px 16px 20px;
+}
+.status-row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:10px;
+}
+.status-chip{
+  background:#f8fafc;
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:8px 12px;
+  font-size:13px;
   font-weight:800;
 }
-.practice div{
-  background:#fff;
-  border:1px dashed #cfd8e3;
-  border-radius:14px;
-  padding:12px 10px;
+.prompt{
   text-align:center;
-  min-height:56px;
+  font-size:15px;
+  color:var(--muted);
+  margin-top:4px;
 }
-details{
-  margin-top:12px;
+.question{
+  text-align:center;
+  font-size:clamp(40px, 12vw, 72px);
+  font-weight:900;
+  color:#2e2b73;
+  line-height:1.15;
+  padding:16px 0 18px;
+  min-height:120px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.choice-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+.answer-btn{
+  min-height:86px;
+  border-radius:22px;
+  border:3px solid transparent;
+  font-size:clamp(24px,7vw,34px);
+  font-weight:900;
+  color:#312e81;
+  cursor:pointer;
+  transition:transform .1s ease, border-color .2s ease, background .2s ease;
+}
+.answer-btn:active{transform:scale(.96)}
+.answer-btn.correct{background:#dcfce7;border-color:#22c55e}
+.answer-btn.wrong{background:#fee2e2;border-color:#ef4444}
+.answer-btn.reveal{border-color:#22c55e;background:#dcfce7}
+.answer-btn.disabled{pointer-events:none;opacity:.9}
+.action-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+  margin-top:14px;
+}
+.step-panel{
+  border-radius:24px;
+  padding:16px 14px;
+  margin-top:14px;
+}
+.step-title{
+  font-size:16px;
+  font-weight:900;
+  margin-bottom:10px;
+  color:#334155;
+}
+.step-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.step-item{
   border:1px solid var(--line);
   border-radius:16px;
+  padding:12px;
   background:#fff;
-  padding:10px 12px;
+  opacity:0;
+  transform:translateY(8px);
+  animation:stepIn .35s ease forwards;
 }
-summary{cursor:pointer;font-weight:800}
-.answers{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:8px 14px;
-  margin-top:10px;
+@keyframes stepIn{
+  to{opacity:1;transform:translateY(0)}
+}
+.step-item .fr{
+  display:block;
   font-size:14px;
+  line-height:1.55;
+  color:#334155;
 }
-.answers div{padding:6px 0;border-bottom:1px solid #eef2f7}
-.footer{text-align:center;color:var(--muted);font-size:13px;margin-top:18px}
+.step-item .zh{
+  display:block;
+  font-size:13px;
+  line-height:1.55;
+  color:var(--muted);
+  margin-top:4px;
+}
+.feedback{
+  text-align:center;
+  font-size:18px;
+  font-weight:900;
+  margin-top:12px;
+  min-height:28px;
+}
+.feedback.good{color:#15803d}
+.feedback.bad{color:#b91c1c}
+.progress{
+  margin-top:12px;
+  width:100%;
+  height:10px;
+  border-radius:999px;
+  background:#e8edf5;
+  overflow:hidden;
+}
+.progress-fill{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--blue),var(--pink));
+  transition:width .25s ease;
+}
+.result-wrap{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.result-card{
+  width:100%;
+  max-width:560px;
+  border-radius:28px;
+  padding:24px 20px;
+  text-align:center;
+}
+.result-card h2{
+  font-size:34px;
+  margin-bottom:10px;
+}
+.result-card p{
+  font-size:16px;
+  line-height:1.65;
+  color:#475569;
+}
+.score{
+  font-size:54px;
+  font-weight:900;
+  color:#312e81;
+  margin:14px 0 6px;
+}
+.stars{
+  font-size:38px;
+  letter-spacing:6px;
+  margin-bottom:10px;
+}
 @media (min-width:860px){
-  .block.half{grid-column:span 6}
+  .mode-card{grid-column:span 6}
 }
-@media (max-width:760px){
+@media (max-width:740px){
+  .screen{padding:14px 12px 22px}
   h1{font-size:26px}
-  .practice,.answers{grid-template-columns:1fr 1fr}
-}
-@media (max-width:520px){
-  .practice,.answers{grid-template-columns:1fr}
+  .choice-grid{gap:10px}
+  .answer-btn{min-height:78px}
 }
 </style>
 </head>
 <body>
-<div class="page">
-  <section class="hero">
-    <div class="eyebrow">CP Bridge Exercises</div>
-    <h1>Exercices pour l'enfant<span class="zh">给孩子做的桥接练习</span></h1>
-    <p class="subtitle">Ces exercices suivent la methode : d'abord voir la structure, ensuite transferer, enfin aller vers l'automatisation, y compris pour <code>+5</code> et <code>-5</code>.<span class="zh">这些练习按“先看结构、再做迁移、最后自动化”的顺序设计，现在也把 <code>+5</code>、<code>-5</code> 加进来了，重点不是刷很多，而是让孩子真正从数数转向计算。</span></p>
-    <div class="actions">
-      <a class="btn primary" href="two_week_training_plan.html">🗓️ Plan 2 semaines / 两周计划</a>
-      <a class="btn secondary" href="method_report.html">📘 Rapport / 方法报告</a>
-      <a class="btn secondary" href="index.html">⬅ Accueil / 首页</a>
+
+<div id="menu-screen" class="screen active">
+  <div class="page">
+    <section class="hero">
+      <div class="eyebrow">CP Bridge Exercises</div>
+      <h1>Exercices interactifs<span class="zh">可直接做的互动练习</span></h1>
+      <p class="subtitle">Choisis un mode, reponds dans la page, puis ouvre "Voir les etapes" pour une explication animee pas a pas.<span class="zh">选择一个模式后，孩子可以直接在网页里做题；点“Voir les étapes / 看步骤”可以看到分步动态讲解。</span></p>
+      <div class="hero-actions">
+        <a class="btn secondary" href="method_report.html">📘 Rapport / 方法报告</a>
+        <a class="btn secondary" href="two_week_training_plan.html">🗓️ Plan / 两周计划</a>
+        <a class="btn secondary" href="index.html">⬅ Accueil / 首页</a>
+      </div>
+    </section>
+
+    <div class="mode-grid" id="modeGrid"></div>
+  </div>
+</div>
+
+<div id="play-screen" class="screen">
+  <div class="page">
+    <div class="topbar">
+      <button class="small-btn" id="backToMenu">← Menu</button>
+      <div class="status-chip" id="modeNameChip"></div>
     </div>
-  </section>
 
-  <section class="section">
-    <h2>1. Comment utiliser cette page<span class="zh">1. 这页怎么用</span></h2>
-    <ul>
-      <li>Faire un seul bloc a la fois.<span class="zh">一次只做一个练习块。</span></li>
-      <li>D'abord sans chrono, puis en petite serie rapide.<span class="zh">先不计时，稳定后再做快答。</span></li>
-      <li>Si l'enfant recompte, revenir au hundred chart.<span class="zh">如果孩子又回到数数，就先退回百数表。</span></li>
-      <li>Les reponses sont cachees en bas de chaque bloc pour les parents.<span class="zh">每组答案都折叠在下面，方便家长看，不直接暴露给孩子。</span></li>
-    </ul>
-  </section>
-
-  <div class="grid">
-    <section class="block half">
-      <div class="badge">Bloc A / A组</div>
-      <h3>+10 et -10<span class="zh">先练 ±10</span></h3>
-      <p>Objectif : voir que seule la dizaine change.<span class="zh">目标：看到只有十位变化。</span></p>
-      <div class="hint">Dire / 提示语： "Qu'est-ce qui change ? Les dizaines ou les unites ?" / “哪一位变了？”</div>
-      <div class="practice">
-        <div>24 + 10 = ___</div><div>36 + 10 = ___</div><div>51 + 10 = ___</div>
-        <div>78 - 10 = ___</div><div>64 - 10 = ___</div><div>90 - 10 = ___</div>
-        <div>13 + 10 = ___</div><div>47 + 10 = ___</div><div>82 - 10 = ___</div>
+    <section class="panel">
+      <div class="status-row">
+        <div class="status-chip" id="questionCountChip">Question 1 / 8</div>
+        <div class="status-chip" id="scoreChip">Score 0</div>
       </div>
-      <details><summary>Reponses / 答案</summary><div class="answers"><div>24+10=34</div><div>36+10=46</div><div>51+10=61</div><div>78-10=68</div><div>64-10=54</div><div>90-10=80</div><div>13+10=23</div><div>47+10=57</div><div>82-10=72</div></div></details>
-    </section>
-
-    <section class="block half">
-      <div class="badge">Bloc B / B组</div>
-      <h3>+1 et -1 sans passage<span class="zh">±1 不过整十</span></h3>
-      <p>Objectif : changer seulement les unites.<span class="zh">目标：只改变个位。</span></p>
-      <div class="practice">
-        <div>23 + 1 = ___</div><div>45 + 1 = ___</div><div>67 - 1 = ___</div>
-        <div>84 - 1 = ___</div><div>31 + 1 = ___</div><div>56 - 1 = ___</div>
-        <div>72 + 1 = ___</div><div>18 + 1 = ___</div><div>95 - 1 = ___</div>
+      <div class="prompt" id="promptText"></div>
+      <div class="question" id="questionText"></div>
+      <div class="choice-grid" id="choiceGrid"></div>
+      <div class="feedback" id="feedbackText"></div>
+      <div class="action-row">
+        <button class="btn ghost" id="showStepsBtn">👀 Voir les etapes / 看步骤</button>
+        <button class="btn primary" id="nextBtn" style="display:none;">Suivant / 下一题</button>
       </div>
-      <details><summary>Reponses / 答案</summary><div class="answers"><div>24</div><div>46</div><div>66</div><div>83</div><div>32</div><div>55</div><div>73</div><div>19</div><div>94</div></div></details>
-    </section>
-
-    <section class="block half">
-      <div class="badge">Bloc C / C组</div>
-      <h3>+1 et -1 avec passage<span class="zh">±1 过整十</span></h3>
-      <p>Objectif : stabiliser le bord de la dizaine.<span class="zh">目标：稳定跨整十的边界变化。</span></p>
-      <div class="hint">Dire / 提示语： "9 plus 1 va a la dizaine suivante." / “9再加1，到下一个整十。”</div>
-      <div class="practice">
-        <div>29 + 1 = ___</div><div>39 + 1 = ___</div><div>49 + 1 = ___</div>
-        <div>50 - 1 = ___</div><div>70 - 1 = ___</div><div>40 - 1 = ___</div>
-        <div>89 + 1 = ___</div><div>60 - 1 = ___</div><div>19 + 1 = ___</div>
+      <div class="step-panel" id="stepPanel" style="display:none;">
+        <div class="step-title">Explication pas a pas / 分步讲解</div>
+        <div class="step-list" id="stepList"></div>
       </div>
-      <details><summary>Reponses / 答案</summary><div class="answers"><div>30</div><div>40</div><div>50</div><div>49</div><div>69</div><div>39</div><div>90</div><div>59</div><div>20</div></div></details>
-    </section>
-
-    <section class="block half">
-      <div class="badge">Bloc D / D组</div>
-      <h3>+2 et -2 sans passage<span class="zh">±2 不过整十</span></h3>
-      <p>Objectif : bouger de deux sans recompter toute la suite.<span class="zh">目标：移动两格，但不从头数整条数列。</span></p>
-      <div class="practice">
-        <div>34 + 2 = ___</div><div>52 + 2 = ___</div><div>76 - 2 = ___</div>
-        <div>93 - 2 = ___</div><div>41 + 2 = ___</div><div>68 - 2 = ___</div>
-        <div>22 + 2 = ___</div><div>57 - 2 = ___</div><div>84 + 2 = ___</div>
-      </div>
-      <details><summary>Reponses / 答案</summary><div class="answers"><div>36</div><div>54</div><div>74</div><div>91</div><div>43</div><div>66</div><div>24</div><div>55</div><div>86</div></div></details>
-    </section>
-
-    <section class="block half">
-      <div class="badge">Bloc E / E组</div>
-      <h3>Ponts avec decomposer 10<span class="zh">用“凑10”搭桥</span></h3>
-      <p>Objectif : faire le lien entre petits faits et grands nombres.<span class="zh">目标：把小数事实迁移到两位数。</span></p>
-      <div class="hint">Dire / 提示语： "8 a besoin de 2 pour faire 10." / “8还差2到10。”</div>
-      <div class="practice">
-        <div>28 + 2 = ___</div><div>39 + 1 = ___</div><div>47 + 3 = ___</div>
-        <div>56 + 4 = ___</div><div>68 + 2 = ___</div><div>75 + 5 = ___</div>
-        <div>84 + 6 = ___</div><div>97 + 3 = ___</div><div>58 + 2 = ___</div>
-      </div>
-      <details><summary>Reponses / 答案</summary><div class="answers"><div>30</div><div>40</div><div>50</div><div>60</div><div>70</div><div>80</div><div>90</div><div>100</div><div>60</div></div></details>
-    </section>
-
-    <section class="block half">
-      <div class="badge">Bloc F / F组</div>
-      <h3>Version soustractive<span class="zh">从整十退回来</span></h3>
-      <p>Objectif : revenir depuis une dizaine sans recompter tout.<span class="zh">目标：从整十往回退，不靠逐个数。</span></p>
-      <div class="practice">
-        <div>30 - 2 = ___</div><div>40 - 1 = ___</div><div>50 - 3 = ___</div>
-        <div>60 - 4 = ___</div><div>70 - 2 = ___</div><div>80 - 5 = ___</div>
-        <div>90 - 1 = ___</div><div>100 - 2 = ___</div><div>60 - 3 = ___</div>
-      </div>
-      <details><summary>Reponses / 答案</summary><div class="answers"><div>28</div><div>39</div><div>47</div><div>56</div><div>68</div><div>75</div><div>89</div><div>98</div><div>57</div></div></details>
-    </section>
-
-    <section class="block half">
-      <div class="badge">Bloc G / G组</div>
-      <h3>+5 et -5<span class="zh">±5 练习</span></h3>
-      <p>Objectif : passer d'abord par la dizaine, puis faire le petit reste.<span class="zh">目标：先桥接到整十，再走剩下的一小步。</span></p>
-      <div class="hint">Dire / 提示语： <code>36+5 = 36+4+1</code> ; <code>42-5 = 42-2-3</code> / “先到整十，再补剩下的步数。”</div>
-      <div class="demo">
-        <div><strong>Demo / 示意：</strong> <code>36 + 5</code> → <code>36 + 4 = 40</code> → <code>40 + 1 = 41</code></div>
-        <div><strong>Demo / 示意：</strong> <code>42 - 5</code> → <code>42 - 2 = 40</code> → <code>40 - 3 = 37</code></div>
-      </div>
-      <div class="practice">
-        <div>36 + 5 = ___</div><div>42 - 5 = ___</div><div>57 + 5 = ___</div>
-        <div>63 - 5 = ___</div><div>28 + 5 = ___</div><div>71 - 5 = ___</div>
-        <div>45 + 5 = ___</div><div>80 - 5 = ___</div><div>94 - 5 = ___</div>
-      </div>
-      <details><summary>Reponses / 答案</summary><div class="answers"><div>41</div><div>37</div><div>62</div><div>58</div><div>33</div><div>66</div><div>50</div><div>75</div><div>89</div></div></details>
-    </section>
-
-    <section class="block">
-      <div class="badge">Bloc H / H组</div>
-      <h3>Melange final court<span class="zh">最后的小混合练习</span></h3>
-      <p>Objectif : verifier si l'enfant garde la bonne strategie quand les types se melangent.<span class="zh">目标：看孩子在混合情况下，是否还能保持正确策略。</span></p>
-      <div class="practice">
-        <div>24 + 10 = ___</div><div>39 + 1 = ___</div><div>52 - 1 = ___</div>
-        <div>48 + 2 = ___</div><div>73 - 10 = ___</div><div>60 - 2 = ___</div>
-        <div>67 + 1 = ___</div><div>29 + 1 = ___</div><div>41 - 2 = ___</div>
-        <div>85 - 10 = ___</div><div>34 + 2 = ___</div><div>50 - 1 = ___</div>
-        <div>36 + 5 = ___</div><div>42 - 5 = ___</div><div>57 + 5 = ___</div>
-      </div>
-      <details><summary>Reponses / 答案</summary><div class="answers"><div>34</div><div>40</div><div>51</div><div>50</div><div>63</div><div>58</div><div>68</div><div>30</div><div>39</div><div>75</div><div>36</div><div>49</div><div>41</div><div>37</div><div>62</div></div></details>
+      <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
     </section>
   </div>
-
-  <section class="section">
-    <h2>2. Conseils pour les parents<span class="zh">2. 给家长的使用建议</span></h2>
-    <ul>
-      <li>Choisir 1 ou 2 blocs par jour seulement.<span class="zh">每天只做 1 到 2 组。</span></li>
-      <li>Quand l'enfant hesite, demander : "Qu'est-ce qui change ?"<span class="zh">当孩子犹豫时，先问“哪一位变了？”</span></li>
-      <li>Si l'enfant recompte, ne pas corriger trop vite : revenir au tableau des 100.<span class="zh">如果又开始数数，不要急着纠错，先退回百数表。</span></li>
-      <li>Quand la strategie devient stable, refaire le meme bloc en version rapide.<span class="zh">当思路稳定后，再把同一组做成快答。</span></li>
-    </ul>
-    <div class="hint"><strong>Objectif / 目标：</strong> moins de doigts, moins de pauses, plus de reponses directes.<span class="zh">手指变少、停顿变少、直接反应变多。</span></div>
-  </section>
-
-  <div class="footer">Exercices passerelle bilingues - 双语桥接练习</div>
 </div>
+
+<div id="result-screen" class="screen">
+  <div class="page result-wrap">
+    <section class="result-card">
+      <div class="pill blue" id="resultModeName"></div>
+      <h2 id="resultTitle">Bravo</h2>
+      <div class="score" id="resultScore">8 / 8</div>
+      <div class="stars" id="resultStars"></div>
+      <p id="resultText"></p>
+      <div class="hero-actions" style="justify-content:center;">
+        <button class="btn primary" id="retryBtn">🔄 Rejouer / 再玩一次</button>
+        <button class="btn secondary" id="resultMenuBtn">🏠 Menu</button>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+const MODES = [
+  {
+    id: 'pm10',
+    pill: 'blue',
+    title: 'Plus 10, moins 10',
+    zh: '±10',
+    desc: 'Changer seulement la dizaine. / 只改变十位。',
+    prompt: 'Regarde quelle position change. / 看哪一位在变化。',
+    count: 8,
+    generator: genPm10
+  },
+  {
+    id: 'pm1_easy',
+    pill: 'green',
+    title: 'Plus 1, moins 1',
+    zh: '±1 不过整十',
+    desc: 'Changer seulement les unites. / 只改变个位。',
+    prompt: 'Sans passer une dizaine. / 不跨整十。',
+    count: 8,
+    generator: genPm1Easy
+  },
+  {
+    id: 'pm1_cross',
+    pill: 'orange',
+    title: 'Passage de dizaine',
+    zh: '±1 过整十',
+    desc: '29+1, 50-1... / 跨整十边界。',
+    prompt: 'Passe a la dizaine voisine. / 到相邻整十。',
+    count: 8,
+    generator: genPm1Cross
+  },
+  {
+    id: 'pm2_easy',
+    pill: 'green',
+    title: 'Plus 2, moins 2',
+    zh: '±2 不过整十',
+    desc: 'Bouger de deux unites. / 移动两个一。',
+    prompt: 'Observe les unites. / 观察个位。',
+    count: 8,
+    generator: genPm2Easy
+  },
+  {
+    id: 'bridge10',
+    pill: 'orange',
+    title: 'Pont vers la dizaine',
+    zh: '桥接整十',
+    desc: 'Utiliser decomposer 10. / 用“凑10”搭桥。',
+    prompt: 'Va d’abord a la dizaine. / 先到整十。',
+    count: 8,
+    generator: genBridge10
+  },
+  {
+    id: 'back10',
+    pill: 'orange',
+    title: 'Retour depuis la dizaine',
+    zh: '从整十退回来',
+    desc: 'Revenir sans recompter tout. / 不靠从头数。',
+    prompt: 'Recule jusqu’a la bonne place. / 从整十往回退。',
+    count: 8,
+    generator: genBack10
+  },
+  {
+    id: 'pm5',
+    pill: 'blue',
+    title: 'Plus 5, moins 5',
+    zh: '±5',
+    desc: 'Passer d’abord par la dizaine. / 先到整十，再完成。',
+    prompt: 'Va a la dizaine, puis termine. / 先到整十，再走剩下的。',
+    count: 8,
+    generator: genPm5
+  },
+  {
+    id: 'mix',
+    pill: 'blue',
+    title: 'Defi melange',
+    zh: '混合挑战',
+    desc: 'Un peu de tout. / 小范围混合。',
+    prompt: 'Choisis la bonne strategie. / 选择正确策略。',
+    count: 10,
+    generator: genMix
+  }
+];
+
+const state = {
+  mode: null,
+  questions: [],
+  index: 0,
+  score: 0,
+  answered: false,
+  revealTimer: null
+};
+
+function randInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function shuffle(arr) {
+  const copy = [...arr];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = randInt(0, i);
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function uniqueQuestions(generator, count) {
+  const list = [];
+  const seen = new Set();
+  let guard = 0;
+  while (list.length < count && guard < 200) {
+    guard++;
+    const q = generator();
+    const key = q.text;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    list.push(q);
+  }
+  return list;
+}
+
+function genChoices(answer) {
+  const set = new Set([answer]);
+  let span = Math.max(3, Math.min(10, Math.floor(answer / 10) + 3));
+  let guard = 0;
+  while (set.size < 4 && guard < 60) {
+    guard++;
+    let n = answer + randInt(-span, span);
+    if (n < 0) continue;
+    set.add(n);
+  }
+  return shuffle([...set]).slice(0, 4);
+}
+
+function packQuestion(base) {
+  return { ...base, choices: genChoices(base.answer) };
+}
+
+function genPm10() {
+  const add = Math.random() < 0.5;
+  if (add) {
+    const a = randInt(11, 89);
+    return packQuestion({ type: 'pm10_add', text: `${a} + 10 = ?`, answer: a + 10, a });
+  }
+  const a = randInt(20, 99);
+  return packQuestion({ type: 'pm10_sub', text: `${a} - 10 = ?`, answer: a - 10, a });
+}
+
+function genPm1Easy() {
+  const add = Math.random() < 0.5;
+  if (add) {
+    const tens = randInt(1, 8) * 10;
+    const ones = randInt(1, 7);
+    const a = tens + ones;
+    return packQuestion({ type: 'pm1_easy_add', text: `${a} + 1 = ?`, answer: a + 1, a });
+  }
+  const tens = randInt(1, 9) * 10;
+  const ones = randInt(2, 8);
+  const a = tens + ones;
+  return packQuestion({ type: 'pm1_easy_sub', text: `${a} - 1 = ?`, answer: a - 1, a });
+}
+
+function genPm1Cross() {
+  const add = Math.random() < 0.5;
+  if (add) {
+    const tens = randInt(1, 8) * 10;
+    const a = tens + 9;
+    return packQuestion({ type: 'pm1_cross_add', text: `${a} + 1 = ?`, answer: a + 1, a });
+  }
+  const tens = randInt(2, 10) * 10;
+  const a = tens;
+  return packQuestion({ type: 'pm1_cross_sub', text: `${a} - 1 = ?`, answer: a - 1, a });
+}
+
+function genPm2Easy() {
+  const add = Math.random() < 0.5;
+  if (add) {
+    const tens = randInt(1, 8) * 10;
+    const ones = randInt(1, 6);
+    const a = tens + ones;
+    return packQuestion({ type: 'pm2_easy_add', text: `${a} + 2 = ?`, answer: a + 2, a });
+  }
+  const tens = randInt(1, 9) * 10;
+  const ones = randInt(3, 8);
+  const a = tens + ones;
+  return packQuestion({ type: 'pm2_easy_sub', text: `${a} - 2 = ?`, answer: a - 2, a });
+}
+
+function genBridge10() {
+  const tens = randInt(2, 9) * 10;
+  const ones = randInt(4, 9);
+  const needed = 10 - ones;
+  const a = tens + ones;
+  return packQuestion({ type: 'bridge10', text: `${a} + ${needed} = ?`, answer: a + needed, a, needed });
+}
+
+function genBack10() {
+  const tens = randInt(3, 10) * 10;
+  const back = randInt(1, 5);
+  return packQuestion({ type: 'back10', text: `${tens} - ${back} = ?`, answer: tens - back, tens, back });
+}
+
+function genPm5() {
+  const add = Math.random() < 0.5;
+  if (add) {
+    const a = randInt(12, 94);
+    return packQuestion({ type: 'pm5_add', text: `${a} + 5 = ?`, answer: a + 5, a });
+  }
+  const a = randInt(15, 99);
+  return packQuestion({ type: 'pm5_sub', text: `${a} - 5 = ?`, answer: a - 5, a });
+}
+
+function genMix() {
+  const gens = [genPm10, genPm1Easy, genPm1Cross, genPm2Easy, genBridge10, genBack10, genPm5];
+  return gens[randInt(0, gens.length - 1)]();
+}
+
+function explainSteps(q) {
+  const steps = [];
+  if (q.type === 'pm10_add') {
+    const tens = Math.floor(q.a / 10);
+    const ones = q.a % 10;
+    steps.push({ fr: `${q.a} = ${tens} dizaines et ${ones} unites.`, zh: `${q.a} = ${tens}个十和${ones}个一。` });
+    steps.push({ fr: `Quand on ajoute 10, seule la dizaine change.`, zh: `加10时，只改变十位。` });
+    steps.push({ fr: `${tens} dizaines deviennent ${tens + 1} dizaines, donc ${q.answer}.`, zh: `${tens}个十变成${tens + 1}个十，所以答案是 ${q.answer}。` });
+  } else if (q.type === 'pm10_sub') {
+    const tens = Math.floor(q.a / 10);
+    const ones = q.a % 10;
+    steps.push({ fr: `${q.a} = ${tens} dizaines et ${ones} unites.`, zh: `${q.a} = ${tens}个十和${ones}个一。` });
+    steps.push({ fr: `Quand on enleve 10, seule la dizaine diminue.`, zh: `减10时，只是十位减一。` });
+    steps.push({ fr: `${tens} dizaines deviennent ${tens - 1} dizaines, donc ${q.answer}.`, zh: `${tens}个十变成${tens - 1}个十，所以答案是 ${q.answer}。` });
+  } else if (q.type === 'pm1_easy_add' || q.type === 'pm1_easy_sub') {
+    const add = q.type.endsWith('add');
+    steps.push({ fr: `On regarde seulement le chiffre des unites.`, zh: `只看个位。` });
+    steps.push({ fr: add ? `${q.a % 10} + 1 = ${(q.answer % 10)}` : `${q.a % 10} - 1 = ${(q.answer % 10)}`, zh: add ? `${q.a % 10} + 1 = ${q.answer % 10}` : `${q.a % 10} - 1 = ${q.answer % 10}` });
+    steps.push({ fr: `La dizaine ne change pas, donc ${q.answer}.`, zh: `十位不变，所以答案是 ${q.answer}。` });
+  } else if (q.type === 'pm1_cross_add') {
+    steps.push({ fr: `Le nombre finit par 9.`, zh: `这个数的个位是9。` });
+    steps.push({ fr: `9 + 1 = 10, on passe a la dizaine suivante.`, zh: `9 + 1 = 10，所以要到下一个整十。` });
+    steps.push({ fr: `Donc ${q.a} + 1 = ${q.answer}.`, zh: `所以 ${q.a} + 1 = ${q.answer}。` });
+  } else if (q.type === 'pm1_cross_sub') {
+    steps.push({ fr: `Le nombre est une dizaine entiere.`, zh: `这是一个整十数。` });
+    steps.push({ fr: `En enlevant 1, on revient juste avant cette dizaine.`, zh: `减1就是退回到这个整十前面一个数。` });
+    steps.push({ fr: `Donc ${q.a} - 1 = ${q.answer}.`, zh: `所以 ${q.a} - 1 = ${q.answer}。` });
+  } else if (q.type === 'pm2_easy_add' || q.type === 'pm2_easy_sub') {
+    const add = q.type.endsWith('add');
+    steps.push({ fr: `On regarde les unites.`, zh: `先看个位。` });
+    steps.push({ fr: add ? `${q.a % 10} + 2 = ${q.answer % 10}` : `${q.a % 10} - 2 = ${q.answer % 10}`, zh: add ? `${q.a % 10} + 2 = ${q.answer % 10}` : `${q.a % 10} - 2 = ${q.answer % 10}` });
+    steps.push({ fr: `On ne passe pas une nouvelle dizaine, donc la dizaine reste la meme.`, zh: `这里不跨整十，所以十位不变。` });
+    steps.push({ fr: `Reponse : ${q.answer}.`, zh: `答案是 ${q.answer}。` });
+  } else if (q.type === 'bridge10') {
+    steps.push({ fr: `On veut aller a la dizaine suivante.`, zh: `这题先要到下一个整十。` });
+    steps.push({ fr: `${q.a % 10} a besoin de ${q.needed} pour faire 10.`, zh: `${q.a % 10} 还差 ${q.needed} 才到 10。` });
+    steps.push({ fr: `Donc ${q.a} + ${q.needed} = ${q.answer}.`, zh: `所以 ${q.a} + ${q.needed} = ${q.answer}。` });
+  } else if (q.type === 'back10') {
+    steps.push({ fr: `On part d'une dizaine entiere : ${q.tens}.`, zh: `我们从整十数 ${q.tens} 出发。` });
+    steps.push({ fr: `On recule de ${q.back}.`, zh: `往回退 ${q.back}。` });
+    steps.push({ fr: `Donc ${q.tens} - ${q.back} = ${q.answer}.`, zh: `所以 ${q.tens} - ${q.back} = ${q.answer}。` });
+  } else if (q.type === 'pm5_add') {
+    const ones = q.a % 10;
+    const toTen = 10 - ones;
+    if (toTen <= 5) {
+      const rest = 5 - toTen;
+      steps.push({ fr: `On va d'abord a la dizaine suivante.`, zh: `先到下一个整十。` });
+      steps.push({ fr: `${q.a} + ${toTen} = ${q.a + toTen}.`, zh: `${q.a} + ${toTen} = ${q.a + toTen}` });
+      steps.push({ fr: `Il reste encore ${rest}.`, zh: `还剩下 ${rest}。` });
+      steps.push({ fr: `${q.a + toTen} + ${rest} = ${q.answer}.`, zh: `${q.a + toTen} + ${rest} = ${q.answer}` });
+    } else {
+      steps.push({ fr: `Ici on peut aussi ajouter 5 directement aux unites.`, zh: `这题也可以直接把个位加5。` });
+      steps.push({ fr: `${ones} + 5 = ${q.answer % 10}.`, zh: `${ones} + 5 = ${q.answer % 10}` });
+      steps.push({ fr: `La dizaine reste la meme, donc ${q.answer}.`, zh: `十位不变，所以答案是 ${q.answer}。` });
+    }
+  } else if (q.type === 'pm5_sub') {
+    const ones = q.a % 10;
+    if (ones < 5) {
+      const toTen = ones;
+      const rest = 5 - toTen;
+      steps.push({ fr: `On recule d'abord jusqu'a la dizaine.`, zh: `先退回整十。` });
+      steps.push({ fr: `${q.a} - ${toTen} = ${q.a - toTen}.`, zh: `${q.a} - ${toTen} = ${q.a - toTen}` });
+      steps.push({ fr: `Il reste encore ${rest}.`, zh: `还需要再退 ${rest}。` });
+      steps.push({ fr: `${q.a - toTen} - ${rest} = ${q.answer}.`, zh: `${q.a - toTen} - ${rest} = ${q.answer}` });
+    } else {
+      steps.push({ fr: `On enleve 5 aux unites.`, zh: `直接从个位减5。` });
+      steps.push({ fr: `${ones} - 5 = ${q.answer % 10}.`, zh: `${ones} - 5 = ${q.answer % 10}` });
+      steps.push({ fr: `La dizaine ne change pas, donc ${q.answer}.`, zh: `十位不变，所以答案是 ${q.answer}。` });
+    }
+  } else {
+    steps.push({ fr: `Choisis la bonne strategie : dizaine, unites ou pont.`, zh: `先判断该看十位、个位，还是先桥接。` });
+    steps.push({ fr: `Puis calcule : ${q.text.replace(' = ?', '')} = ${q.answer}.`, zh: `然后计算：${q.text.replace(' = ?', '')} = ${q.answer}。` });
+  }
+  return steps;
+}
+
+function renderModes() {
+  const grid = document.getElementById('modeGrid');
+  grid.innerHTML = '';
+  MODES.forEach(mode => {
+    const card = document.createElement('button');
+    card.className = 'mode-card';
+    card.innerHTML = `
+      <div class="pill ${mode.pill}">${mode.zh}</div>
+      <h2>${mode.title}<span class="zh">${mode.zh}</span></h2>
+      <p>${mode.desc}</p>
+    `;
+    card.addEventListener('click', () => startMode(mode.id));
+    grid.appendChild(card);
+  });
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function startMode(modeId) {
+  const mode = MODES.find(m => m.id === modeId);
+  state.mode = mode;
+  state.questions = uniqueQuestions(mode.generator, mode.count);
+  state.index = 0;
+  state.score = 0;
+  renderQuestion();
+  showScreen('play-screen');
+}
+
+function renderQuestion() {
+  clearTimeout(state.revealTimer);
+  state.answered = false;
+  const q = state.questions[state.index];
+  document.getElementById('modeNameChip').textContent = `${state.mode.title} / ${state.mode.zh}`;
+  document.getElementById('questionCountChip').textContent = `Question ${state.index + 1} / ${state.questions.length}`;
+  document.getElementById('scoreChip').textContent = `Score ${state.score}`;
+  document.getElementById('promptText').textContent = state.mode.prompt;
+  document.getElementById('questionText').textContent = q.text;
+  document.getElementById('feedbackText').textContent = '';
+  document.getElementById('feedbackText').className = 'feedback';
+  document.getElementById('stepPanel').style.display = 'none';
+  document.getElementById('stepList').innerHTML = '';
+  document.getElementById('nextBtn').style.display = 'none';
+  document.getElementById('showStepsBtn').style.display = 'inline-flex';
+  document.getElementById('progressFill').style.width = `${(state.index / state.questions.length) * 100}%`;
+
+  const grid = document.getElementById('choiceGrid');
+  grid.innerHTML = '';
+  q.choices.forEach(choice => {
+    const btn = document.createElement('button');
+    btn.className = 'answer-btn';
+    btn.textContent = choice;
+    btn.addEventListener('click', () => answerQuestion(choice, btn));
+    grid.appendChild(btn);
+  });
+}
+
+function answerQuestion(choice, btn) {
+  if (state.answered) return;
+  state.answered = true;
+  const q = state.questions[state.index];
+  const buttons = [...document.querySelectorAll('.answer-btn')];
+  buttons.forEach(b => b.classList.add('disabled'));
+  const ok = choice === q.answer;
+  if (ok) {
+    state.score++;
+    btn.classList.add('correct');
+    setFeedback('Bravo ! / 太棒了！', true);
+  } else {
+    btn.classList.add('wrong');
+    buttons.forEach(b => {
+      if (Number(b.textContent) === q.answer) b.classList.add('reveal');
+    });
+    setFeedback(`Bonne reponse : ${q.answer} / 正确答案：${q.answer}`, false);
+    revealSteps();
+  }
+  document.getElementById('scoreChip').textContent = `Score ${state.score}`;
+  document.getElementById('nextBtn').style.display = 'inline-flex';
+}
+
+function setFeedback(text, good) {
+  const el = document.getElementById('feedbackText');
+  el.textContent = text;
+  el.className = `feedback ${good ? 'good' : 'bad'}`;
+}
+
+function revealSteps() {
+  const q = state.questions[state.index];
+  const steps = explainSteps(q);
+  const panel = document.getElementById('stepPanel');
+  const list = document.getElementById('stepList');
+  panel.style.display = 'block';
+  list.innerHTML = '';
+  steps.forEach((step, i) => {
+    state.revealTimer = setTimeout(() => {
+      const item = document.createElement('div');
+      item.className = 'step-item';
+      item.innerHTML = `<span class="fr">${step.fr}</span><span class="zh">${step.zh}</span>`;
+      list.appendChild(item);
+    }, i * 700);
+  });
+}
+
+function nextQuestion() {
+  state.index++;
+  if (state.index >= state.questions.length) {
+    showResult();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showResult() {
+  const total = state.questions.length;
+  const ratio = state.score / total;
+  let stars = '⭐';
+  let title = 'Bien joue !';
+  let text = 'Tu progresses bien.';
+  if (ratio === 1) {
+    stars = '⭐⭐⭐';
+    title = 'Incroyable !';
+    text = 'Toutes les reponses sont justes. Continue comme ca ! / 全对了，继续保持！';
+  } else if (ratio >= 0.75) {
+    stars = '⭐⭐';
+    title = 'Super !';
+    text = 'La strategie devient plus stable. / 你的策略越来越稳定了。';
+  } else if (ratio >= 0.5) {
+    stars = '⭐';
+    title = 'Bonne base';
+    text = 'Refais le mode en regardant bien les etapes. / 先多看步骤，再练一次会更稳。';
+  } else {
+    stars = '🌱';
+    title = 'On recommence';
+    text = 'Retourne aux etapes et au hundred chart. / 先回到步骤讲解和百数表。';
+  }
+  document.getElementById('resultModeName').textContent = `${state.mode.title} / ${state.mode.zh}`;
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultScore').textContent = `${state.score} / ${total}`;
+  document.getElementById('resultStars').textContent = stars;
+  document.getElementById('resultText').textContent = text;
+  showScreen('result-screen');
+}
+
+document.getElementById('showStepsBtn').addEventListener('click', revealSteps);
+document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+document.getElementById('backToMenu').addEventListener('click', () => showScreen('menu-screen'));
+document.getElementById('retryBtn').addEventListener('click', () => startMode(state.mode.id));
+document.getElementById('resultMenuBtn').addEventListener('click', () => showScreen('menu-screen'));
+
+renderModes();
+</script>
 </body>
 </html>
