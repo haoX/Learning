@@ -663,10 +663,10 @@ const MODES = [
   {
     id: 'facts10',
     pill: 'green',
-    title: 'Additions et soustractions 0-10',
-    zh: '0到10加减法',
-    desc: '20 questions de faits de base. / 20道0到10基础加减法。',
-    prompt: 'On cherche les nombres amis et les decompositions. / 找朋友数和分解关系，不靠往后数。',
+    title: 'Plus 1, moins 1, plus 2, moins 2 jusqu\'a 10',
+    zh: '0到10的±1和±2',
+    desc: '20 questions sur +/-1 et +/-2 dans 0-10. / 20道0到10范围内的±1和±2。',
+    prompt: 'On regarde les unites et les petites decompositions. / 看个位和小范围分解，不靠往后数。',
     count: 20,
     fixedCount: true,
     generator: genFacts10
@@ -821,27 +821,37 @@ function genPm10(difficulty) {
 }
 
 function genFacts5() {
+  const allowZero = Math.random() < 0.12;
   const add = Math.random() < 0.5;
   if (add) {
-    const a = randInt(0, 5);
-    const b = randInt(0, 5 - a);
+    const a = allowZero ? randInt(0, 5) : randInt(1, 5);
+    const maxB = 5 - a;
+    const minB = allowZero ? 0 : Math.min(1, maxB);
+    const b = randInt(minB, maxB);
     return packQuestion({ type: 'fact_add', text: `${a} + ${b} = ?`, answer: a + b, a, b, limit: 5 });
   }
-  const a = randInt(0, 5);
-  const b = randInt(0, a);
+  const a = allowZero ? randInt(0, 5) : randInt(1, 5);
+  const minB = allowZero ? 0 : Math.min(1, a);
+  const b = randInt(minB, a);
   return packQuestion({ type: 'fact_sub', text: `${a} - ${b} = ?`, answer: a - b, a, b, limit: 5 });
 }
 
 function genFacts10() {
-  const add = Math.random() < 0.5;
-  if (add) {
-    const a = randInt(0, 10);
-    const b = randInt(0, 10 - a);
-    return packQuestion({ type: 'fact_add', text: `${a} + ${b} = ?`, answer: a + b, a, b, limit: 10 });
+  const op = randInt(1, 4);
+  if (op === 1) {
+    const a = randInt(0, 9);
+    return packQuestion({ type: 'fact_pm_small', text: `${a} + 1 = ?`, answer: a + 1, a, delta: 1, sign: '+' });
   }
-  const a = randInt(0, 10);
-  const b = randInt(0, a);
-  return packQuestion({ type: 'fact_sub', text: `${a} - ${b} = ?`, answer: a - b, a, b, limit: 10 });
+  if (op === 2) {
+    const a = randInt(1, 10);
+    return packQuestion({ type: 'fact_pm_small', text: `${a} - 1 = ?`, answer: a - 1, a, delta: 1, sign: '-' });
+  }
+  if (op === 3) {
+    const a = randInt(0, 8);
+    return packQuestion({ type: 'fact_pm_small', text: `${a} + 2 = ?`, answer: a + 2, a, delta: 2, sign: '+' });
+  }
+  const a = randInt(2, 10);
+  return packQuestion({ type: 'fact_pm_small', text: `${a} - 2 = ?`, answer: a - 2, a, delta: 2, sign: '-' });
 }
 
 function genPm1Easy(difficulty) {
@@ -960,6 +970,16 @@ function explainSteps(q) {
     steps.push({ fr: `On cherche comment decomposer ${q.a}.`, zh: `先想 ${q.a} 可以怎样分解。` });
     steps.push({ fr: `${q.a} = ${q.b} + ${q.answer}.`, zh: `${q.a} = ${q.b} + ${q.answer}` });
     steps.push({ fr: `Donc ${q.a} - ${q.b} = ${q.answer}. On ne retire pas les nombres un par un.`, zh: `所以 ${q.a} - ${q.b} = ${q.answer}。不是把数字一个个“删掉”。` });
+  } else if (q.type === 'fact_pm_small') {
+    if (q.sign === '+') {
+      steps.push({ fr: `On regarde le nombre ${q.a}.`, zh: `先看数字 ${q.a}。` });
+      steps.push({ fr: `Ajouter ${q.delta}, c'est avancer de ${q.delta} sans recompter toute la suite.`, zh: `加 ${q.delta}，不是把后面的数字一个个数出来。` });
+      steps.push({ fr: `${q.a} + ${q.delta} = ${q.answer}.`, zh: `${q.a} + ${q.delta} = ${q.answer}` });
+    } else {
+      steps.push({ fr: `On part de ${q.a}.`, zh: `先看 ${q.a}。` });
+      steps.push({ fr: `Enlever ${q.delta}, c'est reculer de ${q.delta} sans barrer les nombres un par un.`, zh: `减 ${q.delta}，不是把数字一个个删掉。` });
+      steps.push({ fr: `${q.a} - ${q.delta} = ${q.answer}.`, zh: `${q.a} - ${q.delta} = ${q.answer}` });
+    }
   } else if (q.type === 'pm10_add') {
     const tens = Math.floor(q.a / 10);
     const ones = q.a % 10;
@@ -1058,6 +1078,12 @@ function buildVisualFrames(q) {
     return [
       { values: [q.a], captionFr: 'On part du tout.', captionZh: '先看整体。' },
       { values: [q.a, q.b, q.answer], captionFr: `${q.a} se decompose en ${q.b} et ${q.answer}.`, captionZh: `${q.a} 可以分成 ${q.b} 和 ${q.answer}。` }
+    ];
+  }
+  if (q.type === 'fact_pm_small') {
+    return [
+      { values: [q.a], captionFr: 'On part du nombre de depart.', captionZh: '先看起始数字。' },
+      { values: [q.a, q.answer], captionFr: q.sign === '+' ? `On avance de ${q.delta}.` : `On recule de ${q.delta}.`, captionZh: q.sign === '+' ? `往前走 ${q.delta}。` : `往回退 ${q.delta}。` }
     ];
   }
   if (q.type === 'pm10_add' || q.type === 'pm10_sub') {
