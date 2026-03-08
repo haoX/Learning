@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan 2 semaines - Calcul mental CP</title>
+<style>
+:root{
+  --bg1:#eef6ff;
+  --bg2:#f7eefc;
+  --bg3:#fff4e9;
+  --card:#ffffff;
+  --ink:#243447;
+  --muted:#667085;
+  --line:#e6eaf1;
+  --blue:#2563eb;
+  --violet:#8b5cf6;
+  --green:#eaf8ec;
+  --yellow:#fff6dc;
+  --red:#fff0ef;
+  --soft:#eff5ff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 100% 0, rgba(139,92,246,.14), transparent 30%),
+    radial-gradient(circle at 0 0, rgba(37,99,235,.12), transparent 28%),
+    linear-gradient(160deg,var(--bg1),var(--bg2) 52%,var(--bg3));
+  min-height:100vh;
+  padding:20px 16px 44px;
+}
+.page{max-width:980px;margin:0 auto}
+.hero{
+  background:rgba(255,255,255,.84);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.72);
+  box-shadow:0 16px 40px rgba(63,78,100,.12);
+  border-radius:28px;
+  padding:28px 22px;
+  margin-bottom:18px;
+}
+.eyebrow{
+  display:inline-block;
+  color:var(--blue);
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+h1{
+  font-size:30px;
+  line-height:1.15;
+  margin-bottom:10px;
+}
+.subtitle{
+  color:var(--muted);
+  font-size:15px;
+  line-height:1.65;
+}
+.hero-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:18px;
+}
+.btn{
+  text-decoration:none;
+  border-radius:999px;
+  padding:11px 16px;
+  font-size:14px;
+  font-weight:700;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+.btn.primary{background:linear-gradient(135deg,var(--blue),var(--violet));color:#fff}
+.btn.secondary{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:16px;
+}
+.card{
+  grid-column:span 12;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:22px 18px;
+  box-shadow:0 10px 28px rgba(63,78,100,.08);
+}
+.card h2{font-size:22px;margin-bottom:12px}
+.card h3{font-size:17px;margin:16px 0 8px}
+.card p{font-size:15px;line-height:1.7;color:#334155;margin-bottom:10px}
+.card ul{padding-left:20px;margin:10px 0}
+.card li{margin:8px 0;line-height:1.6;color:#334155}
+.callout{
+  padding:14px;
+  border-radius:18px;
+  font-size:14px;
+  line-height:1.65;
+  margin:12px 0;
+}
+.callout.green{background:var(--green)}
+.callout.yellow{background:var(--yellow)}
+.callout.red{background:var(--red)}
+.callout.soft{background:var(--soft)}
+.week-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  background:#edf3ff;
+  color:var(--blue);
+  margin-bottom:10px;
+}
+.day{
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:18px 16px;
+  margin-top:14px;
+}
+.day-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:10px;
+}
+.day-title{
+  font-size:18px;
+  font-weight:800;
+}
+.focus{
+  font-size:13px;
+  color:var(--muted);
+  font-weight:700;
+}
+.pill{
+  flex:0 0 auto;
+  padding:7px 10px;
+  border-radius:999px;
+  background:#f8fafc;
+  border:1px solid var(--line);
+  font-size:12px;
+  font-weight:700;
+}
+.mini-list{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  margin-top:12px;
+}
+.mini{
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:12px;
+  background:#fff;
+}
+.mini .label{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  margin-bottom:6px;
+}
+.mini .text{
+  font-size:14px;
+  line-height:1.55;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+  margin-top:10px;
+}
+th,td{
+  border:1px solid var(--line);
+  padding:11px 10px;
+  text-align:left;
+  vertical-align:top;
+  line-height:1.55;
+}
+th{background:#f8fafc;font-size:13px}
+.footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+  margin-top:18px;
+}
+@media (min-width:820px){
+  .card.wide{grid-column:span 8}
+  .card.side{grid-column:span 4}
+}
+@media (max-width:700px){
+  h1{font-size:26px}
+  .mini-list{grid-template-columns:1fr}
+  .day-head{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <section class="hero">
+    <div class="eyebrow">CP Training Plan</div>
+    <h1>Plan de 2 semaines pour passer de compter a calculer</h1>
+    <p class="subtitle">Plan court, concret et repetable. Il s'appuie sur les complements a 10 deja acquis et vise l'automatisation de <code>+1</code>, <code>-1</code>, <code>+2</code>, <code>-2</code>, <code>+10</code>, <code>-10</code> jusqu'a 100, surtout autour des passages de dizaine.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="method_report.html">📘 Lire le rapport methode</a>
+      <a class="btn secondary" href="progress_tracker.html">📊 Aller au suivi</a>
+      <a class="btn secondary" href="index.html">⬅ Retour a l'accueil</a>
+    </div>
+  </section>
+
+  <div class="grid">
+    <section class="card wide">
+      <h2>1. Regles du plan</h2>
+      <ul>
+        <li>Chaque seance dure entre 10 et 15 minutes maximum.</li>
+        <li>On travaille une structure a la fois.</li>
+        <li>On verbalise avant de chronometrer.</li>
+        <li>Si l'enfant recompte, on ralentit et on revient au support visuel.</li>
+      </ul>
+      <div class="callout yellow"><strong>Point important :</strong> la bonne reponse ne suffit pas. On observe la strategie. Si l'enfant trouve en comptant, l'objectif de la seance n'est pas encore atteint.</div>
+    </section>
+
+    <section class="card side">
+      <h2>2. Materiel</h2>
+      <ul>
+        <li><a href="hundred_chart.html">hundred_chart.html</a></li>
+        <li><a href="number_bonds.html">number_bonds.html</a></li>
+        <li><a href="flash_cards.html">flash_cards.html</a></li>
+        <li>Papier + crayon</li>
+        <li>Chrono de 1 minute</li>
+      </ul>
+    </section>
+
+    <section class="card wide">
+      <div class="week-tag">Semaine 1</div>
+      <h2>3. Construire les ponts</h2>
+      <p>Objectif : stabiliser la valeur de position et les passages de dizaine. On commence par ce qui est le plus structurel et le plus facile a automatiser.</p>
+
+      <div class="day">
+        <div class="day-head">
+          <div>
+            <div class="day-title">Jour 1</div>
+            <div class="focus">Focus : <code>+10</code> et <code>-10</code></div>
+          </div>
+          <div class="pill">10-12 min</div>
+        </div>
+        <p>Sur le hundred chart, faire descendre ou remonter le doigt d'une ligne. L'enfant dit ce qui change.</p>
+        <div class="mini-list">
+          <div class="mini"><div class="label">Dire</div><div class="text">"Qu'est-ce qui change ? Les dizaines ou les unites ?"</div></div>
+          <div class="mini"><div class="label">Exemples</div><div class="text"><code>24+10</code>, <code>36+10</code>, <code>78-10</code>, <code>91-10</code></div></div>
+          <div class="mini"><div class="label">Critere</div><div class="text">L'enfant dit rapidement : "les dizaines changent, les unites restent".</div></div>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="day-head">
+          <div>
+            <div class="day-title">Jour 2</div>
+            <div class="focus">Focus : <code>+1</code> et <code>-1</code> sans passage</div>
+          </div>
+          <div class="pill">10-12 min</div>
+        </div>
+        <p>Travailler seulement des nombres qui ne franchissent pas de dizaine.</p>
+        <div class="mini-list">
+          <div class="mini"><div class="label">Exemples</div><div class="text"><code>23+1</code>, <code>45+1</code>, <code>67-1</code>, <code>84-1</code></div></div>
+          <div class="mini"><div class="label">Dire</div><div class="text">"Je change seulement les unites."</div></div>
+          <div class="mini"><div class="label">A surveiller</div><div class="text">Eviter le comptage oral : 23, 24...</div></div>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="day-head">
+          <div>
+            <div class="day-title">Jour 3</div>
+            <div class="focus">Focus : <code>+1</code> et <code>-1</code> avec passage</div>
+          </div>
+          <div class="pill">12 min</div>
+        </div>
+        <p>Ici, on travaille le bord de la dizaine. C'est un vrai test de strategie.</p>
+        <div class="mini-list">
+          <div class="mini"><div class="label">Exemples</div><div class="text"><code>29+1</code>, <code>39+1</code>, <code>50-1</code>, <code>70-1</code></div></div>
+          <div class="mini"><div class="label">Dire</div><div class="text">"9 plus 1 va a la dizaine suivante."</div></div>
+          <div class="mini"><div class="label">Support</div><div class="text">Hundred chart ou mini ligne numerique si besoin.</div></div>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="day-head">
+          <div>
+            <div class="day-title">Jour 4</div>
+            <div class="focus">Focus : <code>+2</code> et <code>-2</code> sans passage</div>
+          </div>
+          <div class="pill">12 min</div>
+        </div>
+        <p>On avance ou on recule de deux sans franchir de dizaine.</p>
+        <div class="mini-list">
+          <div class="mini"><div class="label">Exemples</div><div class="text"><code>34+2</code>, <code>52+2</code>, <code>76-2</code>, <code>93-2</code></div></div>
+          <div class="mini"><div class="label">Dire</div><div class="text">"Je bouge de deux unites."</div></div>
+          <div class="mini"><div class="label">Attention</div><div class="text">Ne pas melanger avec les passages de dizaine ce jour-la.</div></div>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="day-head">
+          <div>
+            <div class="day-title">Jour 5</div>
+            <div class="focus">Focus : utiliser <code>decomposer 10</code> sur les grands nombres</div>
+          </div>
+          <div class="pill">12-15 min</div>
+        </div>
+        <p>Faire le pont explicitement entre les complements a 10 et les dizaines suivantes.</p>
+        <div class="mini-list">
+          <div class="mini"><div class="label">Exemples</div><div class="text"><code>28+2</code>, <code>39+1</code>, <code>47+3</code>, <code>56+4</code></div></div>
+          <div class="mini"><div class="label">Dire</div><div class="text">"8 a besoin de 2 pour faire 10, donc 28 va a 30."</div></div>
+          <div class="mini"><div class="label">But</div><div class="text">L'enfant doit voir que les complements a 10 servent encore.</div></div>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="day-head">
+          <div>
+            <div class="day-title">Jour 6</div>
+            <div class="focus">Focus : version soustractive du pont</div>
+          </div>
+          <div class="pill">12 min</div>
+        </div>
+        <p>On revient d'une dizaine vers un nombre juste en dessous.</p>
+        <div class="mini-list">
+          <div class="mini"><div class="label">Exemples</div><div class="text"><code>30-2</code>, <code>40-1</code>, <code>50-3</code>, <code>60-4</code></div></div>
+          <div class="mini"><div class="label">Dire</div><div class="text">"Depuis 50, j'enleve 3, donc j'arrive a 47."</div></div>
+          <div class="mini"><div class="label">But</div><div class="text">Stabiliser les retours en arriere sans recompter toute la suite.</div></div>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="day-head">
+          <div>
+            <div class="day-title">Jour 7</div>
+            <div class="focus">Focus : mini bilan de semaine</div>
+          </div>
+          <div class="pill">10 min</div>
+        </div>
+        <p>Faire 3 petites series de 6 questions : <code>+10/-10</code>, <code>+1/-1</code>, ponts de dizaine.</p>
+        <div class="callout soft"><strong>Observation :</strong> noter ce qui est immediat, ce qui est encore lent, et ce qui declenche encore le comptage.</div>
+      </div>
+    </section>
+
+    <section class="card wide">
+      <div class="week-tag">Semaine 2</div>
+      <h2>4. Aller vers l'automatisation</h2>
+      <p>Objectif : garder la structure, mais raccourcir le temps de reponse. On introduit plus de melange, sans noyer l'enfant.</p>
+
+      <div class="day">
+        <div class="day-head">
+          <div>
+            <div class="day-title">Jour 8</div>
+            <div class="focus">Focus : <code>+2</code> et <code>-2</code> avec passage</div>
+          </div>
+          <div class="pill">12-15 min</div>
+        </div>
+        <p>Le coeur de la semaine : <code>38+2</code>, <code>49+2</code>, <code>41-2</code>, <code>60-2</code>.</p>
+        <div class="mini-list">
+          <div class="mini"><div class="label">Dire</div><div class="text">"Je passe par la dizaine."</div></div>
+          <div class="mini"><div class="label">Exemples</div><div class="text"><code>38+2</code>, <code>49+2</code>, <code>41-2</code>, <code>70-2</code></div></div>
+          <div class="mini"><div class="label">Support</div><div class="text">Hundred chart si la strategie n'est pas stable.</div></div>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="day-head">
+          <div>
+            <div class="day-title">Jour 9</div>
+            <div class="focus">Focus : completions et retours</div>
+          </div>
+          <div class="pill">10-12 min</div>
+        </div>
+        <p>On alterne les questions ouvertes et les calculs directs.</p>
+        <div class="mini-list">
+          <div class="mini"><div class="label">Forme 1</div><div class="text"><code>48 + ? = 50</code>, <code>60 - ? = 58</code></div></div>
+          <div class="mini"><div class="label">Forme 2</div><div class="text"><code>48+2</code>, <code>60-2</code></div></div>
+          <div class="mini"><div class="label">But</div><div class="text">Faire apparaitre la meme structure sous deux formes.</div></div>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="day-head">
+          <div>
+            <div class="day-title">Jour 10</div>
+            <div class="focus">Focus : melange simple</div>
+          </div>
+          <div class="pill">12 min</div>
+        </div>
+        <p>On melange seulement trois familles : <code>+10/-10</code>, <code>+1/-1</code>, ponts de dizaine.</p>
+        <div class="mini-list">
+          <div class="mini"><div class="label">Serie</div><div class="text"><code>24+10</code>, <code>39+1</code>, <code>52-1</code>, <code>48+2</code>, <code>73-10</code>, <code>60-2</code></div></div>
+          <div class="mini"><div class="label">Regle</div><div class="text">6 questions, puis pause courte. Pas de longue feuille.</div></div>
+          <div class="mini"><div class="label">Observation</div><div class="text">La strategie doit rester propre malgre le melange.</div></div>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="day-head">
+          <div>
+            <div class="day-title">Jour 11</div>
+            <div class="focus">Focus : vitesse controlee</div>
+          </div>
+          <div class="pill">10 min</div>
+        </div>
+        <p>Premier vrai travail chronometre, mais sur une petite dose.</p>
+        <div class="callout yellow"><strong>Format :</strong> 3 series de 6 questions. Si l'enfant recompte, on retire le chrono a la serie suivante.</div>
+      </div>
+
+      <div class="day">
+        <div class="day-head">
+          <div>
+            <div class="day-title">Jour 12</div>
+            <div class="focus">Focus : verbalisation reduite</div>
+          </div>
+          <div class="pill">10-12 min</div>
+        </div>
+        <p>L'enfant repond plus vite, puis explique seulement 2 ou 3 calculs qui ont ete difficiles.</p>
+        <div class="mini-list">
+          <div class="mini"><div class="label">But</div><div class="text">Passer de l'explication systematique a une reponse plus automatique.</div></div>
+          <div class="mini"><div class="label">Questions</div><div class="text"><code>29+1</code>, <code>38+2</code>, <code>67-10</code>, <code>50-1</code>, <code>41-2</code></div></div>
+          <div class="mini"><div class="label">Verifier</div><div class="text">Le comptage visible doit diminuer nettement.</div></div>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="day-head">
+          <div>
+            <div class="day-title">Jour 13</div>
+            <div class="focus">Focus : simulation mini evaluation</div>
+          </div>
+          <div class="pill">8-10 min</div>
+        </div>
+        <p>Une petite serie de 12 calculs, sans aide visuelle immediate, puis correction orale.</p>
+        <div class="callout soft"><strong>Apres la serie :</strong> identifier non seulement les erreurs, mais surtout les questions ou la strategie a eté lente.</div>
+      </div>
+
+      <div class="day">
+        <div class="day-head">
+          <div>
+            <div class="day-title">Jour 14</div>
+            <div class="focus">Focus : bilan final</div>
+          </div>
+          <div class="pill">10 min</div>
+        </div>
+        <p>Comparer avec le jour 1 : temps de reponse, passages de dizaine, besoin d'aide visuelle, confiance.</p>
+        <div class="callout green"><strong>Succes attendu :</strong> l'enfant repond plus vite, surtout sur <code>+10/-10</code>, <code>+1/-1</code> et plusieurs ponts comme <code>38+2</code> ou <code>50-1</code>, avec beaucoup moins de comptage visible.</div>
+      </div>
+    </section>
+
+    <section class="card wide">
+      <h2>5. Grille d'observation parent</h2>
+      <table>
+        <tr>
+          <th>A observer</th>
+          <th>Debut</th>
+          <th>Apres 2 semaines</th>
+        </tr>
+        <tr>
+          <td><code>+10/-10</code></td>
+          <td>Hesite, recompte ou confond les dizaines</td>
+          <td>Repond vite en voyant que seule la dizaine change</td>
+        </tr>
+        <tr>
+          <td><code>+1/-1</code> avec passage</td>
+          <td>Bloque sur <code>39+1</code>, <code>50-1</code></td>
+          <td>Voit plus naturellement le passage a la dizaine voisine</td>
+        </tr>
+        <tr>
+          <td><code>+2/-2</code> avec passage</td>
+          <td>Compte pas a pas</td>
+          <td>Utilise parfois le pont des complements a 10</td>
+        </tr>
+        <tr>
+          <td>Comportement</td>
+          <td>Doigts, bouche, pauses longues</td>
+          <td>Moins de signes visibles de comptage</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="card side">
+      <h2>6. Si ca bloque encore</h2>
+      <ul>
+        <li>Revenir au hundred chart 2 ou 3 jours.</li>
+        <li>Reduire le nombre de questions.</li>
+        <li>Ne travailler qu'un seul type de passage.</li>
+        <li>Retirer le chrono temporairement.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="footer">Plan statique 2 semaines - projet Learning / CP Maths</div>
+</div>
+</body>
+</html>

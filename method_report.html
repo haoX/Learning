@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Methode de calcul mental - Rapport parents</title>
+<style>
+:root{
+  --bg1:#eef6ff;
+  --bg2:#f7eefc;
+  --bg3:#fff4e9;
+  --card:#ffffff;
+  --ink:#243447;
+  --muted:#6b7280;
+  --line:#e7eaf0;
+  --accent:#2563eb;
+  --accent-2:#8b5cf6;
+  --good:#e8f7e9;
+  --warn:#fff5db;
+  --note:#eef4ff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at top right, rgba(139,92,246,.14), transparent 26%),
+    radial-gradient(circle at top left, rgba(37,99,235,.12), transparent 24%),
+    linear-gradient(160deg,var(--bg1),var(--bg2) 55%,var(--bg3));
+  min-height:100vh;
+  padding:20px 16px 48px;
+}
+.page{max-width:900px;margin:0 auto}
+.hero{
+  background:rgba(255,255,255,.82);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:0 16px 40px rgba(63,78,100,.12);
+  border-radius:28px;
+  padding:28px 22px;
+  margin-bottom:16px;
+}
+.eyebrow{
+  display:inline-block;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:10px;
+}
+h1{
+  font-size:30px;
+  line-height:1.15;
+  margin-bottom:10px;
+}
+.subtitle{
+  color:var(--muted);
+  font-size:15px;
+  line-height:1.6;
+}
+.hero-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:18px;
+}
+.btn{
+  text-decoration:none;
+  border-radius:999px;
+  padding:11px 16px;
+  font-size:14px;
+  font-weight:700;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+.btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff}
+.btn.secondary{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:16px;
+}
+.card{
+  grid-column:span 12;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:22px 18px;
+  box-shadow:0 10px 28px rgba(63,78,100,.08);
+}
+.card h2{
+  font-size:22px;
+  margin-bottom:12px;
+}
+.card h3{
+  font-size:17px;
+  margin:18px 0 8px;
+}
+.card p{
+  font-size:15px;
+  line-height:1.7;
+  color:#334155;
+  margin-bottom:10px;
+}
+.card ul,.card ol{padding-left:20px;margin:10px 0}
+.card li{margin:8px 0;color:#334155;line-height:1.6}
+.callout{
+  border-radius:18px;
+  padding:14px 14px;
+  margin:14px 0;
+  font-size:14px;
+  line-height:1.65;
+}
+.callout.note{background:var(--note)}
+.callout.good{background:var(--good)}
+.callout.warn{background:var(--warn)}
+.mini-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-top:14px;
+}
+.mini{
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:14px;
+  background:#fff;
+}
+.mini .label{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  margin-bottom:6px;
+}
+.mini .value{
+  font-size:15px;
+  line-height:1.5;
+  font-weight:700;
+}
+.table-wrap{overflow:auto;margin-top:12px}
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+  background:#fff;
+  border-radius:16px;
+  overflow:hidden;
+}
+th,td{
+  border:1px solid var(--line);
+  padding:11px 10px;
+  text-align:left;
+  vertical-align:top;
+  line-height:1.5;
+}
+th{background:#f8fafc;font-size:13px}
+.step{
+  display:flex;
+  gap:12px;
+  padding:14px 0;
+  border-top:1px solid var(--line);
+}
+.step:first-of-type{border-top:none;padding-top:0}
+.step-num{
+  width:32px;
+  height:32px;
+  flex:0 0 32px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+}
+.step-body strong{display:block;margin-bottom:4px}
+.footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+  margin-top:18px;
+}
+@media (min-width:760px){
+  .hero{padding:34px 30px}
+  .card.wide{grid-column:span 8}
+  .card.side{grid-column:span 4}
+}
+@media (max-width:640px){
+  h1{font-size:26px}
+  .mini-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <section class="hero">
+    <div class="eyebrow">CP Maths Report</div>
+    <h1>Passer de "je compte" a "je calcule"</h1>
+    <p class="subtitle">Rapport detaille pour les parents. Objectif : utiliser la base deja acquise sur les complements a 10 pour automatiser le calcul mental en CP sur les nombres jusqu'a 100, surtout <code>+1</code>, <code>-1</code>, <code>+2</code>, <code>-2</code> et <code>+10</code>, <code>-10</code>.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="progress_tracker.html">📊 Ouvrir le suivi</a>
+      <a class="btn secondary" href="index.html">⬅ Retour a l'accueil</a>
+    </div>
+  </section>
+
+  <div class="grid">
+    <section class="card wide">
+      <h2>1. Diagnostic</h2>
+      <p>Si l'enfant sait decomposer 10, repond juste a beaucoup de petites additions et soustractions, mais reussit mal les evaluations scolaires, le probleme le plus probable n'est pas "il ne sait pas", mais "il n'a pas encore automatise".</p>
+      <div class="callout warn"><strong>Hypothese centrale :</strong> l'enfant utilise encore une strategie de comptage pour beaucoup de calculs a deux chiffres. Il trouve parfois la bonne reponse, mais trop lentement pour une evaluation rapide.</div>
+      <div class="mini-grid">
+        <div class="mini">
+          <div class="label">Signe de comptage</div>
+          <div class="value">Pause visible, levres qui bougent, yeux qui "suivent" la suite des nombres, doigts ou petits gestes.</div>
+        </div>
+        <div class="mini">
+          <div class="label">Signe de calcul</div>
+          <div class="value">Reponse rapide, attention sur les chiffres qui changent, explication du type "le chiffre des unites change".</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card side">
+      <h2>2. Idee cle</h2>
+      <p>Il ne faut pas demander a l'enfant de memoriser brutalement des grands calculs comme <code>38 + 2 = 40</code>. Il faut lui apprendre a reutiliser ce qu'il sait deja.</p>
+      <div class="callout note"><strong>But :</strong> faire le pont entre <code>8 + 2 = 10</code> et <code>38 + 2 = 40</code>.</div>
+    </section>
+
+    <section class="card wide">
+      <h2>3. La methode</h2>
+      <p>La bonne progression reste celle des mathematiques de Singapour :</p>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Concrete</strong>
+          <p>Manipuler des cubes, des jetons, une ligne numerique ou un tableau des 100. L'enfant doit voir ce qui bouge.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Pictorial</strong>
+          <p>Representer les nombres par dizaines et unites, ou deplacer le doigt sur un hundred chart. L'enfant apprend a voir la structure.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Abstract</strong>
+          <p>Passer au calcul pur : <code>38 + 2</code>, <code>54 - 1</code>, <code>67 - 10</code>. La vitesse vient seulement apres la comprehension.</p>
+        </div>
+      </div>
+      <div class="callout good"><strong>Point cle :</strong> on ne saute pas directement a la vitesse. On construit d'abord la structure mentale, puis on automatise.</div>
+    </section>
+
+    <section class="card wide">
+      <h2>4. Ce que l'enfant doit voir</h2>
+      <h3>Valeur de position</h3>
+      <p><code>38</code> n'est pas un bloc opaque. C'est <code>3 dizaines + 8 unites</code>.</p>
+      <h3>Point d'appui</h3>
+      <p>Les dizaines entieres <code>40</code>, <code>50</code>, <code>60</code> servent de reperes.</p>
+      <h3>Pont a partir des complements a 10</h3>
+      <p>Si l'enfant sait deja que <code>8 + 2 = 10</code>, alors il peut apprendre que :</p>
+      <div class="callout note"><code>38 + 2 = 30 + (8 + 2) = 40</code></div>
+      <p>Ce n'est pas du par coeur. C'est du transfert.</p>
+    </section>
+
+    <section class="card side">
+      <h2>5. Langage parent</h2>
+      <ul>
+        <li>"Qu'est-ce qui change, les dizaines ou les unites ?"</li>
+        <li>"De combien manque-t-il pour arriver a la prochaine dizaine ?"</li>
+        <li>"Tu l'as calcule ou tu l'as compte ?"</li>
+        <li>"Montre-moi ou est le pont vers 40."</li>
+      </ul>
+    </section>
+
+    <section class="card wide">
+      <h2>6. Progression recommandee</h2>
+      <div class="table-wrap">
+        <table>
+          <tr>
+            <th>Etape</th>
+            <th>Objectif</th>
+            <th>Exemples</th>
+            <th>Ce qu'on veut entendre</th>
+          </tr>
+          <tr>
+            <td>1. +/-10</td>
+            <td>Voir que seule la dizaine change</td>
+            <td><code>24+10</code>, <code>67-10</code></td>
+            <td>"Je change la dizaine, les unites restent."</td>
+          </tr>
+          <tr>
+            <td>2. +/-1 sans passage</td>
+            <td>Voir la variation des unites</td>
+            <td><code>34+1</code>, <code>52-1</code></td>
+            <td>"Je change juste les unites."</td>
+          </tr>
+          <tr>
+            <td>3. +/-1 avec passage</td>
+            <td>Passer une dizaine</td>
+            <td><code>39+1</code>, <code>50-1</code></td>
+            <td>"9 plus 1 va a la dizaine suivante."</td>
+          </tr>
+          <tr>
+            <td>4. +/-2 sans passage</td>
+            <td>Avancer ou reculer de 2 sans recompter tout</td>
+            <td><code>34+2</code>, <code>76-2</code></td>
+            <td>"Je bouge de deux unites."</td>
+          </tr>
+          <tr>
+            <td>5. +/-2 avec passage</td>
+            <td>Utiliser le pont des complements a 10</td>
+            <td><code>38+2</code>, <code>41-2</code></td>
+            <td>"8 a besoin de 2 pour faire 10."</td>
+          </tr>
+          <tr>
+            <td>6. Melange</td>
+            <td>Automatiser sans perdre la structure</td>
+            <td><code>29+1</code>, <code>48+2</code>, <code>73-10</code></td>
+            <td>Reponse rapide sans comptage visible</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <section class="card wide">
+      <h2>7. Exercices passerelle a privilegier</h2>
+      <h3>A. Completer jusqu'a la dizaine suivante</h3>
+      <p><code>28 + ? = 30</code>, <code>39 + ? = 40</code>, <code>47 + ? = 50</code>, <code>58 + ? = 60</code></p>
+      <p>Ces exercices recyclent directement les complements a 10 dans les nombres a deux chiffres.</p>
+      <h3>B. Revenir depuis une dizaine</h3>
+      <p><code>30 - ? = 28</code>, <code>40 - ? = 39</code>, <code>50 - ? = 47</code></p>
+      <p>C'est la version soustractive du meme pont.</p>
+      <h3>C. Calculs autour des dizaines</h3>
+      <p><code>29+1</code>, <code>38+2</code>, <code>49+1</code>, <code>61-2</code>, <code>70-1</code></p>
+      <div class="callout warn"><strong>A eviter :</strong> melanger trop tot des calculs de natures tres differentes. On veut d'abord stabiliser une structure mentale a la fois.</div>
+    </section>
+
+    <section class="card side">
+      <h2>8. Signes de progres</h2>
+      <ul>
+        <li>Moins de mouvements des doigts</li>
+        <li>Moins de pause avant la reponse</li>
+        <li>Explications plus structurelles</li>
+        <li>Reussite stable sur 6 a 10 questions rapides</li>
+      </ul>
+    </section>
+
+    <section class="card wide">
+      <h2>9. Routine quotidienne conseillée</h2>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>3 minutes - rappel rapide</strong>
+          <p>Quelques calculs deja acquis : complements a 10, <code>+10</code>, <code>-10</code>, <code>+1</code>, <code>-1</code>.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>5 minutes - focus du jour</strong>
+          <p>Une seule famille : par exemple <code>38+2</code>, <code>48+2</code>, <code>58+2</code>. On verbalise beaucoup.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>3 minutes - petit sprint</strong>
+          <p>6 questions rapides. Objectif : reponse propre et rapide, sans comptage visible.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>2 minutes - retour meta</strong>
+          <p>Demander : "Quelles questions tu as vraiment calculees ? Lesquelles tu as encore comptees ?"</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card wide">
+      <h2>10. Ce qu'il ne faut pas faire</h2>
+      <ul>
+        <li>Ne pas introduire trop de nouvelles formes en meme temps.</li>
+        <li>Ne pas exiger la vitesse avant que la structure soit comprise.</li>
+        <li>Ne pas faire de longues series fatigantes.</li>
+        <li>Ne pas confondre "bonne reponse" et "bonne strategie".</li>
+      </ul>
+      <div class="callout note"><strong>Regle simple :</strong> d'abord comprendre, ensuite transferer, enfin automatiser.</div>
+    </section>
+
+    <section class="card wide">
+      <h2>11. Conclusion</h2>
+      <p>L'enfant n'a probablement pas besoin de "recommencer depuis zero". Il a deja une base utile : les complements a 10. Le vrai travail consiste maintenant a transformer cette base en outil pour les nombres jusqu'a 100.</p>
+      <p>Le bon cap n'est donc pas le bachotage, mais le passage progressif de <strong>je compte</strong> a <strong>je vois la structure</strong>, puis a <strong>je reponds automatiquement</strong>.</p>
+      <div class="callout good"><strong>Objectif des prochaines semaines :</strong> automatiser <code>+1</code>, <code>-1</code>, <code>+2</code>, <code>-2</code>, <code>+10</code> et <code>-10</code> jusqu'a 100, surtout autour des passages de dizaine.</div>
+    </section>
+  </div>
+
+  <div class="footer">Page statique pour parents - projet Learning / CP Maths</div>
+</div>
+</body>
+</html>
